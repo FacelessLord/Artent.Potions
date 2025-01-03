@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "artent_potions",
+  "version": "${version}",
+  "name": "Artent.Potions",
+  "description": "Potions part of Artent Mod",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/artent_potions/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "faceless.artent_potions.client.ArtentPotionsClient"
+    ],
+    "main": [
+      "faceless.artent_potions.ArtentPotions"
+    ]
+  },
+  "mixins": [
+    "artent_potions.mixins.json",
+    {
+      "config": "artent_potions.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
