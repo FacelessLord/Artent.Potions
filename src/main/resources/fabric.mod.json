@@ -11,14 +11,14 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "faceless.artent_potions.client.ArtentPotionsClient"
+      "faceless.artent.potions.client.ArtentPotionsClient"
     ],
     "main": [
-      "faceless.artent_potions.ArtentPotions"
+      "faceless.artent.potions.ArtentPotions"
     ]
   },
   "mixins": [
-    "artent_potions.mixins.json",
+    "artent.potions.mixins.json",
     {
       "config": "artent_potions.client.mixins.json",
       "environment": "client"

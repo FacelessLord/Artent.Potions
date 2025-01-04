@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "faceless.artent.potions.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BreakBlockMixin",
+    "BrewingItemMixin",
+    "FeatherFallMixin",
+    "LivingEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
