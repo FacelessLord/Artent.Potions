@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "artent_potions:block/shadowveil"
+    "layer0": "artent_potions:item/shadowveil"
   }
 }

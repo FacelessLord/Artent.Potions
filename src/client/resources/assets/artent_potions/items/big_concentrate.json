@@ -1,0 +1,136 @@
+{
+    "model": {
+        "type": "minecraft:range_dispatch",
+        "entries": [
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_phial"
+                },
+                "threshold": 0
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_0",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 1
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_1",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 2
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_2",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 3
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_3",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 4
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_4",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 5
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_5",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 6
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_6",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 7
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_7",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 8
+            },
+            {
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_8",
+                    "tints": [
+                        {
+                            "type": "artent_potions:potion_color",
+                            "default": -13083194
+                        }
+                    ]
+                },
+                "threshold": 9
+            }
+        ],
+        "fallback": {
+            "type": "minecraft:model",
+            "model": "artent_potions:item/big_concentrate_phial"
+        },
+        "property": "artent_potions:concentrate_amount"
+    }
+}

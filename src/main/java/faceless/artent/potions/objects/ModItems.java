@@ -19,96 +19,26 @@ import static faceless.artent.potions.registry.DataComponentRegistry.CONCENTRATE
 import static faceless.artent.potions.registry.DataComponentRegistry.POTION_KEY;
 
 public final class ModItems {
-  public static final Item EmptyPhial = register(
-      "empty_phial",
-      Item::new,
-      new Item.Settings().maxCount(64),
-      ModItemGroups.Potions);
-  public static final Item EmptyPhialExplosive = register(
-      "empty_phial_explosive",
-      Item::new,
-      new Item.Settings().maxCount(64),
-      ModItemGroups.Potions);
-  public static final Item PotionPhial = register(
-      "potion_phial",
-      PotionPhial::new,
-      new Item.Settings().component(POTION_KEY, "").maxCount(64),
-      null);
+  public static Item EmptyPhial;
+  public static Item EmptyPhialExplosive;
+  public static Item PotionPhial;
+  public static Item PotionPhialExplosive;
 
-  public static final Item PotionPhialExplosive = register(
-      "potion_phial_explosive",
-      PotionPhial::new,
-      new Item.Settings().component(POTION_KEY, "").maxCount(64),
-      null);
+  public static FoodComponent Berry = new FoodComponent(2, 0.1f, false);
 
-  static {
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhial, ModItemGroups.Potions);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhialExplosive, ModItemGroups.Potions);
-  }
+  public static Item CrimsonLeaf;
+  public static Item GoldenBucket;
+  public static Item GoldenBucketFilled;
+  public static Item SmallConcentratePhial;
+  public static Item SmallConcentrate;
+  public static Item MediumConcentratePhial;
+  public static Item MediumConcentrate;
+  public static Item BigConcentratePhial;
+  public static Item BigConcentrate;
 
-  public static final FoodComponent Berry = new FoodComponent(2, 0.1f, false);
+  public static Item[] berries = new Item[5];
 
-  public static final Item CrimsonLeaf = register(
-      "crimson_leaf",
-      Item::new,
-      new Item.Settings().maxCount(64),
-      ModItemGroups.Potions);
-  public static final Item GoldenBucket = register(
-      "golden_bucket",
-      Item::new,
-      new Item.Settings().maxCount(1),
-      ModItemGroups.Potions);
-  public static final Item GoldenBucketFilled = register(
-      "golden_bucket_filled",
-      FilledGoldenBucket::new,
-      new Item.Settings().maxCount(1),
-      null);
-  public static final Item SmallConcentratePhial = register(
-      "small_concentrate_phial",
-      Item::new,
-      new Item.Settings().maxCount(64),
-      ModItemGroups.Potions);
-  public static final Item SmallConcentrate = register(
-      "small_concentrate",
-      SmallConcentrate::new,
-      new Item.Settings().component(POTION_KEY, "").maxCount(64),
-      null);
-  public static final Item MediumConcentratePhial = register(
-      "medium_concentrate_phial",
-      Item::new,
-      new Item.Settings().maxCount(1),
-      ModItemGroups.Potions);
-  public static final Item MediumConcentrate = register(
-      "medium_concentrate",
-      MediumConcentrate::new,
-      new Item.Settings()
-          .component(POTION_KEY, "")
-          .component(CONCENTRATE_AMOUNT, 3)
-          .maxCount(1),
-      null);
-  public static final Item BigConcentratePhial = register(
-      "big_concentrate_phial",
-      Item::new,
-      new Item.Settings().maxCount(64),
-      ModItemGroups.Potions);
-  public static final Item BigConcentrate = register(
-      "big_concentrate",
-      BigConcentrate::new,
-      new Item.Settings()
-          .component(POTION_KEY, "")
-          .component(CONCENTRATE_AMOUNT, 9)
-          .maxCount(1),
-      null);
-
-  static {
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, -1, ModItemGroups.Potions);
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.MediumConcentrate, 3, ModItemGroups.Potions);
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.BigConcentrate, 9, ModItemGroups.Potions);
-  }
-
-  public static final Item[] berries = new Item[5];
-
-  static {
+  public void register() {
     for (int i = 0; i < berries.length; i++) {
       berries[i] = register(
           Ingredients.GetBerryName(i),
@@ -116,6 +46,76 @@ public final class ModItems {
           new Item.Settings().maxCount(64).food(Berry),
           ModItemGroups.Potions);
     }
+
+    CrimsonLeaf = register("crimson_leaf", Item::new, new Item.Settings().maxCount(64), ModItemGroups.Potions);
+    GoldenBucket = register("golden_bucket", Item::new, new Item.Settings().maxCount(1), ModItemGroups.Potions);
+    GoldenBucketFilled = register(
+        "golden_bucket_filled",
+        FilledGoldenBucket::new,
+        new Item.Settings().maxCount(1),
+        null);
+
+    EmptyPhial = register("empty_phial", Item::new, new Item.Settings().maxCount(64), ModItemGroups.Potions);
+    EmptyPhialExplosive = register(
+        "empty_phial_explosive",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    PotionPhial = register(
+        "potion_phial",
+        PotionPhial::new,
+        new Item.Settings().component(POTION_KEY, "").maxCount(64),
+        null);
+
+    PotionPhialExplosive = register(
+        "potion_phial_explosive",
+        PotionPhialExplosive::new,
+        new Item.Settings().component(POTION_KEY, "").maxCount(64),
+        null);
+
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhial, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhialExplosive, ModItemGroups.Potions);
+
+    SmallConcentratePhial = register(
+        "small_concentrate_phial",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    SmallConcentrate = register(
+        "small_concentrate",
+        SmallConcentrate::new,
+        new Item.Settings().component(POTION_KEY, "").maxCount(64),
+        null);
+    MediumConcentratePhial = register(
+        "medium_concentrate_phial",
+        Item::new,
+        new Item.Settings().maxCount(1),
+        ModItemGroups.Potions);
+    MediumConcentrate = register(
+        "medium_concentrate",
+        MediumConcentrate::new,
+        new Item.Settings()
+            .component(POTION_KEY, "")
+            .component(CONCENTRATE_AMOUNT, 3)
+            .maxCount(1),
+        null);
+    BigConcentratePhial = register(
+        "big_concentrate_phial",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    BigConcentrate = register(
+        "big_concentrate",
+        BigConcentrate::new,
+        new Item.Settings()
+            .component(POTION_KEY, "")
+            .component(CONCENTRATE_AMOUNT, 9)
+            .maxCount(1),
+        null);
+
+    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, -1, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.MediumConcentrate, 3, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.BigConcentrate, 9, ModItemGroups.Potions);
   }
 
   public static Item register(

@@ -1,6 +1,8 @@
 package faceless.artent.potions;
 
 import faceless.artent.potions.network.ArtentServerHook;
+import faceless.artent.potions.objects.ModBlocks;
+import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ public class ArtentPotions implements ModInitializer {
   public static ItemGroupRegistry ItemGroups = new ItemGroupRegistry();
   public static ArtentServerHook ServerHook = new ArtentServerHook();
 
+  public static ModItems Items = new ModItems();
+  public static ModBlocks Blocks = new ModBlocks();
   public static EntityRegistry Entities = new EntityRegistry();
   public static AlchemicalPotionRegistry Potions = new AlchemicalPotionRegistry();
   public static BrewingRegistry Brewing = new BrewingRegistry();
@@ -27,6 +31,8 @@ public class ArtentPotions implements ModInitializer {
   public void onInitialize() {
     Potions.register();
 
+    Blocks.register();
+    Items.register();
     BlockEntities.register();
     Entities.register();
 

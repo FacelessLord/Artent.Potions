@@ -1,0 +1,12 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "artent_potions:item/potion_phial",
+        "tints": [
+            {
+                "type": "artent_potions:potion_color",
+                "default": -13083194
+            }
+        ]
+    }
+}
