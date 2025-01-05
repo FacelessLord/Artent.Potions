@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "artent_potions:block/fermenting_barrel",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "artent_potions:block/fermenting_barrel"
+    },
+    "facing=south": {
+      "model": "artent_potions:block/fermenting_barrel",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "artent_potions:block/fermenting_barrel",
+      "y": 270
+    }
+  }
+}

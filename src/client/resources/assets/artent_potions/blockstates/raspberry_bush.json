@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "artent_potions:block/berry_bush"
+    },
+    "age=1": {
+      "model": "artent_potions:block/greenberry_bush"
+    },
+    "age=2": {
+      "model": "artent_potions:block/raspberry_bush"
+    }
+  }
+}

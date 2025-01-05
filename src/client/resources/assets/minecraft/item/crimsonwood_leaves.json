@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "artent_potions:block/crimsonwood/_leaves"
+  }
+}

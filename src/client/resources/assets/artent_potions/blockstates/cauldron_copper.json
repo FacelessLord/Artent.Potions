@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "has_coal=false,is_burning=false": {
+      "model": "artent_potions:block/cauldron_copper"
+    },
+    "has_coal=false,is_burning=true": {
+      "model": "artent_potions:block/cauldron_copper"
+    },
+    "has_coal=true,is_burning=false": {
+      "model": "artent_potions:block/cauldron_copper_black_embers"
+    },
+    "has_coal=true,is_burning=true": {
+      "model": "artent_potions:block/cauldron_copper_red_embers"
+    }
+  }
+}
