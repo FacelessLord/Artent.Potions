@@ -6,6 +6,7 @@ import faceless.artent.potions.block.BrewingCauldron;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.brewingApi.IBrewable;
 import faceless.artent.potions.network.ArtentServerHook;
+import faceless.artent.potions.network.CauldronSyncPayload;
 import faceless.artent.potions.objects.BrewingRecipes;
 import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.registry.BrewingRegistry;
@@ -31,9 +32,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BrewingCauldronBlockEntity extends BlockEntity {
-  public ArrayList<BrewingIngredient> ingredients = new ArrayList<>();
+  public List<BrewingIngredient> ingredients = new ArrayList<>();
   public int fuelAmount = 0;
   public int waterAmount = 0;
   public int portionsLeft = 9;
@@ -104,16 +107,25 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
     updateBlock();
   }
 
+  public void acceptPayload(CauldronSyncPayload payload) {
+    this.fuelAmount = payload.fuelAmount();
+    this.waterAmount = payload.waterAmount();
+    this.portionsLeft = payload.portionsLeft();
+
+    this.ingredients = payload.ingredients();
+
+    color = this.ingredients.stream().map(BrewingRegistry.Ingredients::get).reduce(Color::add).orElse(Color.Blue);
+  }
+
   @Override
   public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
-    fuelAmount = nbt.getInt("fuelAmount");
-    waterAmount = nbt.getInt("waterAmount");
-    portionsLeft = nbt.getInt("portionsLeft");
+    var fuelAmount = nbt.getInt("fuelAmount");
+    var waterAmount = nbt.getInt("waterAmount");
+    var portionsLeft = nbt.getInt("portionsLeft");
+
     var ingredientsTag = nbt.getList("ingredients", NbtCompound.COMPOUND_TYPE);
-    ingredients = new ArrayList<>(ingredientsTag.size());
-    var colors = new ArrayList<Color>();
-    color.add(Color.Blue);
+    var ingredients = new ArrayList<BrewingIngredient>(ingredientsTag.size());
     for (net.minecraft.nbt.NbtElement nbtElement : ingredientsTag) {
       var ingredientTag = (NbtCompound) nbtElement;
       var id = ingredientTag.getString("id");
@@ -125,9 +137,10 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
       var meta = ingredientTag.getInt("meta");
       var ingredient = new BrewingIngredient(item, meta);
       ingredients.add(ingredient);
-      colors.add(BrewingRegistry.Ingredients.get(ingredient));
     }
-    color = colors.stream().reduce(Color::add).orElse(Color.Blue);
+
+    var payload = new CauldronSyncPayload(null, fuelAmount, waterAmount, portionsLeft, ingredients);
+    this.acceptPayload(payload);
   }
 
   @Override
@@ -202,9 +215,9 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
 
     if (world.isClient) return;
 
-//    for (var player : PlayerLookup.tracking((ServerWorld) world, pos)) {
-//      ArtentServerHook.packetSyncCauldron(player, this);
-//    }
+    for (var player : PlayerLookup.tracking((ServerWorld) world, pos)) {
+      ArtentServerHook.packetSyncCauldron(player, this);
+    }
   }
 
   public static enum AddFuelResultType {

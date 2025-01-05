@@ -1,6 +1,5 @@
 package faceless.artent.potions.network;
 
-import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -17,9 +16,12 @@ public class ArtentServerHook {
     if (player.getWorld().isClient)
       return;
 
-    var registryManager = player.getWorld().getRegistryManager();
-    var nbt = entity.createNbt(registryManager);
-    var payload = new CauldronSyncPayload(entity.getPos(), nbt);
+    var payload = new CauldronSyncPayload(
+        entity.getPos(),
+        entity.fuelAmount,
+        entity.waterAmount,
+        entity.portionsLeft,
+        entity.ingredients);
     ServerPlayNetworking.send((ServerPlayerEntity) player, payload);
   }
 }
