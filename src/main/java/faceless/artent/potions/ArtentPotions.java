@@ -5,6 +5,8 @@ import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.DependencyException;
+import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
