@@ -16,19 +16,5 @@ public class ColorProvidersRegistry implements IRegistry {
       }
       return 0;
     }, ModBlocks.CauldronFluid);
-
-    // TODO
-//    Color.ITEM.register(
-//        (ItemStack stack, int tintIndex) -> {
-//          if (tintIndex == 0) return -1;
-//          return AlchemicalPotionUtil.getColor(stack);
-//        },
-//        ModItems.PotionPhial,
-//        ModItems.PotionPhialExplosive,
-//        ModItems.GoldenBucketFilled,
-//        ModItems.SmallConcentrate,
-//        ModItems.MediumConcentrate,
-//        ModItems.BigConcentrate);
-
   }
 }

@@ -5,13 +5,14 @@ import faceless.artent.potions.BrewingAutomata;
 import faceless.artent.potions.block.BrewingCauldron;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.brewingApi.IBrewable;
+import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.objects.BrewingRecipes;
 import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.registry.BrewingRegistry;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -22,6 +23,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -200,12 +202,9 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
 
     if (world.isClient) return;
 
-    var box = Box.of(pos.toCenterPos(), 64, 64, 64);
-    var players = world.getEntitiesByType(EntityType.PLAYER, box, playerEntity -> true);
-    // TODO
-//        for (var player : players) {
-//            ArtentServerHook.packetSyncCauldron(player, this);
-//        }
+//    for (var player : PlayerLookup.tracking((ServerWorld) world, pos)) {
+//      ArtentServerHook.packetSyncCauldron(player, this);
+//    }
   }
 
   public static enum AddFuelResultType {
