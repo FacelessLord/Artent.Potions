@@ -2,11 +2,10 @@ package faceless.artent.potions;
 
 import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.objects.ModBlocks;
+import faceless.artent.potions.objects.ModFeatures;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.DependencyException;
-import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +27,7 @@ public class ArtentPotions implements ModInitializer {
   public static BrewingRegistry Brewing = new BrewingRegistry();
   public static StatusEffectsRegistry StatusEffects = new StatusEffectsRegistry();
   public static DataComponentRegistry DataComponents = new DataComponentRegistry();
+  public static ModFeatures Features = new ModFeatures();
 
   @Override
   public void onInitialize() {
@@ -37,6 +37,7 @@ public class ArtentPotions implements ModInitializer {
     Items.register();
     BlockEntities.register();
     Entities.register();
+    Features.register();
 
     Brewing.register();
 

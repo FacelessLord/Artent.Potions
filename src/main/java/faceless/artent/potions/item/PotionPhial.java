@@ -72,7 +72,7 @@ public class PotionPhial extends Item implements INamed {
 
   @Override
   public Text getName(ItemStack stack) {
-    var key = stack.get(POTION_KEY);
+    var key = AlchemicalPotionUtil.getPotionKey(stack);
     return Text.translatable("item.potion." + key);
   }
 

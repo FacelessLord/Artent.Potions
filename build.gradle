@@ -102,6 +102,13 @@ publishing {
         // retrieving dependencies.
     }
 }
+
+fabricApi {
+    configureDataGeneration() {
+        client = true
+    }
+}
+
 import com.modrinth.minotaur.dependencies.ModDependency
 
 modrinth {

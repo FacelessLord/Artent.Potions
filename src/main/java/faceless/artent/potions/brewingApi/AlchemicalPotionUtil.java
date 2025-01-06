@@ -30,7 +30,7 @@ public class AlchemicalPotionUtil {
   public static void buildTooltip(ItemStack stack, List<Text> list, float durationMultiplier, float tickRate) {
     var potion = getPotion(stack);
     if (potion == null) {
-      list.add(Text.literal("FFF"));
+      list.add(Text.translatable("text.artent_potions.potion.unidentified"));
       return;
     }
     List<StatusEffectInstance> effects = potion.getEffects();
@@ -43,9 +43,13 @@ public class AlchemicalPotionUtil {
 
   public static AlchemicalPotion getPotion(ItemStack stack) {
     var key = stack.get(POTION_KEY);
-    if (key == null)
-      return null;
+    if (key == null) return null;
     return AlchemicalPotionRegistry.getRegisteredPotions().getOrDefault(key, null);
+  }
+
+  public static String getPotionKey(ItemStack stack) {
+    var potion = getPotion(stack);
+    return potion == null ? "unidentified" : potion.id;
   }
 
   public static AlchemicalPotion getFermentedPotion(ItemStack stack) {
@@ -59,7 +63,9 @@ public class AlchemicalPotionUtil {
   }
 
   public static List<StatusEffectInstance> getPotionEffects(ItemStack itemStack) {
-    return getPotion(itemStack).getEffects();
+    var potion = getPotion(itemStack);
+    if (potion == null) return new ArrayList<>();
+    return potion.getEffects();
   }
 
   public static void setPotion(ItemStack stack, AlchemicalPotion potion) {
@@ -75,13 +81,13 @@ public class AlchemicalPotionUtil {
     return integer == null ? 0 : integer;
   }
 
-  public static ItemStack setFermentedPotion(ItemStack stack, String potionKey, int amount) {
-    setFermentedPotion(stack, potionKey);
+  public static ItemStack setFermentedPotionByKey(ItemStack stack, String potionKey, int amount) {
+    setFermentedPotionByKey(stack, potionKey);
     setConcentrateAmount(stack, amount);
     return stack;
   }
 
-  public static ItemStack setFermentedPotion(ItemStack stack, String potionKey) {
+  public static ItemStack setFermentedPotionByKey(ItemStack stack, String potionKey) {
     stack.set(POTION_KEY, potionKey);
     return stack;
   }
@@ -113,23 +119,19 @@ public class AlchemicalPotionUtil {
   }
 
   public static void applyPotionEffects(
-      ServerWorld serverWorld,
-      LivingEntity user,
-      PlayerEntity playerEntity,
-      AlchemicalPotion potion) {
+      ServerWorld serverWorld, LivingEntity user, PlayerEntity playerEntity, AlchemicalPotion potion) {
     List<StatusEffectInstance> list = potion.getEffects();
     for (StatusEffectInstance statusEffectInstance : list) {
       if (statusEffectInstance.getEffectType().value().isInstant()) {
         statusEffectInstance
             .getEffectType()
             .value()
-            .applyInstantEffect(
-                serverWorld,
-                playerEntity,
-                playerEntity,
-                user,
-                statusEffectInstance.getAmplifier(),
-                1.0);
+            .applyInstantEffect(serverWorld,
+                                playerEntity,
+                                playerEntity,
+                                user,
+                                statusEffectInstance.getAmplifier(),
+                                1.0);
         continue;
       }
       user.addStatusEffect(new StatusEffectInstance(statusEffectInstance));
@@ -142,8 +144,7 @@ public class AlchemicalPotionUtil {
     }
     if (!world.isClient && world instanceof ServerWorld serverWorld) {
       var potion = AlchemicalPotionUtil.getFermentedPotion(stack);
-      if (potion != null)
-        AlchemicalPotionUtil.applyPotionEffects(serverWorld, playerEntity, playerEntity, potion);
+      if (potion != null) AlchemicalPotionUtil.applyPotionEffects(serverWorld, playerEntity, playerEntity, potion);
     }
     world.emitGameEvent(playerEntity, GameEvent.DRINK, playerEntity.getPos());
     playerEntity.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));

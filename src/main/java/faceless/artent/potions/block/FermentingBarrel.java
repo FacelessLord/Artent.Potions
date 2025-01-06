@@ -115,14 +115,14 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
         if (!player.isCreative()) {
           stack.decrement(1);
         }
-        var smallConcentrate = AlchemicalPotionUtil.setFermentedPotion(
+        var smallConcentrate = AlchemicalPotionUtil.setFermentedPotionByKey(
             new ItemStack(ModItems.SmallConcentrate),
             potionKey);
         MiscUtils.giveOrDropItem(world, pos, player, smallConcentrate);
       } else if (stack.getItem() == ModItems.MediumConcentratePhial) {
         var amount = be.takePotionPortions(3);
         if (amount == 0) return ActionResult.FAIL;
-        var mediumConcentrate = AlchemicalPotionUtil.setFermentedPotion(
+        var mediumConcentrate = AlchemicalPotionUtil.setFermentedPotionByKey(
             new ItemStack(ModItems.MediumConcentrate),
             potionKey,
             amount);
@@ -143,7 +143,7 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
         if (!player.isCreative())
           stack.decrement(1);
         var bigConcentrate = new ItemStack(ModItems.BigConcentrate);
-        player.giveItemStack(AlchemicalPotionUtil.setFermentedPotion(bigConcentrate, potionKey, amount));
+        player.giveItemStack(AlchemicalPotionUtil.setFermentedPotionByKey(bigConcentrate, potionKey, amount));
       } else if (stack.getItem() == ModItems.BigConcentrate) {
         var potion = AlchemicalPotionUtil.getPotion(stack);
         if (potion != null && potion.id.equals(potionKey)) {

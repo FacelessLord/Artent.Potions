@@ -15,6 +15,9 @@
     ],
     "main": [
       "faceless.artent.potions.ArtentPotions"
+    ],
+    "fabric-datagen": [
+      "faceless.artent.potions.client.datagen.ArtentPotionsDataGenerator"
     ]
   },
   "mixins": [
