@@ -1,7 +1,0 @@
-{
-  "type": "artent_potions:example_feature",
-  "config": {
-    "blockID": "minecraft:netherite_block",
-    "number": 10
-  }
-}

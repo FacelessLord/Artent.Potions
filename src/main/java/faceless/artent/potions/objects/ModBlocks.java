@@ -19,6 +19,7 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public final class ModBlocks {
@@ -65,6 +66,9 @@ public final class ModBlocks {
 
   public static Block FermentingBarrel;
   public static Item FermentingBarrelItem;
+
+  public static Block CrimsonwoodSapling;
+  public static Item CrimsonwoodSaplingItem;
 
   public void register() {
     var pair = register(
@@ -144,7 +148,12 @@ public final class ModBlocks {
     pair = register(
         "crimsonwood_log",
         PillarBlock::new,
-        Block.Settings.copy(Blocks.OAK_LOG).mapColor(MapColor.SPRUCE_BROWN).strength(2.0f).sounds(BlockSoundGroup.WOOD),
+        Block.Settings
+            .copy(Blocks.OAK_LOG)
+            .mapColor(MapColor.SPRUCE_BROWN)
+            .strength(2.0f)
+            .sounds(BlockSoundGroup.WOOD)
+            .burnable(),
         ModItemGroups.Potions);
     CrimsonwoodLog = pair.getLeft();
     CrimsonwoodLogItem = pair.getRight();
@@ -152,14 +161,7 @@ public final class ModBlocks {
     pair = register(
         "crimsonwood_leaves",
         CrimsonwoodLeaves::new,
-        Block.Settings
-            .copy(Blocks.ACACIA_LEAVES)
-            .strength(0.2f)
-            .ticksRandomly()
-            .sounds(BlockSoundGroup.GRASS)
-            .allowsSpawning(ModBlocks::never)
-            .suffocates(ModBlocks::never)
-            .blockVision(ModBlocks::never),
+        Blocks.createLeavesSettings(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
     CrimsonwoodLeaves = pair.getLeft();
     CrimsonwoodLeavesItem = pair.getRight();
@@ -171,10 +173,31 @@ public final class ModBlocks {
             .copy(Blocks.OAK_PLANKS)
             .mapColor(MapColor.BROWN)
             .strength(2.0f, 3.0f)
-            .sounds(BlockSoundGroup.WOOD),
+            .sounds(BlockSoundGroup.WOOD)
+            .burnable(),
         ModItemGroups.Potions);
     CrimsonwoodPlanks = pair.getLeft();
     CrimsonwoodPlanksItem = pair.getRight();
+
+    var crimsonSaplingGenerator = new SaplingGenerator(
+        ArtentPotions.MODID + "_crimsonwood",
+        Optional.empty(),
+        Optional.of(ModFeatures.CRIMSON_TREE_CONFIGURED_KEY),
+        Optional.empty());
+
+    pair = register(
+        "crimsonwood_sapling",
+        (settings) -> new CrimsonwoodSapling(crimsonSaplingGenerator, settings),
+        Block.Settings
+            .copy(Blocks.OAK_SAPLING)
+            .noCollision()
+            .ticksRandomly()
+            .breakInstantly()
+            .sounds(BlockSoundGroup.GRASS)
+            .burnable(),
+        ModItemGroups.Potions);
+    CrimsonwoodSapling = pair.getLeft();
+    CrimsonwoodSaplingItem = pair.getRight();
 
     pair = register(
         "fermenting_barrel",
@@ -188,16 +211,13 @@ public final class ModBlocks {
         ModItemGroups.Potions);
     FermentingBarrel = pair.getLeft();
     FermentingBarrelItem = pair.getRight();
+
+    FireBlock fireBlock = (FireBlock) Blocks.FIRE;
+    fireBlock.registerFlammableBlock(CrimsonwoodLog, 5, 20);
+    fireBlock.registerFlammableBlock(CrimsonwoodPlanks, 5, 20);
+    fireBlock.registerFlammableBlock(CrimsonwoodLeaves, 30, 60);
+    fireBlock.registerFlammableBlock(CrimsonwoodSapling, 30, 60);
   }
-
-  //	public static SaplingBlock CrimsonwoodSapling = new CrimsonwoodSapling(new CrimsonwoodSaplingGenerator(), FabricBlockSettings
-//		.of(Material.PLANT)
-//		.noCollision()
-//		.ticksRandomly()
-//		.breakInstantly()
-//		.sounds(BlockSoundGroup.GRASS));
-//	public static BlockItem CrimsonwoodSaplingItem = new BlockItem(CrimsonwoodSapling, new FabricItemSettings().group(Core.General));
-
 
   public static Pair<Block, Item> register(
       String keyString,

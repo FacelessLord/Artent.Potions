@@ -1,7 +1,7 @@
 package faceless.artent.potions.client.datagen;
 
-import faceless.artent.potions.client.registry.ConfiguredFeatureRegistry;
-import faceless.artent.potions.client.registry.PlacedFeatureRegistry;
+import faceless.artent.potions.registry.ConfiguredFeatureRegistry;
+import faceless.artent.potions.registry.PlacedFeatureRegistry;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -13,6 +13,8 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
   public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
     FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
     pack.addProvider((FabricDataOutput output) -> new WorldgenProvider(output, fabricDataGenerator.getRegistries()));
+    pack.addProvider((FabricDataOutput output) -> new BlockTagsProvider(output, fabricDataGenerator.getRegistries()));
+    pack.addProvider((FabricDataOutput output) -> new ItemTagsProvider(output, fabricDataGenerator.getRegistries()));
   }
 
   @Override

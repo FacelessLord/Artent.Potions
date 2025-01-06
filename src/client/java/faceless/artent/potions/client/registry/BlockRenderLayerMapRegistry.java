@@ -17,6 +17,7 @@ public class BlockRenderLayerMapRegistry implements IRegistry {
         ModBlocks.berryBush[1],
         ModBlocks.berryBush[2],
         ModBlocks.berryBush[3],
-        ModBlocks.CrimsonwoodLeaves);
+        ModBlocks.CrimsonwoodLeaves,
+        ModBlocks.CrimsonwoodSapling);
   }
 }

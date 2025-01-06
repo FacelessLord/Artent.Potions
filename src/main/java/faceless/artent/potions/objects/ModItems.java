@@ -5,6 +5,7 @@ import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.item.*;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -116,6 +117,9 @@ public final class ModItems {
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, -1, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.MediumConcentrate, 3, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.BigConcentrate, 9, ModItemGroups.Potions);
+
+    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodLeaves.asItem(), 0.5F);
+    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodSapling.asItem(), 0.5F);
   }
 
   public static Item register(
