@@ -1,12 +1,16 @@
 package faceless.artent.potions.client.datagen;
 
-import faceless.artent.potions.registry.ConfiguredFeatureRegistry;
-import faceless.artent.potions.registry.PlacedFeatureRegistry;
+import faceless.artent.potions.registry.FeatureRegistry;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.PlacedFeature;
+
+import java.util.function.BiConsumer;
 
 public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
   @Override
@@ -19,7 +23,15 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
 
   @Override
   public void buildRegistry(RegistryBuilder registryBuilder) {
-    registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureRegistry::bootstrap);
-    registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, PlacedFeatureRegistry::bootstrap);
+    this.aggregateRegistries(registryBuilder, FeatureRegistry::bootstrap);
+  }
+
+  public void aggregateRegistries(
+      RegistryBuilder registryBuilder,
+      BiConsumer<Registerable<ConfiguredFeature<?, ?>>, Registerable<PlacedFeature>> consumer) {
+    var acceptor = new RegistryAcceptor(consumer);
+
+    registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, acceptor::acceptConfiguredFeatureRegisterable);
+    registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, acceptor::acceptPlacedFeatureRegisterable);
   }
 }

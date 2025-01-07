@@ -12,9 +12,16 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class ModFeatures {
   public static final Identifier CRIMSON_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_tree");
-
   public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREE_CONFIGURED_KEY = configuredKeyOf(CRIMSON_TREE_FEATURE_ID);
   public static RegistryKey<PlacedFeature> CRIMSON_TREE_PLACED_KEY = placedKeyOf(CRIMSON_TREE_FEATURE_ID);
+
+  public static final Identifier CRIMSON_MEGA_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_mega_tree");
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_MEGA_TREE_CONFIGURED_KEY = configuredKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> CRIMSON_MEGA_TREE_PLACED_KEY = placedKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
+
+  public static final Identifier CRIMSON_TREES_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_trees");
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREES_CONFIGURED_KEY = configuredKeyOf(CRIMSON_TREES_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> CRIMSON_TREES_PLACED_KEY = placedKeyOf(CRIMSON_TREES_FEATURE_ID);
 
   public void register() {
     // add it to overworld biomes using FAPI
@@ -23,6 +30,11 @@ public class ModFeatures {
         // the feature is to be added while flowers and trees are being generated
         GenerationStep.Feature.VEGETAL_DECORATION,
         CRIMSON_TREE_PLACED_KEY);
+    BiomeModifications.addFeature(
+        BiomeSelectors.foundInOverworld(),
+        // the feature is to be added while flowers and trees are being generated
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        CRIMSON_MEGA_TREE_PLACED_KEY);
   }
 
   private static RegistryKey<ConfiguredFeature<?, ?>> configuredKeyOf(Identifier id) {

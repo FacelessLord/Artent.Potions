@@ -26,6 +26,16 @@ public class WorldgenProvider extends FabricDynamicRegistryProvider {
     var placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.PLACED_FEATURE, ModFeatures.CRIMSON_TREE_FEATURE_ID));
     entries.add(configuredFeature);
     entries.add(placedFeature);
+
+    configuredFeature = configuredFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, ModFeatures.CRIMSON_MEGA_TREE_FEATURE_ID));
+    placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.PLACED_FEATURE, ModFeatures.CRIMSON_MEGA_TREE_FEATURE_ID));
+    entries.add(configuredFeature);
+    entries.add(placedFeature);
+
+    configuredFeature = configuredFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, ModFeatures.CRIMSON_TREES_FEATURE_ID));
+    placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.PLACED_FEATURE, ModFeatures.CRIMSON_TREES_FEATURE_ID));
+    entries.add(configuredFeature);
+    entries.add(placedFeature);
   }
 
   @Override

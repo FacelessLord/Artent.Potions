@@ -181,7 +181,7 @@ public final class ModBlocks {
 
     var crimsonSaplingGenerator = new SaplingGenerator(
         ArtentPotions.MODID + "_crimsonwood",
-        Optional.empty(),
+        Optional.of(ModFeatures.CRIMSON_MEGA_TREE_CONFIGURED_KEY),
         Optional.of(ModFeatures.CRIMSON_TREE_CONFIGURED_KEY),
         Optional.empty());
 

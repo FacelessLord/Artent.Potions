@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "artent_potions:crimson_tree",
+    "features": [
+      {
+        "chance": 0.1,
+        "feature": "artent_potions:crimson_mega_tree"
+      }
+    ]
+  }
+}
