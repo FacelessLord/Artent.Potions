@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
 
@@ -22,18 +23,22 @@ public class WorldgenProvider extends FabricDynamicRegistryProvider {
     final RegistryWrapper.Impl<ConfiguredFeature<?, ?>> configuredFeatureRegistry = registries.getOrThrow(RegistryKeys.CONFIGURED_FEATURE);
     final RegistryWrapper.Impl<PlacedFeature> placedFeatureRegistry = registries.getOrThrow(RegistryKeys.PLACED_FEATURE);
 
-    var configuredFeature = configuredFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, ModFeatures.CRIMSON_TREE_FEATURE_ID));
-    var placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.PLACED_FEATURE, ModFeatures.CRIMSON_TREE_FEATURE_ID));
-    entries.add(configuredFeature);
-    entries.add(placedFeature);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, ModFeatures.CRIMSON_TREE_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, ModFeatures.CRIMSON_MEGA_TREE_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, ModFeatures.CRIMSON_TREES_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, ModFeatures.BERRY_BUSH_FEATURE_ID);
+  }
 
-    configuredFeature = configuredFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, ModFeatures.CRIMSON_MEGA_TREE_FEATURE_ID));
-    placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.PLACED_FEATURE, ModFeatures.CRIMSON_MEGA_TREE_FEATURE_ID));
-    entries.add(configuredFeature);
-    entries.add(placedFeature);
-
-    configuredFeature = configuredFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, ModFeatures.CRIMSON_TREES_FEATURE_ID));
-    placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(RegistryKeys.PLACED_FEATURE, ModFeatures.CRIMSON_TREES_FEATURE_ID));
+  private void registerSimpleFeature(
+      Entries entries,
+      RegistryWrapper.Impl<ConfiguredFeature<?, ?>> configuredFeatureRegistry,
+      RegistryWrapper.Impl<PlacedFeature> placedFeatureRegistry, Identifier featureId) {
+    var configuredFeature = configuredFeatureRegistry.getOrThrow(RegistryKey.of(
+        RegistryKeys.CONFIGURED_FEATURE,
+        featureId));
+    var placedFeature = placedFeatureRegistry.getOrThrow(RegistryKey.of(
+        RegistryKeys.PLACED_FEATURE,
+        featureId));
     entries.add(configuredFeature);
     entries.add(placedFeature);
   }

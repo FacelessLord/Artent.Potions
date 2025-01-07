@@ -1,0 +1,7 @@
+{
+  "type": "artent_potions:berry_bush",
+  "config": {
+    "berry_type_count": 4,
+    "max_height": 3
+  }
+}
