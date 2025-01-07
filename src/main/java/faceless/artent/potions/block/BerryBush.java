@@ -98,10 +98,19 @@ public class BerryBush extends Block implements INamed, Fertilizable {
   }
 
   protected static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 15, 14);
+  protected static final VoxelShape SHAPE_BOTTOM = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+  protected static final VoxelShape SHAPE_MIDDLE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+  protected static final VoxelShape SHAPE_TOP = Block.createCuboidShape(2, 0, 2, 14, 15, 14);
 
   @Override
   public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-    return SHAPE; // TODO
+    var type = state.get(BUSH_TYPE);
+    return switch (type) {
+      case Single -> SHAPE;
+      case Bottom -> SHAPE_BOTTOM;
+      case Middle -> SHAPE_MIDDLE;
+      case Top -> SHAPE_TOP;
+    };
   }
 
   @Override
