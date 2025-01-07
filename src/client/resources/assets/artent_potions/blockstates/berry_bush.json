@@ -4,19 +4,19 @@
       "model": "artent_potions:block/berry_bush"
     },
     "age=1": {
-      "model": "artent_potions:block/berry_greenberry_bush"
+      "model": "artent_potions:block/grown_berry_bush"
     },
     "age=2,berry_type=0": {
-      "model": "artent_potions:block/blackberry_bush"
+      "model": "artent_potions:block/grown_blackberry_bush"
     },
     "age=2,berry_type=1": {
-      "model": "artent_potions:block/blueberry_bush"
+      "model": "artent_potions:block/grown_blueberry_bush"
     },
     "age=2,berry_type=2": {
-      "model": "artent_potions:block/cloudberry_bush"
+      "model": "artent_potions:block/grown_cloudberry_bush"
     },
     "age=2,berry_type=3": {
-      "model": "artent_potions:block/raspberry_bush"
+      "model": "artent_potions:block/grown_raspberry_bush"
     }
   }
 }

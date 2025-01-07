@@ -1,13 +1,40 @@
 {
   "variants": {
-    "age=0": {
+    "age=0,bush_type=single": {
       "model": "artent_potions:block/berry_bush"
     },
-    "age=1": {
-      "model": "artent_potions:block/greenberry_bush"
+    "age=1,bush_type=single": {
+      "model": "artent_potions:block/grown_berry_bush"
     },
-    "age=2": {
-      "model": "artent_potions:block/blueberry_bush"
+    "age=2,bush_type=single": {
+      "model": "artent_potions:block/grown_berry_bush"
+    },
+    "age=0,bush_type=bottom": {
+      "model": "artent_potions:block/berry_bush_bottom"
+    },
+    "age=1,bush_type=bottom": {
+      "model": "artent_potions:block/grown_bush_bottom"
+    },
+    "age=2,bush_type=bottom": {
+      "model": "artent_potions:block/grown_bush_bottom"
+    },
+    "age=0,bush_type=middle": {
+      "model": "artent_potions:block/berry_bush_middle"
+    },
+    "age=1,bush_type=middle": {
+      "model": "artent_potions:block/grown_bush_middle"
+    },
+    "age=2,bush_type=middle": {
+      "model": "artent_potions:block/grown_bush_middle"
+    },
+    "age=0,bush_type=top": {
+      "model": "artent_potions:block/berry_bush_top"
+    },
+    "age=1,bush_type=top": {
+      "model": "artent_potions:block/grown_bush_top"
+    },
+    "age=2,bush_type=top": {
+      "model": "artent_potions:block/grown_bush_top"
     }
   }
 }
