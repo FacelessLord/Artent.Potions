@@ -7,7 +7,8 @@
     "BreakBlockMixin",
     "BrewingItemMixin",
     "FeatherFallMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "VanillaBiomeParametersMixin"
   ],
   "injectors": {
     "defaultRequire": 1

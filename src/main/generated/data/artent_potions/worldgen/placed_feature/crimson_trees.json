@@ -1,16 +1,5 @@
 {
-  "feature": {
-    "type": "minecraft:random_selector",
-    "config": {
-      "default": "artent_potions:crimson_tree",
-      "features": [
-        {
-          "chance": 0.1,
-          "feature": "artent_potions:crimson_mega_tree"
-        }
-      ]
-    }
-  },
+  "feature": "artent_potions:crimson_trees",
   "placement": [
     {
       "type": "minecraft:count",
@@ -18,11 +7,11 @@
         "type": "minecraft:weighted_list",
         "distribution": [
           {
-            "data": 10,
+            "data": 4,
             "weight": 9
           },
           {
-            "data": 11,
+            "data": 5,
             "weight": 1
           }
         ]
@@ -41,18 +30,6 @@
     },
     {
       "type": "minecraft:biome"
-    },
-    {
-      "type": "minecraft:block_predicate_filter",
-      "predicate": {
-        "type": "minecraft:would_survive",
-        "state": {
-          "Name": "artent_potions:crimsonwood_sapling",
-          "Properties": {
-            "stage": "0"
-          }
-        }
-      }
     }
   ]
 }

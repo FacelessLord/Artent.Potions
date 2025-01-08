@@ -1,37 +1,64 @@
 package faceless.artent.potions.client.datagen;
 
+import faceless.artent.potions.features.WorldGenContext;
 import net.minecraft.registry.Registerable;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class RegistryAcceptor {
   private Registerable<ConfiguredFeature<?, ?>> configuredFeatureRegisterable;
   private Registerable<PlacedFeature> placedFeatureRegisterable;
-  private BiConsumer<Registerable<ConfiguredFeature<?, ?>>, Registerable<PlacedFeature>> consumer;
+  private Registerable<Biome> biomeRegisterable;
+  private Registerable<ConfiguredCarver<?>> carverRegisterable;
+
+  private final Consumer<WorldGenContext> consumer;
 
   public RegistryAcceptor(
-      BiConsumer<Registerable<ConfiguredFeature<?, ?>>, Registerable<PlacedFeature>> consumer) {
+      Consumer<WorldGenContext> consumer) {
     this.consumer = consumer;
   }
 
-  public void acceptConfiguredFeatureRegisterable(
+  public void acceptConfiguredFeatures(
       Registerable<ConfiguredFeature<?, ?>> configuredFeatureRegisterable) {
     this.configuredFeatureRegisterable = configuredFeatureRegisterable;
     runIfFilled(consumer);
   }
 
-  public void acceptPlacedFeatureRegisterable(
+  public void acceptPlacedFeatures(
       Registerable<PlacedFeature> placedFeatureRegisterable) {
     this.placedFeatureRegisterable = placedFeatureRegisterable;
     runIfFilled(consumer);
   }
 
-  public void runIfFilled(
-      BiConsumer<Registerable<ConfiguredFeature<?, ?>>, Registerable<PlacedFeature>> consumer) {
-    if (configuredFeatureRegisterable == null || placedFeatureRegisterable == null) return;
+  public void acceptBiomes(
+      Registerable<Biome> biomeRegisterable) {
+    this.biomeRegisterable = biomeRegisterable;
+    runIfFilled(consumer);
+  }
 
-    consumer.accept(this.configuredFeatureRegisterable, this.placedFeatureRegisterable);
+  public void acceptCarvers(
+      Registerable<ConfiguredCarver<?>> carverRegisterable) {
+    this.carverRegisterable = carverRegisterable;
+    runIfFilled(consumer);
+  }
+
+  public void runIfFilled(
+      Consumer<WorldGenContext> consumer) {
+    if (configuredFeatureRegisterable == null
+        || placedFeatureRegisterable == null
+        || biomeRegisterable == null
+        || carverRegisterable == null) return;
+
+    var ctx = new WorldGenContext(
+        configuredFeatureRegisterable,
+        placedFeatureRegisterable,
+        biomeRegisterable,
+        carverRegisterable
+    );
+    consumer.accept(ctx);
   }
 }
