@@ -4,6 +4,7 @@ import faceless.artent.core.item.group.ArtentItemGroupBuilder;
 import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.block.*;
 import faceless.artent.potions.ingridients.Ingredients;
+import faceless.artent.potions.registry.FeatureRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
@@ -181,8 +182,8 @@ public final class ModBlocks {
 
     var crimsonSaplingGenerator = new SaplingGenerator(
         ArtentPotions.MODID + "_crimsonwood",
-        Optional.of(ModFeatures.CRIMSON_MEGA_TREE_CONFIGURED_KEY),
-        Optional.of(ModFeatures.CRIMSON_TREE_CONFIGURED_KEY),
+        Optional.of(FeatureRegistry.CRIMSON_MEGA_TREE_CONFIGURED_KEY),
+        Optional.of(FeatureRegistry.CRIMSON_TREE_CONFIGURED_KEY),
         Optional.empty());
 
     pair = register(

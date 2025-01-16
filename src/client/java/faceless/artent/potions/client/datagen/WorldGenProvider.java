@@ -1,8 +1,8 @@
 package faceless.artent.potions.client.datagen;
 
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.registry.FeatureRegistry;
 import faceless.artent.potions.objects.ModBiomes;
-import faceless.artent.potions.objects.ModFeatures;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.registry.RegistryKey;
@@ -15,8 +15,8 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 
 import java.util.concurrent.CompletableFuture;
 
-public class WorldgenProvider extends FabricDynamicRegistryProvider {
-  public WorldgenProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+public class WorldGenProvider extends FabricDynamicRegistryProvider {
+  public WorldGenProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
     super(output, registriesFuture);
   }
 
@@ -30,18 +30,20 @@ public class WorldgenProvider extends FabricDynamicRegistryProvider {
         entries,
         configuredFeatureRegistry,
         placedFeatureRegistry,
-        ModFeatures.CRIMSON_TREE_FEATURE_ID);
+        FeatureRegistry.CRIMSON_TREE_FEATURE_ID);
     registerSimpleFeature(
         entries,
         configuredFeatureRegistry,
         placedFeatureRegistry,
-        ModFeatures.CRIMSON_MEGA_TREE_FEATURE_ID);
+        FeatureRegistry.CRIMSON_MEGA_TREE_FEATURE_ID);
     registerSimpleFeature(
         entries,
         configuredFeatureRegistry,
         placedFeatureRegistry,
-        ModFeatures.CRIMSON_TREES_FEATURE_ID);
-    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, ModFeatures.BERRY_BUSH_FEATURE_ID);
+        FeatureRegistry.CRIMSON_TREES_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.BERRY_BUSH_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.SHADOWVEIL_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.SHROOM_FEATURE_ID);
 
     entries.add(biomeRegistry, ModBiomes.CRIMSON_FOREST_BIOME_KEY);
   }

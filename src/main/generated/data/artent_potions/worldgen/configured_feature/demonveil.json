@@ -1,0 +1,9 @@
+{
+  "type": "artent_potions:vegetation_bock",
+  "config": {
+    "plant_state": {
+      "Name": "artent_potions:shadowveil"
+    },
+    "soil_tag": "#minecraft:dirt"
+  }
+}

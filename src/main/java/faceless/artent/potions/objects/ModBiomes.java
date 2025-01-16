@@ -2,6 +2,7 @@ package faceless.artent.potions.objects;
 
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.registry.FeatureRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryEntryLookup;
@@ -36,7 +37,7 @@ public class ModBiomes {
     DefaultBiomeFeatures.addDefaultOres(lookupBackedBuilder);
     DefaultBiomeFeatures.addDefaultDisks(lookupBackedBuilder);
 
-    lookupBackedBuilder.feature(GenerationStep.Feature.VEGETAL_DECORATION, ModFeatures.CRIMSON_TREES_PLACED_KEY);
+    lookupBackedBuilder.feature(GenerationStep.Feature.VEGETAL_DECORATION, FeatureRegistry.CRIMSON_TREES_PLACED_KEY);
 
     DefaultBiomeFeatures.addDefaultFlowers(lookupBackedBuilder);
     DefaultBiomeFeatures.addForestGrass(lookupBackedBuilder);

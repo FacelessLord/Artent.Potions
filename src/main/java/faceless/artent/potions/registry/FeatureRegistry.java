@@ -1,135 +1,76 @@
 package faceless.artent.potions.registry;
 
-import com.google.common.collect.ImmutableList;
+import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.features.BerryBushFeature;
 import faceless.artent.potions.features.BerryBushFeatureConfig;
-import faceless.artent.potions.features.WorldGenContext;
-import faceless.artent.potions.objects.ModBiomes;
-import faceless.artent.potions.objects.ModBlocks;
-import faceless.artent.potions.objects.ModFeatures;
-import net.minecraft.block.Block;
+import faceless.artent.potions.features.VegetationBlockFeature;
+import faceless.artent.potions.features.VegetationBlockFeatureConfig;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
-import net.minecraft.world.gen.blockpredicate.BlockPredicate;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
-import net.minecraft.world.gen.foliage.BlobFoliagePlacer;
-import net.minecraft.world.gen.foliage.LargeOakFoliagePlacer;
-import net.minecraft.world.gen.placementmodifier.BlockFilterPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.PlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SurfaceWaterDepthFilterPlacementModifier;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
-import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
-import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.OptionalInt;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class FeatureRegistry {
+  public static final Identifier CRIMSON_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_tree");
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREE_CONFIGURED_KEY = configuredKeyOf(CRIMSON_TREE_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> CRIMSON_TREE_PLACED_KEY = placedKeyOf(CRIMSON_TREE_FEATURE_ID);
 
-  private static final PlacementModifier NOT_IN_SURFACE_WATER_MODIFIER = SurfaceWaterDepthFilterPlacementModifier.of(0);
+  public static final Identifier CRIMSON_MEGA_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_mega_tree");
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_MEGA_TREE_CONFIGURED_KEY = configuredKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> CRIMSON_MEGA_TREE_PLACED_KEY = placedKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
 
-  private static ImmutableList<PlacementModifier> treeModifiers(
-      Block block) {
-    return ImmutableList.<PlacementModifier>builder()
-                        .add(NOT_IN_SURFACE_WATER_MODIFIER)
-                        .add(BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(
-                            block.getDefaultState(),
-                            BlockPos.ORIGIN))).build();
+  public static final Identifier CRIMSON_TREES_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_trees");
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREES_CONFIGURED_KEY = configuredKeyOf(CRIMSON_TREES_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> CRIMSON_TREES_PLACED_KEY = placedKeyOf(CRIMSON_TREES_FEATURE_ID);
+
+  public static final Identifier BERRY_BUSH_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "berry_bush");
+  public static RegistryKey<ConfiguredFeature<?, ?>> BERRY_BUSH_CONFIGURED_KEY = configuredKeyOf(BERRY_BUSH_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> BERRY_BUSH_PLACED_KEY = placedKeyOf(BERRY_BUSH_FEATURE_ID);
+  public static final Feature<BerryBushFeatureConfig> BERRY_BUSH_FEATURE = new BerryBushFeature(BerryBushFeatureConfig.CODEC);
+
+  public static final Identifier VEGETATION_BLOCK_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "vegetation_bock");
+  public static final Feature<VegetationBlockFeatureConfig> VEGETATION_BLOCK_FEATURE = new VegetationBlockFeature(VegetationBlockFeatureConfig.CODEC);
+
+  public static final Identifier SHADOWVEIL_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "demonveil");
+  public static RegistryKey<ConfiguredFeature<?, ?>> SHADOWVEIL_CONFIGURED_KEY = configuredKeyOf(SHADOWVEIL_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> SHADOWVEIL_PLACED_KEY = placedKeyOf(SHADOWVEIL_FEATURE_ID);
+
+  public static final Identifier SHROOM_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "shroom");
+  public static RegistryKey<ConfiguredFeature<?, ?>> SHROOM_CONFIGURED_KEY = configuredKeyOf(SHROOM_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> SHROOM_PLACED_KEY = placedKeyOf(SHROOM_FEATURE_ID);
+
+  public void register() {
+    Registry.register(Registries.FEATURE, BERRY_BUSH_FEATURE_ID, BERRY_BUSH_FEATURE);
+    Registry.register(Registries.FEATURE, VEGETATION_BLOCK_FEATURE_ID, VEGETATION_BLOCK_FEATURE);
+
+    BiomeModifications.addFeature(
+        BiomeSelectors.foundInOverworld(),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        BERRY_BUSH_PLACED_KEY);
+
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        SHADOWVEIL_PLACED_KEY);
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        SHROOM_PLACED_KEY);
   }
 
-  private static final TreeFeatureConfig CRIMSON_TREE_CONFIG = new TreeFeatureConfig.Builder(
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLog),
-      new StraightTrunkPlacer(5, 2, 0),
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLeaves),
-      new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
-      new TwoLayersFeatureSize(1, 0, 1)
-  ).build();
-  public static final ConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>> CRIMSON_TREE = new ConfiguredFeature<>(
-      TreeFeature.TREE,
-      CRIMSON_TREE_CONFIG);
-  public static PlacedFeature CRIMSONWOOD_TREE_PLACED = new PlacedFeature(
-      RegistryEntry.of(CRIMSON_TREE),
-      treeModifiers(ModBlocks.CrimsonwoodSapling));
-
-  private static final TreeFeatureConfig CRIMSON_MEGA_TREE_CONFIG = new TreeFeatureConfig.Builder(
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLog),
-      new LargeOakTrunkPlacer(3, 11, 0),
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLeaves),
-      new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(4), 4),
-      new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
-  )
-      .ignoreVines()
-      .build();
-  public static final ConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>> CRIMSON_MEGA_TREE = new ConfiguredFeature<>(
-      TreeFeature.TREE,
-      CRIMSON_MEGA_TREE_CONFIG);
-  public static PlacedFeature CRIMSONWOOD_MEGA_TREE_PLACED = new PlacedFeature(
-      RegistryEntry.of(CRIMSON_MEGA_TREE),
-      treeModifiers(ModBlocks.CrimsonwoodSapling));
-
-  public static ConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>> CRIMSON_TREES;
-  public static PlacedFeature CRIMSON_TREES_PLACED;
-
-  public static final BerryBushFeatureConfig BERRY_BUSH_FEATURE_CONFIG = new BerryBushFeatureConfig(
-      ModBlocks.berryBush.length,
-      3);
-
-  public static final ConfiguredFeature<BerryBushFeatureConfig, Feature<BerryBushFeatureConfig>> BERRY_BUSH = new ConfiguredFeature<>(
-      ModFeatures.BERRY_BUSH_FEATURE,
-      BERRY_BUSH_FEATURE_CONFIG);
-
-  private static final List<PlacementModifier> BerryBushPlacementModifiers;
-
-  static {
-    var modifiers = new ArrayList<>(VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-        PlacedFeatures.createCountExtraModifier(
-            3,
-            0.1F,
-            1),
-        ModBlocks.berryBush[0]));
-    modifiers.add(SquarePlacementModifier.of());
-    BerryBushPlacementModifiers = modifiers;
+  private static RegistryKey<ConfiguredFeature<?, ?>> configuredKeyOf(Identifier id) {
+    return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id);
   }
 
-  public static PlacedFeature BERRY_BUSH_PLACED = new PlacedFeature(
-      RegistryEntry.of(BERRY_BUSH),
-      BerryBushPlacementModifiers
-  );
-
-  public static void bootstrap(WorldGenContext ctx) {
-    ctx.configuredFeatures().register(ModFeatures.CRIMSON_TREE_CONFIGURED_KEY, CRIMSON_TREE);
-    ctx.configuredFeatures().register(ModFeatures.CRIMSON_MEGA_TREE_CONFIGURED_KEY, CRIMSON_MEGA_TREE);
-    ctx.configuredFeatures().register(ModFeatures.BERRY_BUSH_CONFIGURED_KEY, BERRY_BUSH);
-
-    var placedCrimsonTree = ctx.placedFeatures().register(
-        ModFeatures.CRIMSON_TREE_PLACED_KEY,
-        CRIMSONWOOD_TREE_PLACED);
-    var placedCrimsonMegaTree = ctx.placedFeatures().register(
-        ModFeatures.CRIMSON_MEGA_TREE_PLACED_KEY,
-        CRIMSONWOOD_MEGA_TREE_PLACED);
-
-    ctx.placedFeatures().register(
-        ModFeatures.BERRY_BUSH_PLACED_KEY,
-        BERRY_BUSH_PLACED);
-
-    CRIMSON_TREES = new ConfiguredFeature<>(
-        Feature.RANDOM_SELECTOR,
-        new RandomFeatureConfig(List.of(new RandomFeatureEntry(placedCrimsonMegaTree, 0.1F)), placedCrimsonTree));
-    var crimsonTreesEntry = ctx.configuredFeatures().register(ModFeatures.CRIMSON_TREES_CONFIGURED_KEY, CRIMSON_TREES);
-    CRIMSON_TREES_PLACED = new PlacedFeature(
-        crimsonTreesEntry,
-        VegetationPlacedFeatures.treeModifiers(PlacedFeatures.createCountExtraModifier(6, 0.1F, 1)));
-    ctx.placedFeatures().register(ModFeatures.CRIMSON_TREES_PLACED_KEY, CRIMSON_TREES_PLACED);
-
-    var crimsonForest = ModBiomes.createCrimsonForest(
-        ctx.placedFeatures()
-           .getRegistryLookup(RegistryKeys.PLACED_FEATURE),
-        ctx.carvers()
-           .getRegistryLookup(RegistryKeys.CONFIGURED_CARVER));
-    ctx.biomes().register(ModBiomes.CRIMSON_FOREST_BIOME_KEY, crimsonForest);
+  private static RegistryKey<PlacedFeature> placedKeyOf(Identifier id) {
+    return RegistryKey.of(RegistryKeys.PLACED_FEATURE, id);
   }
 }
