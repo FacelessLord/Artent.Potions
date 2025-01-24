@@ -19,9 +19,15 @@ public class BreakBlockMixin {
       BlockState state, PlayerEntity player, BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir) {
     if (player.hasStatusEffect(StatusEffectsRegistry.LUMBERJACK)) {
       var potion = player.getStatusEffect(StatusEffectsRegistry.LUMBERJACK);
-      if ((state.isIn(BlockTags.LOGS) || state.isIn(BlockTags.LEAVES)) && potion != null) {
-        var modifier = 3 << potion.getAmplifier();
-        cir.setReturnValue(cir.getReturnValue() * modifier);
+      if(potion != null){
+        if (state.isIn(BlockTags.LOGS)) {
+          var modifier = 6 << potion.getAmplifier();
+          cir.setReturnValue(cir.getReturnValue() * modifier);
+        }
+        if (state.isIn(BlockTags.LEAVES)) {
+          var modifier = 6 << potion.getAmplifier();
+          cir.setReturnValue(cir.getReturnValue() * modifier);
+        }
       }
     }
   }

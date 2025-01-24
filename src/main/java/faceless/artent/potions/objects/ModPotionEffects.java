@@ -67,28 +67,36 @@ public class ModPotionEffects {
     public static final StatusEffect STONE_SKIN =
       new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red)
         .addAttributeModifier(EntityAttributes.MOVEMENT_SPEED,
-                              AttributeUuids.BerserkModifier,
+                              AttributeUuids.StoneSkin,
                               -0.5,
                               EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
         .addAttributeModifier(EntityAttributes.ARMOR_TOUGHNESS,
-                              AttributeUuids.BerserkModifier,
+                              AttributeUuids.StoneSkin,
                               1.5,
                               EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     public static final StatusEffect FREEZING =
       new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red, false)
         .addAttributeModifier(EntityAttributes.MOVEMENT_SPEED,
                               AttributeUuids.Freezing,
-                              -0.8,
+                              -0.15,
+                              EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+        .addAttributeModifier(EntityAttributes.ATTACK_DAMAGE,
+                              AttributeUuids.Freezing,
+                              -0.15,
+                              EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+        .addAttributeModifier(EntityAttributes.BLOCK_BREAK_SPEED,
+                              AttributeUuids.Freezing,
+                              -0.15,
+                              EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+        .addAttributeModifier(EntityAttributes.JUMP_STRENGTH,
+                              AttributeUuids.Freezing,
+                              -0.15,
                               EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-    // TODO
+    public static final StatusEffect SATURATION =
+        new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
     public static final StatusEffect LIQUID_FLAME = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
     public static final StatusEffect ANTIDOTE = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
-    public static final StatusEffect FAST_SWIMMING =
-      new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red)
-        .addAttributeModifier(EntityAttributes.MOVEMENT_SPEED,
-                              AttributeUuids.SwimmingModifier,
-                              1,
-                              EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+
     public static final StatusEffect FEATHER_FALLING = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL,
                                                                               Color.Red);
     public static final StatusEffect FLIGHT = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
@@ -96,6 +104,8 @@ public class ModPotionEffects {
                                                                                     Color.Red,
                                                                                     true);
     public static final StatusEffect LUMBERJACK = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
+
+    // TODO
     public static final StatusEffect FERMENTED_VAMPIRISM = new ConcentrateStatusEffect(StatusEffectCategory.BENEFICIAL,
                                                                                        Color.Red,
                                                                                        false);

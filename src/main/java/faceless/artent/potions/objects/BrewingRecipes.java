@@ -38,6 +38,7 @@ public class BrewingRecipes {
     public static final BrewingIngredient FermentedSpiderEye = new BrewingIngredient(Items.FERMENTED_SPIDER_EYE, -1);
     public static final BrewingIngredient Allium = new BrewingIngredient(Items.ALLIUM, -1);
     public static final BrewingIngredient MagmaCream = new BrewingIngredient(Items.MAGMA_CREAM, -1);
+    public static final BrewingIngredient PhantomMembrane = new BrewingIngredient(Items.PHANTOM_MEMBRANE, -1);
 
 
     public static BrewingAutomata RecipeAutomata;

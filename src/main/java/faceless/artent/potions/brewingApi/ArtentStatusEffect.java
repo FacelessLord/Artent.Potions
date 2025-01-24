@@ -8,12 +8,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static net.minecraft.world.Heightmap.Type.MOTION_BLOCKING;
 import static net.minecraft.world.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES;
 
 public class ArtentStatusEffect extends StatusEffect {
@@ -65,13 +67,10 @@ public class ArtentStatusEffect extends StatusEffect {
       entity.extinguish();
       return true;
     }
-    if (this == ModPotionEffects.FAST_SWIMMING) {
-      if (entity.isTouchingWater()) onApplied(entity.getAttributes(), amplifier);
-      else onRemoved(entity.getAttributes());
-      return true;
-    }
-    if (entity.hasStatusEffect(StatusEffectsRegistry.FEATHER_FALLING)) {
-      entity.fallDistance = 0;
+    if (this == ModPotionEffects.SATURATION) {
+      if (entity instanceof PlayerEntity playerEntity && world != null) {
+        playerEntity.getHungerManager().add(amplifier + 1, 1.0F);
+      }
       return true;
     }
     return false;
@@ -88,10 +87,10 @@ public class ArtentStatusEffect extends StatusEffect {
       var pos = target.getBlockPos();
       if (world == null) return;
 
-      var topPosition = world.getTopPosition(MOTION_BLOCKING_NO_LEAVES, pos);
+      var topPosition = world.getTopPosition(MOTION_BLOCKING, pos);
       var diff = topPosition.subtract(pos).getY();
       if (diff > 0 && diff < 64 * (amplifier + 1)) {
-        target.teleport(topPosition.getX(), topPosition.getY() + 1, topPosition.getZ(), false);
+        target.teleport(topPosition.getX() + 0.5f, topPosition.getY() + 1, topPosition.getZ() + 0.5f, false);
       }
     }
   }
@@ -101,7 +100,7 @@ public class ArtentStatusEffect extends StatusEffect {
            || this == ModPotionEffects.FLIGHT
            || this == ModPotionEffects.FREEZING && duration % 10 == 0
            || this == ModPotionEffects.BERSERK && duration == 600
-           || this == ModPotionEffects.FAST_SWIMMING && (duration % 10 == 0);
+           || this == ModPotionEffects.SATURATION && (duration % (80 / (amplifier + 1)) == 0);
   }
 
   @Override

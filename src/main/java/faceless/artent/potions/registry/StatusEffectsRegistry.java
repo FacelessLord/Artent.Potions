@@ -16,10 +16,10 @@ public class StatusEffectsRegistry {
     public static final RegistryEntry.Reference<StatusEffect> BERSERK_RECOIL = register("berserk_recoil", ModPotionEffects.BERSERK_RECOIL);
     public static final RegistryEntry.Reference<StatusEffect> STONE_SKIN = register("stone_skin", ModPotionEffects.STONE_SKIN);
     public static final RegistryEntry.Reference<StatusEffect> FREEZING = register("freezing", ModPotionEffects.FREEZING);
+    public static final RegistryEntry.Reference<StatusEffect> SATURATION = register("saturation", ModPotionEffects.SATURATION);
+    public static final RegistryEntry.Reference<StatusEffect> ANTIDOTE = register("antidote", ModPotionEffects.ANTIDOTE);
     // TODO
     public static final RegistryEntry.Reference<StatusEffect> LIQUID_FLAME = register("liquid_flame", ModPotionEffects.LIQUID_FLAME);
-    public static final RegistryEntry.Reference<StatusEffect> ANTIDOTE = register("antidote", ModPotionEffects.ANTIDOTE);
-    public static final RegistryEntry.Reference<StatusEffect> FAST_SWIMMING = register("fast_swimming", ModPotionEffects.FAST_SWIMMING);
     public static final RegistryEntry.Reference<StatusEffect> FEATHER_FALLING = register("feather_falling", ModPotionEffects.FEATHER_FALLING);
     public static final RegistryEntry.Reference<StatusEffect> FLIGHT = register("flight", ModPotionEffects.FLIGHT);
     public static final RegistryEntry.Reference<StatusEffect> SURFACE_TELEPORTATION = register("surface_teleportation", ModPotionEffects.SURFACE_TELEPORTATION);

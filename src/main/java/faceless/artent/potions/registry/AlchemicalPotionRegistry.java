@@ -43,9 +43,9 @@ public class AlchemicalPotionRegistry implements IRegistry {
         register(FLIGHT);
         register(LUCK);
         register(SATURATION, FERMENTED_SATURATION);
-        register(SURFACE_TELEPORTATION);
         register(LUMBERJACK);
         register(HASTE);
+        register(LEVITATION, SURFACE_TELEPORTATION);
     }
 
     public void register(AlchemicalPotion potion) {

@@ -1,9 +1,14 @@
 package faceless.artent.potions.mixin;
 
 import faceless.artent.potions.brewingApi.ArtentStatusEffect;
+import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.registry.tag.EntityTypeTags;
+import net.minecraft.server.world.ServerWorld;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,6 +65,46 @@ public class LivingEntityMixin {
       this.updateAttributes();
     }
   }
+
+
+  @Inject(at = @At("HEAD"), method = "applyDamage")
+  protected void applyDamage(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
+    if (source.getAttacker() instanceof LivingEntity attacker) {
+      var target = this.get();
+      if (source.isDirect()) {
+        if (!target.getType().isIn(EntityTypeTags.UNDEAD)) {
+          var vampirism = attacker.getStatusEffect(StatusEffectsRegistry.VAMPIRISM);
+          if (vampirism != null)
+            attacker.heal(amount * (vampirism.getAmplifier() + 1) / 10);
+        } else {
+          var holyWater = attacker.getStatusEffect(StatusEffectsRegistry.HOLY_WATER);
+          if (holyWater != null && !source.isOf(DamageTypes.INDIRECT_MAGIC) && !source.isOf(DamageTypes.ON_FIRE)) {
+            target.timeUntilRegen = 5;
+            target.damage(
+                world,
+                world.getDamageSources().create(DamageTypes.INDIRECT_MAGIC, attacker),
+                amount * (holyWater.getAmplifier() + 1) / 10);
+            target.timeUntilRegen = 25;
+            this.lastDamageTaken = amount;
+          }
+        }
+        var liquidFlame = attacker.getStatusEffect(StatusEffectsRegistry.LIQUID_FLAME);
+        if (liquidFlame != null && !source.isOf(DamageTypes.ON_FIRE) && !source.isOf(DamageTypes.INDIRECT_MAGIC)) {
+          target.timeUntilRegen = 5;
+          target.damage(
+              world,
+              world.getDamageSources().create(DamageTypes.ON_FIRE, attacker),
+              amount * (liquidFlame.getAmplifier() + 1) / 10);
+          target.setOnFireForTicks((liquidFlame.getAmplifier() + 1) * 10);
+          target.timeUntilRegen = 20;
+          this.lastDamageTaken = amount;
+        }
+      }
+    }
+  }
+
+  @Shadow
+  protected float lastDamageTaken;
 
   @Shadow
   private void updateAttributes() {
