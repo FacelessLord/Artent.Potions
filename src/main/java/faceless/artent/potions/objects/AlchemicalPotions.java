@@ -125,7 +125,7 @@ public class AlchemicalPotions {
                                                                                        Color.Red,
                                                                                        new StatusEffectInstance(
                                                                                          StatusEffectsRegistry.FERMENTED_LIQUID_FLAME,
-                                                                                         1));
+                                                                                         1200));
     public static final AlchemicalPotion INSTANT_HEALING = new AlchemicalPotion("instant_healing",
                                                                                 Color.Red,
                                                                                 new StatusEffectInstance(StatusEffects.INSTANT_HEALTH,
@@ -134,7 +134,7 @@ public class AlchemicalPotions {
                                                                                    Color.Red,
                                                                                    new StatusEffectInstance(
                                                                                      StatusEffectsRegistry.FERMENTED_ANTIDOTE,
-                                                                                     1));
+                                                                                     1200));
     public static final AlchemicalPotion FERMENTED_SATURATION = new AlchemicalPotion("fermented_saturation",
                                                                                      Color.Red,
                                                                                      new StatusEffectInstance(

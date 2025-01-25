@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,8 +75,7 @@ public class LivingEntityMixin {
       if (source.isDirect()) {
         if (!target.getType().isIn(EntityTypeTags.UNDEAD)) {
           var vampirism = attacker.getStatusEffect(StatusEffectsRegistry.VAMPIRISM);
-          if (vampirism != null)
-            attacker.heal(amount * (vampirism.getAmplifier() + 1) / 10);
+          if (vampirism != null) attacker.heal(amount * (vampirism.getAmplifier() + 1) / 10);
         } else {
           var holyWater = attacker.getStatusEffect(StatusEffectsRegistry.HOLY_WATER);
           if (holyWater != null && !source.isOf(DamageTypes.INDIRECT_MAGIC) && !source.isOf(DamageTypes.ON_FIRE)) {
@@ -108,6 +108,24 @@ public class LivingEntityMixin {
 
   @Shadow
   private void updateAttributes() {
+  }
+
+  @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+  public void damage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    var target = this.get();
+    if (source.isOf(DamageTypes.ON_FIRE) || source.isOf(DamageTypes.IN_FIRE)) {
+      if (target.hasStatusEffect(StatusEffectsRegistry.FERMENTED_LIQUID_FLAME)) {
+        var fermentedLiquidFlame = target.getStatusEffect(StatusEffectsRegistry.FERMENTED_LIQUID_FLAME);
+        if (fermentedLiquidFlame != null) {
+          if (target.timeUntilRegen < 10) {
+              target.heal(amount);
+            target.timeUntilRegen = 20;
+          }
+          cir.setReturnValue(false);
+          cir.cancel();
+        }
+      }
+    }
   }
 
   @Unique
