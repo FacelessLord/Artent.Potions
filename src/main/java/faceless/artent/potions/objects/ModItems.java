@@ -8,6 +8,7 @@ import faceless.artent.potions.item.*;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -36,8 +37,12 @@ public final class ModItems {
   public static Item MediumConcentrate;
   public static Item BigConcentratePhial;
   public static Item BigConcentrate;
-
   public static Item[] berries = new Item[5];
+
+  public static Item ManaChickenSpawnEgg;
+  public static Item ManaFeather;
+  public static Item Acorn;
+  public static Item StoneScale;
 
   public void register() {
     for (int i = 0; i < berries.length; i++) {
@@ -113,6 +118,27 @@ public final class ModItems {
             .component(CONCENTRATE_AMOUNT, 9)
             .maxCount(1),
         null);
+
+    ManaChickenSpawnEgg = register(
+        "mana_chicken_spawn_egg",
+        (Item.Settings settings) -> new SpawnEggItem(ModEntities.MANA_CHICKEN, settings),
+        new Item.Settings(), ModItemGroups.Potions);
+
+    ManaFeather = register(
+        "mana_feather",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    Acorn = register(
+        "acorn",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    StoneScale = register(
+        "stone_scale",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
 
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, -1, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.MediumConcentrate, 3, ModItemGroups.Potions);

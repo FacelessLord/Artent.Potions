@@ -21,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class ModBlocks {
@@ -121,7 +122,9 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.GRASS)
             .luminance(state -> 1)
             .postProcess((a, b, c) -> true),
-        ModItemGroups.Potions);
+        ModItemGroups.Potions,
+        faceless.artent.potions.item.ShroomItem::new
+                   );
     Shroom = pair.getLeft();
     ShroomItem = pair.getRight();
 
@@ -231,6 +234,23 @@ public final class ModBlocks {
 
     var itemKey = keyOf(key);
     var blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
+    Registry.register(Registries.ITEM, itemKey, blockItem);
+    if (groupBuilder != null) groupBuilder.addItem(blockItem);
+    return new Pair<>(block, blockItem);
+  }
+
+  public static Pair<Block, Item> register(
+      String keyString,
+      Function<AbstractBlock.Settings, Block> factory,
+      AbstractBlock.Settings settings,
+      ArtentItemGroupBuilder groupBuilder,
+      BiFunction<Block, Item.Settings, BlockItem> customBlockItem) {
+    var key = keyOf(keyString);
+    Block block = factory.apply(settings.registryKey(key));
+    Registry.register(Registries.BLOCK, key, block);
+
+    var itemKey = keyOf(key);
+    var blockItem = customBlockItem.apply(block, new Item.Settings().registryKey(itemKey));
     Registry.register(Registries.ITEM, itemKey, blockItem);
     if (groupBuilder != null) groupBuilder.addItem(blockItem);
     return new Pair<>(block, blockItem);

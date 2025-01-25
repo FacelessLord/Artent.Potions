@@ -18,6 +18,10 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
     pack.addProvider((FabricDataOutput output) -> new BlockTagsProvider(output, fabricDataGenerator.getRegistries()));
     pack.addProvider((FabricDataOutput output) -> new ItemTagsProvider(output, fabricDataGenerator.getRegistries()));
     pack.addProvider((FabricDataOutput output) -> new BiomeTagsProvider(output, fabricDataGenerator.getRegistries()));
+    pack.addProvider((FabricDataOutput output) -> new ArtentPotionsEntitiesLootTableProvider(
+        output,
+        fabricDataGenerator.getRegistries()
+    ));
   }
 
   @Override
