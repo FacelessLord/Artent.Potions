@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.loot.v3.LootTableSource;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -31,10 +32,13 @@ public class ArtentLootTableModifiers {
   public void modifyLootTables() {
     LootTableEvents.MODIFY.register((RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries) -> {
       var oakLeavesKey = Blocks.OAK_LEAVES.getLootTableKey().orElseThrow();
+      var tropicalFish = EntityType.TROPICAL_FISH.getLootTableKey().orElseThrow();
       RegistryWrapper.Impl<Enchantment> impl = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
       // Let's only modify built-in loot tables and leave data pack loot tables untouched by checking the source.
       // We also check that the loot table ID is equal to the ID we want.
-      if (source.isBuiltin() && oakLeavesKey.equals(key)) {
+      if (!source.isBuiltin())
+        return;
+      if (oakLeavesKey.equals(key)) {
         tableBuilder.pool(
             LootPool
                 .builder()
@@ -68,9 +72,27 @@ public class ArtentLootTableModifiers {
                           .builder(ModItems.Acorn)
                           .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
                           .apply(ExplosionDecayLootFunction.builder())));
+    }
+
+      if (tropicalFish.equals(key)) {
+        System.out.println("Modifier tropical fish");
+        tableBuilder.pool(
+            LootPool
+                .builder()
+                .rolls(ConstantLootNumberProvider.create(1.0F))
+                .conditionally(TableBonusLootCondition.builder(
+                    impl.getOrThrow(Enchantments.FORTUNE),
+                    0.025F,
+                    0.03125F,
+                    0.041666668F,
+                    0.05F))
+                .with(ItemEntry
+                          .builder(ModItems.StoneScale)
+                          .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                          .apply(ExplosionDecayLootFunction.builder())));
       }
-    });
-  }
+  });
+}
 
 
 }
