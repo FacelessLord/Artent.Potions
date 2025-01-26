@@ -72,6 +72,9 @@ public final class ModBlocks {
   public static Block CrimsonwoodSapling;
   public static Item CrimsonwoodSaplingItem;
 
+  public static Block FrostPumpkin;
+  public static Item FrostPumpkinItem;
+
   public void register() {
     var pair = register(
         "cauldron",
@@ -215,6 +218,17 @@ public final class ModBlocks {
         ModItemGroups.Potions);
     FermentingBarrel = pair.getLeft();
     FermentingBarrelItem = pair.getRight();
+
+    pair = register(
+        "frost_pumpkin",
+        FrostPumpkin::new,
+        Block.Settings
+            .copy(Blocks.PUMPKIN)
+            .mapColor(MapColor.CYAN)
+            .nonOpaque(),
+        ModItemGroups.Potions);
+    FrostPumpkin = pair.getLeft();
+    FrostPumpkinItem = pair.getRight();
 
     FireBlock fireBlock = (FireBlock) Blocks.FIRE;
     fireBlock.registerFlammableBlock(CrimsonwoodLog, 5, 20);

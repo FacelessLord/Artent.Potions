@@ -14,6 +14,7 @@
   "block.artent_potions.raspberry_bush": "Raspberry Bush",
   "block.artent_potions.cauldron_fluid": "Cauldron Fluid",
   "block.artent_potions.fermenting_barrel": "Fermenting Barrel",
+  "block.artent_potions.frost_pumpkin": "Frost Pumpkin",
 
   "item.artent_potions.cauldron": "Iron Cauldron",
   "item.artent_potions.cauldron_copper": "Copper Cauldron",
@@ -33,6 +34,7 @@
   "item.artent_potions.mana_feather": "Mana Feather",
   "item.artent_potions.stone_scale": "Stone Scale",
   "item.artent_potions.acorn": "Acorn",
+  "item.artent_potions.frost_pumpkin": "Frost Pumpkin",
 
   "item.artent_potions.empty_phial": "Empty Phial",
   "item.artent_potions.empty_phial_explosive": "Empty Explosive Phial",
