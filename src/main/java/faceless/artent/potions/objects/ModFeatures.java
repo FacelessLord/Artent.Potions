@@ -124,12 +124,26 @@ public class ModFeatures {
       PlantPlacementModifiers
   );
 
+
+  public static final VegetationBlockFeatureConfig FROST_PUMPKIN_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
+      ModBlocks.FrostPumpkin.getDefaultState(), BlockTags.DIRT);
+
+  public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> FROST_PUMPKIN = new ConfiguredFeature<>(
+      FeatureRegistry.VEGETATION_BLOCK_FEATURE,
+      FROST_PUMPKIN_FEATURE_CONFIG);
+
+  public static PlacedFeature FROST_PUMPKIN_PLACED = new PlacedFeature(
+      RegistryEntry.of(FROST_PUMPKIN),
+      PlantPlacementModifiers
+  );
+
   public static void bootstrap(WorldGenContext ctx) {
     ctx.configuredFeatures().register(FeatureRegistry.CRIMSON_TREE_CONFIGURED_KEY, CRIMSON_TREE);
     ctx.configuredFeatures().register(FeatureRegistry.CRIMSON_MEGA_TREE_CONFIGURED_KEY, CRIMSON_MEGA_TREE);
     ctx.configuredFeatures().register(FeatureRegistry.BERRY_BUSH_CONFIGURED_KEY, BERRY_BUSH);
     ctx.configuredFeatures().register(FeatureRegistry.SHADOWVEIL_CONFIGURED_KEY, SHADOWVEIL);
     ctx.configuredFeatures().register(FeatureRegistry.SHROOM_CONFIGURED_KEY, SHROOM);
+    ctx.configuredFeatures().register(FeatureRegistry.FROST_PUMPKIN_CONFIGURED_KEY, FROST_PUMPKIN);
 
     var placedCrimsonTree = ctx.placedFeatures().register(
         FeatureRegistry.CRIMSON_TREE_PLACED_KEY,
@@ -147,6 +161,9 @@ public class ModFeatures {
     ctx.placedFeatures().register(
         FeatureRegistry.SHROOM_PLACED_KEY,
         SHROOM_PLACED);
+    ctx.placedFeatures().register(
+        FeatureRegistry.FROST_PUMPKIN_PLACED_KEY,
+        FROST_PUMPKIN_PLACED);
 
     CRIMSON_TREES = new ConfiguredFeature<>(
         Feature.RANDOM_SELECTOR,

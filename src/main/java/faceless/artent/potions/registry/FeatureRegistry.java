@@ -47,6 +47,10 @@ public class FeatureRegistry {
   public static RegistryKey<ConfiguredFeature<?, ?>> SHROOM_CONFIGURED_KEY = configuredKeyOf(SHROOM_FEATURE_ID);
   public static RegistryKey<PlacedFeature> SHROOM_PLACED_KEY = placedKeyOf(SHROOM_FEATURE_ID);
 
+  public static final Identifier FROST_PUMPKIN_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "frost_pumpkin");
+  public static RegistryKey<ConfiguredFeature<?, ?>> FROST_PUMPKIN_CONFIGURED_KEY = configuredKeyOf(FROST_PUMPKIN_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> FROST_PUMPKIN_PLACED_KEY = placedKeyOf(FROST_PUMPKIN_FEATURE_ID);
+
   public void register() {
     Registry.register(Registries.FEATURE, BERRY_BUSH_FEATURE_ID, BERRY_BUSH_FEATURE);
     Registry.register(Registries.FEATURE, VEGETATION_BLOCK_FEATURE_ID, VEGETATION_BLOCK_FEATURE);
@@ -64,6 +68,10 @@ public class FeatureRegistry {
         BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
         GenerationStep.Feature.VEGETAL_DECORATION,
         SHROOM_PLACED_KEY);
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        FROST_PUMPKIN_PLACED_KEY);
   }
 
   private static RegistryKey<ConfiguredFeature<?, ?>> configuredKeyOf(Identifier id) {

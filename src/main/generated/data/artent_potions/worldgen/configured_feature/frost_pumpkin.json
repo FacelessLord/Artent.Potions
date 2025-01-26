@@ -1,0 +1,12 @@
+{
+  "type": "artent_potions:vegetation_bock",
+  "config": {
+    "plant_state": {
+      "Name": "artent_potions:frost_pumpkin",
+      "Properties": {
+        "facing": "north"
+      }
+    },
+    "soil_tag": "#minecraft:dirt"
+  }
+}
