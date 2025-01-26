@@ -4,7 +4,6 @@ import faceless.artent.potions.features.WorldGenContext;
 import faceless.artent.potions.objects.ModFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 
@@ -14,14 +13,12 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
   @Override
   public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
     FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
-    pack.addProvider((FabricDataOutput output) -> new WorldGenProvider(output, fabricDataGenerator.getRegistries()));
-    pack.addProvider((FabricDataOutput output) -> new BlockTagsProvider(output, fabricDataGenerator.getRegistries()));
-    pack.addProvider((FabricDataOutput output) -> new ItemTagsProvider(output, fabricDataGenerator.getRegistries()));
-    pack.addProvider((FabricDataOutput output) -> new BiomeTagsProvider(output, fabricDataGenerator.getRegistries()));
-    pack.addProvider((FabricDataOutput output) -> new ArtentPotionsEntitiesLootTableProvider(
-        output,
-        fabricDataGenerator.getRegistries()
-    ));
+    pack.addProvider(WorldGenProvider::new);
+    pack.addProvider(BlockTagsProvider::new);
+    pack.addProvider(ItemTagsProvider::new);
+    pack.addProvider(BiomeTagsProvider::new);
+    pack.addProvider(ArtentPotionsEntitiesLootTableProvider::new);
+    pack.addProvider(ArtentPotionsBlockLootTableProvider::new);
   }
 
   @Override
@@ -30,8 +27,7 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
   }
 
   public void aggregateRegistries(
-      RegistryBuilder registryBuilder,
-      Consumer<WorldGenContext> consumer) {
+      RegistryBuilder registryBuilder, Consumer<WorldGenContext> consumer) {
     var acceptor = new RegistryAcceptor(consumer);
 
     registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, acceptor::acceptConfiguredFeatures);

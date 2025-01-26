@@ -1,7 +1,6 @@
 package faceless.artent.potions;
 
 import faceless.artent.potions.network.ArtentServerHook;
-import faceless.artent.potions.registry.FeatureRegistry;
 import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.registry.*;
@@ -28,6 +27,7 @@ public class ArtentPotions implements ModInitializer {
   public static StatusEffectsRegistry StatusEffects = new StatusEffectsRegistry();
   public static DataComponentRegistry DataComponents = new DataComponentRegistry();
   public static FeatureRegistry Features = new FeatureRegistry();
+  public static ArtentLootTableModifiers LootTableModifiers = new ArtentLootTableModifiers();
 
   @Override
   public void onInitialize() {
@@ -39,6 +39,7 @@ public class ArtentPotions implements ModInitializer {
     Entities.register();
     Features.register();
 
+    LootTableModifiers.modifyLootTables();
     Brewing.register();
 
     ServerHook.load();
