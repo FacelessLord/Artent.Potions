@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "artent:cauldron",
+  "key": {
+    "c": "minecraft:copper_ingot"
+  },
+  "pattern": [
+    "c c",
+    "ccc",
+    "c c"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:cauldron_copper"
+  }
+}

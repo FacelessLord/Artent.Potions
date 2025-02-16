@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "artent:phial",
+  "key": {
+    "c": "minecraft:clay_ball",
+    "g": "minecraft:glass_pane"
+  },
+  "pattern": [
+    "gcg",
+    "g g",
+    " g "
+  ],
+  "result": {
+    "count": 3,
+    "id": "artent_potions:empty_phial"
+  }
+}

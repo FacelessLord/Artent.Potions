@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "artent:concentrate_phial",
+  "key": {
+    "c": "minecraft:clay_ball",
+    "g": "minecraft:glass"
+  },
+  "pattern": [
+    "c",
+    "g"
+  ],
+  "result": {
+    "count": 9,
+    "id": "artent_potions:small_concentrate_phial"
+  }
+}

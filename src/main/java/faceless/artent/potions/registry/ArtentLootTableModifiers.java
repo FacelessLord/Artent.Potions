@@ -75,7 +75,6 @@ public class ArtentLootTableModifiers {
     }
 
       if (tropicalFish.equals(key)) {
-        System.out.println("Modifier tropical fish");
         tableBuilder.pool(
             LootPool
                 .builder()

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fermenting_barrel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "artent_potions:fermenting_barrel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "artent_potions:medium_concentrate_phial"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fermenting_barrel"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "artent_potions:medium_concentrate_phial"
+    ]
+  }
+}

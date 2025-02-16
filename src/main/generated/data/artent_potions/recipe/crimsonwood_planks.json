@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "artent_potions:crimsonwood_log"
+  ],
+  "result": {
+    "count": 4,
+    "id": "artent_potions:crimsonwood_planks"
+  }
+}

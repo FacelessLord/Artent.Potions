@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "artent:cauldron",
+  "key": {
+    "i": "minecraft:iron_ingot",
+    "n": "minecraft:iron_nugget"
+  },
+  "pattern": [
+    "i i",
+    "iii",
+    "n n"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:cauldron"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": "#minecraft:planks",
+    "s": "minecraft:stick"
+  },
+  "pattern": [
+    "pp",
+    "pp",
+    "ss"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:fermenting_barrel"
+  }
+}

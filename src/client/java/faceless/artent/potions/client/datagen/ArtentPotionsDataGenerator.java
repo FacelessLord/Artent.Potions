@@ -19,6 +19,7 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
     pack.addProvider(BiomeTagsProvider::new);
     pack.addProvider(ArtentPotionsEntitiesLootTableProvider::new);
     pack.addProvider(ArtentPotionsBlockLootTableProvider::new);
+    pack.addProvider(ArtentPotionsRecipeProvider::new);
   }
 
   @Override
