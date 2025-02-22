@@ -143,6 +143,5 @@ public class ModPotionEffects {
       false);
   public static final StatusEffect FERMENTED_HOLY_WATER = new ConcentrateStatusEffect(
       StatusEffectCategory.BENEFICIAL,
-      Color.Red,
-      true);
+      Color.Red);
 }
