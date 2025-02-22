@@ -80,10 +80,10 @@ public class AlchemicalPotions {
                                                                        Color.Red,
                                                                        new StatusEffectInstance(StatusEffectsRegistry.FLIGHT,
                                                                                                 3600));
-    // TODO LUCK
-    public static final AlchemicalPotion LUCK = new AlchemicalPotion("luck",
-                                                                     Color.Red,
-                                                                     new StatusEffectInstance(StatusEffects.LUCK,
+    // TODO FORTUNE
+    public static final AlchemicalPotion FORTUNE = new AlchemicalPotion("fortune",
+                                                                        Color.Green,
+                                                                        new StatusEffectInstance(StatusEffects.LUCK,
                                                                                               1800));
     public static final AlchemicalPotion SATURATION = new AlchemicalPotion("saturation",
                                                                            Color.Red,
@@ -128,7 +128,7 @@ public class AlchemicalPotions {
                                                                                          1200));
     public static final AlchemicalPotion INSTANT_HEALING = new AlchemicalPotion("instant_healing",
                                                                                 Color.Red,
-                                                                                new StatusEffectInstance(StatusEffects.INSTANT_HEALTH,
+                                                                                new StatusEffectInstance(StatusEffectsRegistry.INSTANT_HEALING,
                                                                                                          1));
     public static final AlchemicalPotion FERMENTED_ANTIDOTE = new AlchemicalPotion("fermented_antidote",
                                                                                    Color.Red,

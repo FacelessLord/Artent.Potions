@@ -2,16 +2,13 @@ package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.objects.ModPotionEffects;
-import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Unique;
 
 public class ConcentrateStatusEffect extends StatusEffect {
 
@@ -38,6 +35,14 @@ public class ConcentrateStatusEffect extends StatusEffect {
     if (this == ModPotionEffects.FERMENTED_SATURATION) {
       if (target instanceof PlayerEntity player)
         player.getHungerManager().add(20 * (amplifier + 1), 5);
+    }
+    if (this == ModPotionEffects.FERMENTED_HOLY_WATER) {
+        var effects = target.getActiveStatusEffects();
+        for (var effect : effects.entrySet()) {
+          if (effect.getKey().value().getCategory() == StatusEffectCategory.HARMFUL) {
+            target.removeStatusEffect(effect.getKey());
+          }
+        }
     }
   }
 

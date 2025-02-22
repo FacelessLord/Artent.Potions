@@ -21,10 +21,10 @@ public class AlchemicalPotionRegistry implements IRegistry {
 
     @Override
     public void register() {
-        register(POISON, INSTANT_HARM);
+        register(POISON);
         register(STRENGTH);
-        register(VAMPIRISM, FERMENTED_VAMPIRISM);
-        register(HOLY_WATER, FERMENTED_HOLY_WATER);
+        register(VAMPIRISM, FERMENTED_VAMPIRISM); // TODO вапиризм + эффект кровотечения у жертвы, который также восстанавливает хп атакующего
+        register(HOLY_WATER, FERMENTED_HOLY_WATER); // TODO снимает дебаффы
         register(BERSERK);
 
         register(STONE_SKIN);
@@ -41,7 +41,7 @@ public class AlchemicalPotionRegistry implements IRegistry {
         register(NIGHT_VISION);
 
         register(FLIGHT);
-        register(LUCK);
+        register(FORTUNE);
         register(SATURATION, FERMENTED_SATURATION);
         register(LUMBERJACK);
         register(HASTE);

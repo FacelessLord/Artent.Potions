@@ -75,7 +75,17 @@ public class LivingEntityMixin {
       if (source.isDirect()) {
         if (!target.getType().isIn(EntityTypeTags.UNDEAD)) {
           var vampirism = attacker.getStatusEffect(StatusEffectsRegistry.VAMPIRISM);
+          var fermentedVampirism = attacker.getStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM);
           if (vampirism != null) attacker.heal(amount * (vampirism.getAmplifier() + 1) / 10);
+          if (fermentedVampirism != null) {
+            attacker.heal(amount * (fermentedVampirism.getAmplifier() + 1) / 10);
+            target.addStatusEffect(new StatusEffectInstance(
+                StatusEffectsRegistry.BLEEDING,
+                6 * 20,
+                fermentedVampirism.getAmplifier(),
+                false,
+                false));
+          }
         } else {
           var holyWater = attacker.getStatusEffect(StatusEffectsRegistry.HOLY_WATER);
           if (holyWater != null && !source.isOf(DamageTypes.INDIRECT_MAGIC) && !source.isOf(DamageTypes.ON_FIRE)) {
@@ -118,7 +128,7 @@ public class LivingEntityMixin {
         var fermentedLiquidFlame = target.getStatusEffect(StatusEffectsRegistry.FERMENTED_LIQUID_FLAME);
         if (fermentedLiquidFlame != null) {
           if (target.timeUntilRegen < 10) {
-              target.heal(amount);
+            target.heal(amount);
             target.timeUntilRegen = 20;
           }
           cir.setReturnValue(false);

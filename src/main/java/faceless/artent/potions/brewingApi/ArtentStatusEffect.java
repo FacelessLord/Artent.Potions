@@ -2,6 +2,7 @@ package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.objects.ModPotionEffects;
+import faceless.artent.potions.registry.DamageSourceRegistry;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -11,12 +12,12 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Box;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 import static net.minecraft.world.Heightmap.Type.MOTION_BLOCKING;
-import static net.minecraft.world.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES;
 
 public class ArtentStatusEffect extends StatusEffect {
   private boolean isInstant = false;
@@ -67,6 +68,23 @@ public class ArtentStatusEffect extends StatusEffect {
       entity.extinguish();
       return true;
     }
+    if (this == ModPotionEffects.BLEEDING) {
+      var damageSource = world.getDamageSources().create(DamageSourceRegistry.BleedingDamageKey);
+
+      var damage = amplifier + 1;
+      entity.damage(world, damageSource, damage);
+
+      var vampires = world.getEntitiesByClass(
+          LivingEntity.class,
+          Box.enclosing(entity.getBlockPos().add(-3, -3, -3), entity.getBlockPos().add(3, 3, 3)),
+          (e) -> e.hasStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM));
+
+      for (var vampire : vampires) {
+        vampire.heal(damage * 0.1f);
+      }
+
+      return true;
+    }
     if (this == ModPotionEffects.SATURATION) {
       if (entity instanceof PlayerEntity playerEntity && world != null) {
         playerEntity.getHungerManager().add(amplifier + 1, 1.0F);
@@ -93,6 +111,10 @@ public class ArtentStatusEffect extends StatusEffect {
         target.teleport(topPosition.getX() + 0.5f, topPosition.getY() + 1, topPosition.getZ() + 0.5f, false);
       }
     }
+    if (this == ModPotionEffects.INSTANT_HEALING) {
+      var damage = 8 * (amplifier + 1);
+      target.heal(damage);
+    }
   }
 
   public boolean canApplyUpdateEffect(int duration, int amplifier) {
@@ -100,6 +122,7 @@ public class ArtentStatusEffect extends StatusEffect {
            || this == ModPotionEffects.FLIGHT
            || this == ModPotionEffects.FREEZING && duration % 10 == 0
            || this == ModPotionEffects.BERSERK && duration == 600
+           || this == ModPotionEffects.BLEEDING && duration % 40 == 0
            || this == ModPotionEffects.SATURATION && (duration % (80 / (amplifier + 1)) == 0);
   }
 

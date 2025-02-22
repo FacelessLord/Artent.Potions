@@ -142,7 +142,7 @@ public class BrewingRegistry implements IRegistry {
 //        BrewingRecipes.CrimsonLeaf,
 //        BrewingRecipes.Shroom);
     BrewingRecipes.RecipeAutomata.addRecipe(
-        LUCK,
+        FORTUNE,
         BrewingRecipes.Blackberry,
         BrewingRecipes.CrimsonLeaf,
         BrewingRecipes.NetherWart,
