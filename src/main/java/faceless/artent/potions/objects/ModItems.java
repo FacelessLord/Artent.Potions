@@ -84,7 +84,7 @@ public final class ModItems {
         (settings) -> new ConcentrateItem(settings, "small", 1),
         new Item.Settings()
             .component(POTION_KEY, null)
-            .component(CONCENTRATE_AMOUNT, 1)
+            .component(CONCENTRATE_AMOUNT, 0)
             .maxCount(64),
         null);
     MediumConcentrate = register(
@@ -92,7 +92,7 @@ public final class ModItems {
         (settings) -> new ConcentrateItem(settings, "medium", 3),
         new Item.Settings()
             .component(POTION_KEY, null)
-            .component(CONCENTRATE_AMOUNT, 3)
+            .component(CONCENTRATE_AMOUNT, 0)
             .maxCount(1),
         null);
     BigConcentrate = register(
@@ -100,7 +100,7 @@ public final class ModItems {
         (settings) -> new ConcentrateItem(settings, "big", 9),
         new Item.Settings()
             .component(POTION_KEY, null)
-            .component(CONCENTRATE_AMOUNT, 9)
+            .component(CONCENTRATE_AMOUNT, 0)
             .maxCount(1),
         null);
 
