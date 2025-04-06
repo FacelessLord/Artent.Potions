@@ -24,6 +24,7 @@ public class ArtentPotions implements ModInitializer {
   public static EntityRegistry Entities = new EntityRegistry();
   public static AlchemicalPotionRegistry Potions = new AlchemicalPotionRegistry();
   public static BrewingRegistry Brewing = new BrewingRegistry();
+  public static CommandRegistry Commands = new CommandRegistry();
   public static StatusEffectsRegistry StatusEffects = new StatusEffectsRegistry();
   public static DataComponentRegistry DataComponents = new DataComponentRegistry();
   public static FeatureRegistry Features = new FeatureRegistry();
@@ -42,6 +43,7 @@ public class ArtentPotions implements ModInitializer {
     LootTableModifiers.modifyLootTables();
     Brewing.register();
 
+    Commands.register();
     ServerHook.load();
     ItemGroups.register();
   }

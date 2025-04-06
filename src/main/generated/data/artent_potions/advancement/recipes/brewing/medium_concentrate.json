@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "artent_potions:medium_concentrate_phial"
+        "recipe": "artent_potions:medium_concentrate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "artent_potions:medium_concentrate_phial"
+      "artent_potions:medium_concentrate"
     ]
   }
 }

@@ -5,6 +5,7 @@ import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.objects.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +27,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -61,7 +64,7 @@ public class BerryBush extends Block implements INamed, Fertilizable {
   @Override
   public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
     super.randomTick(state, world, pos, random);
-    if (canGrow(world, random, pos, state)) {
+    if (canGrow(world, random, pos, state) && world.random.nextDouble() > 0.9) {
       grow(world, random, pos, state);
     }
   }
@@ -87,7 +90,7 @@ public class BerryBush extends Block implements INamed, Fertilizable {
 
     if (state.get(AGE) == 2) {
       if (!world.isClient()) {
-        player.giveItemStack(new ItemStack(ModItems.berries[type], world.random.nextInt(3) + 1));
+        player.giveItemStack(createBerriesStack(world.random));
         state = state.with(AGE, 0);
         world.setBlockState(pos, state, Block.NOTIFY_LISTENERS);
       }
@@ -95,6 +98,10 @@ public class BerryBush extends Block implements INamed, Fertilizable {
       return ActionResult.SUCCESS_SERVER;
     }
     return ActionResult.FAIL;
+  }
+
+  private @NotNull ItemStack createBerriesStack(Random random) {
+    return new ItemStack(ModItems.berries[type], random.nextInt(3) + 1);
   }
 
   protected static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 15, 14);
@@ -186,6 +193,15 @@ public class BerryBush extends Block implements INamed, Fertilizable {
       @Nullable LivingEntity placer,
       ItemStack itemStack) {
     super.onPlaced(world, pos, state, placer, itemStack);
+  }
+
+  @Override
+  public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    var age = state.get(AGE);
+    if (age == 2) {
+      ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), createBerriesStack(world.random));
+    }
+    return super.onBreak(world, pos, state, player);
   }
 
   public static enum BushType implements StringIdentifiable {

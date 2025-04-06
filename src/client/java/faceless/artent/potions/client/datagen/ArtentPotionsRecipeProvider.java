@@ -81,7 +81,7 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('g', Items.GOLD_INGOT)
             .criterion(hasItem(Items.GOLD_INGOT), conditionsFromItem(Items.GOLD_INGOT))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModItems.SmallConcentratePhial, 9)
+        createShaped(RecipeCategory.BREWING, ModItems.SmallConcentrate, 3)
             .pattern("c")
             .pattern("g")
             .input('g', Items.GLASS)
@@ -89,7 +89,7 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .group("artent:concentrate_phial")
             .criterion(hasItem(ModBlocks.FermentingBarrelItem), conditionsFromItem(ModBlocks.FermentingBarrelItem))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModItems.MediumConcentratePhial, 1)
+        createShaped(RecipeCategory.BREWING, ModItems.MediumConcentrate, 1)
             .pattern(" c ")
             .pattern("g g")
             .pattern(" g ")
@@ -98,7 +98,7 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .group("artent:concentrate_phial")
             .criterion(hasItem(ModBlocks.FermentingBarrelItem), conditionsFromItem(ModBlocks.FermentingBarrelItem))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModItems.BigConcentratePhial, 1)
+        createShaped(RecipeCategory.BREWING, ModItems.BigConcentrate, 1)
             .pattern("ggg")
             .pattern("gcg")
             .pattern("ggg")

@@ -37,6 +37,26 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.CrimsonwoodPlanks)
         .add(ModBlocks.CrimsonwoodSapling)
         .add(ModBlocks.CrimsonwoodLeaves);
+
+    getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+        .add(ModBlocks.BrewingCauldron)
+        .add(ModBlocks.BrewingCauldronCopper);
+    getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
+        .add(ModBlocks.BrewingCauldron)
+        .add(ModBlocks.BrewingCauldronCopper);
+
+    getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
+        .add(ModBlocks.CrimsonwoodLog)
+        .add(ModBlocks.CrimsonwoodPlanks)
+        .add(ModBlocks.CrimsonwoodSapling)
+        .add(ModBlocks.FrostPumpkin)
+        .add(ModBlocks.FermentingBarrel)
+        .add(ModBlocks.berryBush[0])
+        .add(ModBlocks.berryBush[1])
+        .add(ModBlocks.berryBush[2])
+        .add(ModBlocks.berryBush[3]);
+    getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
+        .add(ModBlocks.CrimsonwoodLeaves);
   }
 
   @Override

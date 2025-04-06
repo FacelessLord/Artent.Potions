@@ -1,4 +1,4 @@
-  {
+{
   "itemGroup.artent.potions": "Artent",
   "block.artent_potions.cauldron": "Iron Cauldron",
   "block.artent_potions.cauldron_copper": "Copper Cauldron",
@@ -15,7 +15,6 @@
   "block.artent_potions.cauldron_fluid": "Cauldron Fluid",
   "block.artent_potions.fermenting_barrel": "Fermenting Barrel",
   "block.artent_potions.frost_pumpkin": "Frost Pumpkin",
-
   "item.artent_potions.cauldron": "Iron Cauldron",
   "item.artent_potions.cauldron_copper": "Copper Cauldron",
   "item.artent_potions.shroom": "Shroom",
@@ -35,7 +34,6 @@
   "item.artent_potions.stone_scale": "Stone Scale",
   "item.artent_potions.acorn": "Acorn",
   "item.artent_potions.frost_pumpkin": "Frost Pumpkin",
-
   "item.artent_potions.empty_phial": "Empty Phial",
   "item.artent_potions.empty_phial_explosive": "Empty Explosive Phial",
   "item.artent_potions.blackberry": "Blackberry",
@@ -46,10 +44,9 @@
   "item.artent_potions.crimson_leaf": "Crimson Leaf",
   "item.artent_potions.golden_bucket_filled": "Filled Golden Bucket",
   "item.artent_potions.golden_bucket": "Golden Bucket",
-  "item.artent_potions.small_concentrate_phial": "Small Concentrate Phial",
-  "item.artent_potions.medium_concentrate_phial": "Medium Concentrate Phial",
-  "item.artent_potions.big_concentrate_phial": "Big Concentrate Phial",
-
+  "item.concentrate.small.empty": "Small Concentrate Phial",
+  "item.concentrate.medium.empty": "Medium Concentrate Phial",
+  "item.concentrate.big.empty": "Big Concentrate Phial",
   "item.concentrate.small.artent_potions.liquid_flame": "Small Flaming Soul Potion",
   "item.concentrate.small.artent_potions.holy_water": "Small Holy Water Concentrate",
   "item.concentrate.small.artent_potions.poison": "Small Poison Concentrate",
