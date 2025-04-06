@@ -22,8 +22,6 @@ import net.minecraft.world.event.GameEvent;
 
 import java.util.List;
 
-import static faceless.artent.potions.registry.DataComponentRegistry.POTION_KEY;
-
 public class PotionPhial extends Item implements INamed {
 
   public PotionPhial(Settings settings) {
@@ -48,7 +46,8 @@ public class PotionPhial extends Item implements INamed {
     if (playerEntity != null) {
       playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
       if (!playerEntity.getAbilities().creativeMode) {
-        ItemUsage.exchangeStack(stack, playerEntity, new ItemStack(ModItems.EmptyPhial));
+        stack.decrement(1);
+        playerEntity.giveOrDropStack(new ItemStack(ModItems.EmptyPhial));
       }
     }
     world.emitGameEvent(user, GameEvent.DRINK, user.getPos());
