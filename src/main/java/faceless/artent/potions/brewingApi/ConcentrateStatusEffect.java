@@ -35,11 +35,9 @@ public class ConcentrateStatusEffect extends StatusEffect {
       @Nullable Entity attacker,
       LivingEntity target,
       int amplifier,
-      double proximity
-                                ) {
+      double proximity) {
     if (this == ModPotionEffects.FERMENTED_SATURATION) {
-      if (target instanceof PlayerEntity player)
-        player.getHungerManager().add(20 * (amplifier + 1), 5);
+      if (target instanceof PlayerEntity player) player.getHungerManager().add(20 * (amplifier + 1), 5);
     }
     if (this == ModPotionEffects.FERMENTED_HOLY_WATER) {
       var damage = ArtentStatusEffect.collectHolyWaterDamage(target, amplifier);
@@ -50,10 +48,12 @@ public class ConcentrateStatusEffect extends StatusEffect {
       var effectsToRemove = new ArrayList<RegistryEntry<StatusEffect>>();
       var effects = target.getActiveStatusEffects();
       for (var effect : effects.entrySet()) {
-        if (effect.getKey().value().getCategory() == StatusEffectCategory.HARMFUL
-            || effect.getKey() == StatusEffectsRegistry.VAMPIRISM
-            || effect.getKey() == StatusEffectsRegistry.FERMENTED_VAMPIRISM) {
- 
+        var instance = effect.getValue();
+        var key = effect.getKey();
+        if (instance.getAmplifier() <= amplifier && (key.value().getCategory() == StatusEffectCategory.HARMFUL
+                                                     || key == StatusEffectsRegistry.VAMPIRISM
+                                                     || key == StatusEffectsRegistry.FERMENTED_VAMPIRISM)) {
+
           effectsToRemove.add(effect.getKey());
         }
       }
