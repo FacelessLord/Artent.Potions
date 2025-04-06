@@ -2,6 +2,7 @@ package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.item.group.ArtentItemGroupBuilder;
 import faceless.artent.core.math.Color;
+import faceless.artent.potions.api.IConcentrateContainerItem;
 import faceless.artent.potions.registry.AlchemicalPotionRegistry;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.component.type.PotionContentsComponent;
@@ -54,6 +55,7 @@ public class AlchemicalPotionUtil {
 
   public static AlchemicalPotion getFermentedPotion(ItemStack stack) {
     var key = stack.get(POTION_KEY);
+    if (key == null) return null;
     return AlchemicalPotionRegistry.getFermentedPotions().getOrDefault(key, null);
   }
 
@@ -115,7 +117,12 @@ public class AlchemicalPotionUtil {
               .translatable(sei.getTranslationKey())
               .formatted(sei.getEffectType().value().getCategory().getFormatting()))
           .forEach(tooltip::add);
-    } else tooltip.add(Text.translatable("text.artent_potions.potion.unidentified"));
+    } else {
+      var concentrateAmount = AlchemicalPotionUtil.getConcentrateAmount(stack);
+      if (concentrateAmount > 0) {
+        tooltip.add(Text.translatable("text.artent_potions.potion.unidentified"));
+      }
+    }
   }
 
   public static void applyPotionEffects(
@@ -126,19 +133,20 @@ public class AlchemicalPotionUtil {
         statusEffectInstance
             .getEffectType()
             .value()
-            .applyInstantEffect(serverWorld,
-                                playerEntity,
-                                playerEntity,
-                                user,
-                                statusEffectInstance.getAmplifier(),
-                                1.0);
+            .applyInstantEffect(
+                serverWorld,
+                playerEntity,
+                playerEntity,
+                user,
+                statusEffectInstance.getAmplifier(),
+                1.0);
         continue;
       }
       user.addStatusEffect(new StatusEffectInstance(statusEffectInstance));
     }
   }
 
-  public static ItemStack drinkFermentedPotion(ItemStack stack, World world, PlayerEntity playerEntity, Item phial) {
+  public static ItemStack drinkFermentedPotion(ItemStack stack, World world, PlayerEntity playerEntity) {
     if (playerEntity instanceof ServerPlayerEntity serverPlayer) {
       Criteria.CONSUME_ITEM.trigger(serverPlayer, stack);
     }
@@ -149,11 +157,30 @@ public class AlchemicalPotionUtil {
     world.emitGameEvent(playerEntity, GameEvent.DRINK, playerEntity.getPos());
     playerEntity.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
     if (!playerEntity.getAbilities().creativeMode) {
-      var amount = stack.get(CONCENTRATE_AMOUNT);
-      if (amount != null && amount > 1) stack.set(CONCENTRATE_AMOUNT, amount - 1);
-      else {
+      var item = stack.getItem();
+      if (item.getMaxCount() == 1 || stack.getCount() == 1) {
+        if (item instanceof IConcentrateContainerItem container) {
+          var amount = container.getConcentrateAmount(stack);
+          if (amount != 0) {
+            if (amount - 1 == 0) {
+              container.setConcentrateAmount(stack, null, 0);
+            } else {
+              container.setConcentrateAmount(stack, amount - 1);
+            }
+          }
+        }
+      } else if (item instanceof IConcentrateContainerItem container) {
+        var newStack = stack.copyWithCount(1);
         stack.decrement(1);
-        if (stack.getCount() == 0) return new ItemStack(phial);
+        var amount = container.getConcentrateAmount(newStack);
+        if (amount != 0) {
+          if (amount - 1 == 0) {
+            container.setConcentrateAmount(newStack, null, 0);
+          } else {
+            container.setConcentrateAmount(newStack, amount - 1);
+          }
+        }
+        playerEntity.giveOrDropStack(newStack);
       }
     }
     return stack;
@@ -161,6 +188,11 @@ public class AlchemicalPotionUtil {
 
   public static void appendFermentedPotionStacks(Item base, int size, ArtentItemGroupBuilder group) {
     List<ItemStack> stacks = new ArrayList<>();
+
+    var phialStack = new ItemStack(base);
+    AlchemicalPotionUtil.setConcentrateAmount(phialStack, 0);
+    stacks.add(phialStack);
+
     for (var key : AlchemicalPotionRegistry.getRegisteredPotions().keySet()) {
       if (AlchemicalPotionRegistry.fermentedPotionIsRegistered(key)) {
         var stack = new ItemStack(base);

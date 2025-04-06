@@ -29,7 +29,7 @@ public record ArtentPotionTintSource(int defaultColor) implements TintSource {
   public int getTint(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user) {
     var potion = AlchemicalPotionUtil.getPotion(stack);
     if (potion == null)
-      return ColorHelper.fullAlpha(defaultColor);
+      return ColorHelper.zeroAlpha(defaultColor);
 
     return ColorHelper.fullAlpha(potion.color.asInt());
   }

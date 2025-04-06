@@ -31,11 +31,8 @@ public final class ModItems {
   public static Item CrimsonLeaf;
   public static Item GoldenBucket;
   public static Item GoldenBucketFilled;
-  public static Item SmallConcentratePhial;
   public static Item SmallConcentrate;
-  public static Item MediumConcentratePhial;
   public static Item MediumConcentrate;
-  public static Item BigConcentratePhial;
   public static Item BigConcentrate;
   public static Item[] berries = new Item[5];
 
@@ -82,39 +79,27 @@ public final class ModItems {
     AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhial, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhialExplosive, ModItemGroups.Potions);
 
-    SmallConcentratePhial = register(
-        "small_concentrate_phial",
-        Item::new,
-        new Item.Settings().maxCount(64),
-        ModItemGroups.Potions);
     SmallConcentrate = register(
         "small_concentrate",
-        SmallConcentrate::new,
-        new Item.Settings().component(POTION_KEY, "").maxCount(64),
+        (settings) -> new ConcentrateItem(settings, "small", 1),
+        new Item.Settings()
+            .component(POTION_KEY, null)
+            .component(CONCENTRATE_AMOUNT, 1)
+            .maxCount(64),
         null);
-    MediumConcentratePhial = register(
-        "medium_concentrate_phial",
-        Item::new,
-        new Item.Settings().maxCount(1),
-        ModItemGroups.Potions);
     MediumConcentrate = register(
         "medium_concentrate",
-        MediumConcentrate::new,
+        (settings) -> new ConcentrateItem(settings, "medium", 3),
         new Item.Settings()
-            .component(POTION_KEY, "")
+            .component(POTION_KEY, null)
             .component(CONCENTRATE_AMOUNT, 3)
             .maxCount(1),
         null);
-    BigConcentratePhial = register(
-        "big_concentrate_phial",
-        Item::new,
-        new Item.Settings().maxCount(64),
-        ModItemGroups.Potions);
     BigConcentrate = register(
         "big_concentrate",
-        BigConcentrate::new,
+        (settings) -> new ConcentrateItem(settings, "big", 9),
         new Item.Settings()
-            .component(POTION_KEY, "")
+            .component(POTION_KEY, null)
             .component(CONCENTRATE_AMOUNT, 9)
             .maxCount(1),
         null);
@@ -140,7 +125,7 @@ public final class ModItems {
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
 
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, -1, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, 1, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.MediumConcentrate, 3, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.BigConcentrate, 9, ModItemGroups.Potions);
 

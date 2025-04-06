@@ -2,13 +2,18 @@ package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.objects.ModPotionEffects;
+import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 public class ConcentrateStatusEffect extends StatusEffect {
 
@@ -37,12 +42,22 @@ public class ConcentrateStatusEffect extends StatusEffect {
         player.getHungerManager().add(20 * (amplifier + 1), 5);
     }
     if (this == ModPotionEffects.FERMENTED_HOLY_WATER) {
-        var effects = target.getActiveStatusEffects();
-        for (var effect : effects.entrySet()) {
-          if (effect.getKey().value().getCategory() == StatusEffectCategory.HARMFUL) {
-            target.removeStatusEffect(effect.getKey());
-          }
+      var damage = ArtentStatusEffect.collectHolyWaterDamage(target, amplifier);
+      if (damage > 0) {
+        target.damage(world, world.getDamageSources().magic(), damage * 2);
+      }
+
+      var effectsToRemove = new ArrayList<RegistryEntry<StatusEffect>>();
+      var effects = target.getActiveStatusEffects();
+      for (var effect : effects.entrySet()) {
+        if (effect.getKey().value().getCategory() == StatusEffectCategory.HARMFUL
+            || effect.getKey() == StatusEffectsRegistry.VAMPIRISM
+            || effect.getKey() == StatusEffectsRegistry.FERMENTED_VAMPIRISM) {
+ 
+          effectsToRemove.add(effect.getKey());
         }
+      }
+      effectsToRemove.forEach(target::removeStatusEffect);
     }
   }
 

@@ -10,6 +10,8 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
@@ -68,6 +70,17 @@ public class ArtentStatusEffect extends StatusEffect {
       entity.extinguish();
       return true;
     }
+    if (this == ModPotionEffects.HOLY_WATER) {
+      if (entity.getStatusEffect(StatusEffectsRegistry.FERMENTED_HOLY_WATER) != null) {
+        return true;
+      }
+      var damage = collectHolyWaterDamage(entity, amplifier);
+      if (damage > 0) {
+        entity.damage(world, world.getDamageSources().magic(), damage);
+        cutVampirismDuration(entity, 2 * 20 * damage);
+      }
+      return true;
+    }
     if (this == ModPotionEffects.BLEEDING) {
       var damageSource = world.getDamageSources().create(DamageSourceRegistry.BleedingDamageKey);
 
@@ -80,7 +93,7 @@ public class ArtentStatusEffect extends StatusEffect {
           (e) -> e.hasStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM));
 
       for (var vampire : vampires) {
-        vampire.heal(damage * 0.1f);
+        vampire.heal(damage * 0.5f);
       }
 
       return true;
@@ -93,6 +106,41 @@ public class ArtentStatusEffect extends StatusEffect {
     }
     return false;
   }
+
+  public static int collectHolyWaterDamage(LivingEntity entity, int amplifier) {
+    var damage = 0;
+    if (entity.getType().isIn(EntityTypeTags.UNDEAD)) {
+      damage += 2 * (amplifier + 1);
+    }
+    if (entity.hasStatusEffect(StatusEffectsRegistry.VAMPIRISM)) {
+      damage += 2 * (amplifier + 1);
+    }
+    if (entity.hasStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM)) {
+      damage += 4 * (amplifier + 1);
+    }
+    return damage;
+  }
+
+  private static void cutVampirismDuration(LivingEntity entity, int duration) {
+    cutEffectDuration(entity, StatusEffectsRegistry.VAMPIRISM, duration);
+    cutEffectDuration(entity, StatusEffectsRegistry.FERMENTED_VAMPIRISM, duration);
+  }
+
+  private static void cutEffectDuration(
+      LivingEntity entity,
+      RegistryEntry.Reference<StatusEffect> effectType,
+      int duration) {
+    var effect = entity.getStatusEffect(effectType);
+    if (effect == null) return;
+
+    var newEffect = new StatusEffectInstance(
+        StatusEffectsRegistry.VAMPIRISM,
+        effect.getDuration() - duration, effect.getAmplifier());
+
+    entity.removeStatusEffect(StatusEffectsRegistry.VAMPIRISM);
+    entity.addStatusEffect(newEffect);
+  }
+
 
   public void applyInstantEffect(
       ServerWorld world,
@@ -123,6 +171,7 @@ public class ArtentStatusEffect extends StatusEffect {
            || this == ModPotionEffects.FREEZING && duration % 10 == 0
            || this == ModPotionEffects.BERSERK && duration == 600
            || this == ModPotionEffects.BLEEDING && duration % 40 == 0
+           || this == ModPotionEffects.HOLY_WATER && duration % 40 == 0
            || this == ModPotionEffects.SATURATION && (duration % (80 / (amplifier + 1)) == 0);
   }
 
