@@ -5,7 +5,6 @@ import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.objects.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -71,7 +70,6 @@ public class BerryBush extends Block implements INamed, Fertilizable {
 
   @Override
   protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-
     var stack = player.getEquippedStack(player.getActiveHand() == Hand.MAIN_HAND
                                             ? EquipmentSlot.MAINHAND
                                             : EquipmentSlot.OFFHAND);
@@ -132,40 +130,11 @@ public class BerryBush extends Block implements INamed, Fertilizable {
 
   @Override
   public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-    if (state.get(AGE) < 2)
-      world.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), Block.NOTIFY_LISTENERS);
-  }
-
-  @Override
-  protected void neighborUpdate(
-      BlockState state,
-      World world,
-      BlockPos pos,
-      Block sourceBlock,
-      @Nullable WireOrientation wireOrientation,
-      boolean notify) {
-    super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
-    var top = world.getBlockState(pos.up());
-    var bottom = world.getBlockState(pos.down());
-    var hasTopBush = top.getBlock() instanceof BerryBush;
-    var hasBottomBush = bottom.getBlock() instanceof BerryBush;
-
-    if (hasTopBush) {
-      if (hasBottomBush)
-        world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Middle));
-      else
-        world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Bottom));
-    } else {
-      if (hasBottomBush)
-        world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Top));
-      else
-        world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Single));
-    }
+    if (state.get(AGE) < 2) world.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), Block.NOTIFY_LISTENERS);
   }
 
   protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-    if (floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.FARMLAND))
-      return true;
+    if (floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.FARMLAND)) return true;
     if (floor.getBlock() instanceof BerryBush) {
       var count = 1;
       for (int i = 0; i < 3; i++) {
@@ -186,6 +155,18 @@ public class BerryBush extends Block implements INamed, Fertilizable {
   }
 
   @Override
+  protected void neighborUpdate(
+      BlockState state,
+      World world,
+      BlockPos pos,
+      Block sourceBlock,
+      @Nullable WireOrientation wireOrientation,
+      boolean notify) {
+    super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
+    updateBushType(state, world, pos);
+  }
+
+  @Override
   public void onPlaced(
       World world,
       BlockPos pos,
@@ -193,7 +174,25 @@ public class BerryBush extends Block implements INamed, Fertilizable {
       @Nullable LivingEntity placer,
       ItemStack itemStack) {
     super.onPlaced(world, pos, state, placer, itemStack);
+    updateBushType(state, world, pos);
   }
+
+
+  private static void updateBushType(BlockState state, World world, BlockPos pos) {
+    var top = world.getBlockState(pos.up());
+    var bottom = world.getBlockState(pos.down());
+    var hasTopBush = top.getBlock() instanceof BerryBush;
+    var hasBottomBush = bottom.getBlock() instanceof BerryBush;
+
+    if (hasTopBush) {
+      if (hasBottomBush) world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Middle));
+      else world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Bottom));
+    } else {
+      if (hasBottomBush) world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Top));
+      else world.setBlockState(pos, state.with(BUSH_TYPE, BushType.Single));
+    }
+  }
+
 
   @Override
   public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
@@ -204,11 +203,8 @@ public class BerryBush extends Block implements INamed, Fertilizable {
     return super.onBreak(world, pos, state, player);
   }
 
-  public static enum BushType implements StringIdentifiable {
-    Single,
-    Bottom,
-    Middle,
-    Top;
+  public enum BushType implements StringIdentifiable {
+    Single, Bottom, Middle, Top;
 
     @Override
     public String asString() {

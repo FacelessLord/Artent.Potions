@@ -9,6 +9,7 @@ import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.network.CauldronSyncPayload;
 import faceless.artent.potions.objects.BrewingRecipes;
 import faceless.artent.potions.objects.ModBlockEntities;
+import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.registry.BrewingRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
@@ -33,7 +34,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BrewingCauldronBlockEntity extends BlockEntity {
   public List<BrewingIngredient> ingredients = new ArrayList<>();
@@ -47,6 +47,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
   }
 
   public static final int BrewingCooldown = 30;
+  public static final int CopperBrewingCooldown = 50;
 
   public void tick(World world, BlockPos pos, BlockState state) {
     if (fuelAmount <= 0 && (state.get(BrewingCauldron.HAS_COAL) || state.get(BrewingCauldron.IS_BURNING))) {
@@ -71,9 +72,10 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
             pos.getZ() + 1 - 2 * one16th);
         var items = world.getEntitiesByClass(ItemEntity.class, box, ie -> BrewingRecipes.IsIngredient(ie.getStack()));
         if (!items.isEmpty()) {
+          var brewingCooldown = state.getBlock() == ModBlocks.BrewingCauldronCopper ? CopperBrewingCooldown : BrewingCooldown;
           var first = items.getFirst();
           var brewable = (IBrewable) first;
-          if ((brewable.getBrewingTime() > BrewingCooldown)) {
+          if ((brewable.getBrewingTime() > brewingCooldown)) {
             brewItem(first);
           } else brewable.setBrewingTime(brewable.getBrewingTime() + 1);
         }
@@ -220,7 +222,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
     }
   }
 
-  public static enum AddFuelResultType {
+  public enum AddFuelResultType {
     Fail, ConsumeStack, ConsumeItem,
   }
 }
