@@ -18,6 +18,7 @@ public class StatusEffectsRegistry {
     public static final RegistryEntry.Reference<StatusEffect> FREEZING = register("freezing", ModPotionEffects.FREEZING);
     public static final RegistryEntry.Reference<StatusEffect> SATURATION = register("saturation", ModPotionEffects.SATURATION);
     public static final RegistryEntry.Reference<StatusEffect> ANTIDOTE = register("antidote", ModPotionEffects.ANTIDOTE);
+    public static final RegistryEntry.Reference<StatusEffect> FORTUNE = register("fortune", ModPotionEffects.FORTUNE);
 
     public static final RegistryEntry.Reference<StatusEffect> LIQUID_FLAME = register("liquid_flame", ModPotionEffects.LIQUID_FLAME);
     public static final RegistryEntry.Reference<StatusEffect> FEATHER_FALLING = register("feather_falling", ModPotionEffects.FEATHER_FALLING);

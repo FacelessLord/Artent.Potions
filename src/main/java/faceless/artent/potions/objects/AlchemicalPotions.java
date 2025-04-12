@@ -113,12 +113,11 @@ public class AlchemicalPotions {
       new StatusEffectInstance(
           StatusEffectsRegistry.FLIGHT,
           3600));
-  // TODO FORTUNE
   public static final AlchemicalPotion FORTUNE = new AlchemicalPotion(
       "fortune",
       Color.Green,
       new StatusEffectInstance(
-          StatusEffects.LUCK,
+          StatusEffectsRegistry.FORTUNE,
           1800));
   public static final AlchemicalPotion SATURATION = new AlchemicalPotion(
       "saturation",

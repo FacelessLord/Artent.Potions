@@ -109,6 +109,7 @@ public class ModPotionEffects {
   public static final StatusEffect SATURATION = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect LIQUID_FLAME = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect ANTIDOTE = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
+  public static final StatusEffect FORTUNE = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
 
   public static final StatusEffect FEATHER_FALLING = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect FLIGHT = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);

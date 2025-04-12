@@ -23,8 +23,8 @@ public class AlchemicalPotionRegistry implements IRegistry {
     public void register() {
         register(POISON);
         register(STRENGTH);
-        register(VAMPIRISM, FERMENTED_VAMPIRISM); // TODO вапиризм + эффект кровотечения у жертвы, который также восстанавливает хп атакующего
-        register(HOLY_WATER, FERMENTED_HOLY_WATER); // TODO снимает дебаффы
+        register(VAMPIRISM, FERMENTED_VAMPIRISM);
+        register(HOLY_WATER, FERMENTED_HOLY_WATER);
         register(BERSERK);
 
         register(STONE_SKIN);
