@@ -150,12 +150,12 @@ public class AlchemicalPotions {
           StatusEffects.LEVITATION,
           200));
 
-  public static final AlchemicalPotion INSTANT_HARM = new AlchemicalPotion(
-      "instant_harm",
-      Color.Red,
-      new StatusEffectInstance(
-          StatusEffects.INSTANT_DAMAGE,
-          1));
+//  public static final AlchemicalPotion INSTANT_HARM = new AlchemicalPotion(
+//      "instant_harm",
+//      Color.Red,
+//      new StatusEffectInstance(
+//          StatusEffects.INSTANT_DAMAGE,
+//          1));
   public static final AlchemicalPotion FERMENTED_VAMPIRISM = new AlchemicalPotion(
       "fermented_vampirism",
       Color.Red,
