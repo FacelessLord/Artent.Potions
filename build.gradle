@@ -29,6 +29,10 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     mavenLocal()
+    maven {
+        name = "Jared"
+        url = "https://maven.blamejared.com/" // for JEI and Patchouli
+    }
 }
 
 dependencies {
@@ -40,6 +44,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "faceless.artent.core:Artent.Core:${project.artent_core_version}"
+    modImplementation "vazkii.patchouli:Patchouli:1.21-87-FABRIC"
 }
 
 processResources {
