@@ -1,6 +1,5 @@
 package faceless.artent.potions.client.particles;
 
-import faceless.artent.potions.objects.ModParticles;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;

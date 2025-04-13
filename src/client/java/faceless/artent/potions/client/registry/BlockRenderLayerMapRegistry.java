@@ -13,6 +13,8 @@ public class BlockRenderLayerMapRegistry implements IRegistry {
         RenderLayer.getCutout(),
         ModBlocks.Shroom,
         ModBlocks.Shadowveil,
+        ModBlocks.BlazingMarigold,
+        ModBlocks.SlimeBerry,
         ModBlocks.berryBush[0],
         ModBlocks.berryBush[1],
         ModBlocks.berryBush[2],

@@ -27,7 +27,7 @@ public class ColorProvidersRegistry implements IRegistry {
     var grassColorTinter0 = getGrassColorTintForIndex(0);
     var grassColorTinter1 = getGrassColorTintForIndex(1);
 
-    ColorProviderRegistry.BLOCK.register(grassColorTinter0, ModBlocks.Shadowveil);
+    ColorProviderRegistry.BLOCK.register(grassColorTinter0, ModBlocks.Shadowveil,  ModBlocks.SlimeBerry, ModBlocks.BlazingMarigold);
 
     ColorProviderRegistry.BLOCK.register(
         (BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) -> {
@@ -72,7 +72,7 @@ public class ColorProvidersRegistry implements IRegistry {
   public static BlockColorProvider getGrassColorTintForIndex(int index) {
     return (BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) -> {
       if (tintIndex != index || world == null || pos == null) {
-        return new Color(0, 50, 0).asInt();
+        return Color.White.asInt();
       }
       var biome = world.getBiomeFabric(pos);
       if (biome == null) return new Color(0, 50, 0).asInt();

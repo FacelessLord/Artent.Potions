@@ -37,6 +37,8 @@ public class ArtentPotionsBlockLootTableProvider extends FabricBlockLootTablePro
     addDrop(ModBlocks.FrostPumpkin);
     addDrop(ModBlocks.Shroom);
     addDrop(ModBlocks.Shadowveil);
+    addDrop(ModBlocks.BlazingMarigold);
+    addDrop(ModBlocks.SlimeBerry);
     addDrop(ModBlocks.FermentingBarrel);
     for (int i = 0; i < ModBlocks.berryBush.length; i++) {
       addDrop(ModBlocks.berryBush[i]);

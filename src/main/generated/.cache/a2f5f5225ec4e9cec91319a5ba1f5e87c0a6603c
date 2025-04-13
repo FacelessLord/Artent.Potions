@@ -1,5 +1,6 @@
 // 1.21.4	-999999999-01-01T00:00:00	Artent.Potions/Block Loot Tables
 b77cc9af9a70fa47aa18b1f59ee326747d09b6d5 data/artent_potions/loot_table/blocks/blackberry_bush.json
+f73537c0b54d4fdeb9759bbebdfd31ea324d6154 data/artent_potions/loot_table/blocks/blazing_marigold.json
 4992cb9dad9f8feffc1b51d302351408acfaa52d data/artent_potions/loot_table/blocks/blueberry_bush.json
 8f2935f58151f4c27ad26ed41b485958848152a3 data/artent_potions/loot_table/blocks/cauldron.json
 9f4b746419638c385a6bb96418e7f52e10ef37b8 data/artent_potions/loot_table/blocks/cauldron_copper.json
@@ -13,3 +14,4 @@ f7d1b4a8848aa97165c90e82d1dd8baf03be8d5f data/artent_potions/loot_table/blocks/f
 70c61a531d52a6c76bf792c54f40fde0577ddf56 data/artent_potions/loot_table/blocks/raspberry_bush.json
 f76131920cc40eeb4e275f59d85066cfaad10294 data/artent_potions/loot_table/blocks/shadowveil.json
 982048f610b427d7bbbd4b0d2ff1fd1dce097cff data/artent_potions/loot_table/blocks/shroom.json
+705bf1e2b3e58aff7a298b0f85e330d18fca3426 data/artent_potions/loot_table/blocks/slime_berry.json

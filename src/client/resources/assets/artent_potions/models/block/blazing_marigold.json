@@ -1,0 +1,64 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"1": "artent_potions:block/blazing_marigold_overlay",
+		"cross": "artent_potions:block/blazing_marigold_bottom",
+		"particle": "artent_potions:block/blazing_marigold_overlay",
+		"missing": "artent_potions:block/empty"
+	},
+	"elements": [
+		{
+			"from": [8, 0, 0],
+			"to": [8, 16, 16],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 16], "texture": "#missing"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#cross", "tintindex": 0},
+				"south": {"uv": [0, 0, 0, 16], "texture": "#missing"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#cross", "tintindex": 0},
+				"up": {"uv": [0, 0, 0, 16], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 16], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [8, 0, 0],
+			"to": [8, 16, 16],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 16], "texture": "#missing"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#cross", "tintindex": 0},
+				"south": {"uv": [0, 0, 0, 16], "texture": "#missing"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#cross", "tintindex": 0},
+				"up": {"uv": [0, 0, 0, 16], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 16], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [8, 0, 0],
+			"to": [8, 16, 16],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1},
+				"south": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1},
+				"up": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1},
+				"down": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1}
+			}
+		},
+		{
+			"from": [8, 0, 0],
+			"to": [8, 16, 16],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1},
+				"south": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1},
+				"up": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1},
+				"down": {"uv": [0, 0, 0, 16], "texture": "#1", "tintindex": 1}
+			}
+		}
+	]
+}

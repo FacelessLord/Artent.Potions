@@ -47,6 +47,14 @@ public class FeatureRegistry {
   public static RegistryKey<ConfiguredFeature<?, ?>> SHADOWVEIL_CONFIGURED_KEY = configuredKeyOf(SHADOWVEIL_FEATURE_ID);
   public static RegistryKey<PlacedFeature> SHADOWVEIL_PLACED_KEY = placedKeyOf(SHADOWVEIL_FEATURE_ID);
 
+  public static final Identifier BLAZING_MARIGOLD_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "blazing_marigold");
+  public static RegistryKey<ConfiguredFeature<?, ?>> BLAZING_MARIGOLD_CONFIGURED_KEY = configuredKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> BLAZING_MARIGOLD_PLACED_KEY = placedKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
+
+  public static final Identifier SLIME_BERRY_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "slime_berry");
+  public static RegistryKey<ConfiguredFeature<?, ?>> SLIME_BERRY_CONFIGURED_KEY = configuredKeyOf(SLIME_BERRY_FEATURE_ID);
+  public static RegistryKey<PlacedFeature> SLIME_BERRY_PLACED_KEY = placedKeyOf(SLIME_BERRY_FEATURE_ID);
+
   public static final Identifier SHROOM_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "shroom");
   public static RegistryKey<ConfiguredFeature<?, ?>> SHROOM_CONFIGURED_KEY = configuredKeyOf(SHROOM_FEATURE_ID);
   public static RegistryKey<PlacedFeature> SHROOM_PLACED_KEY = placedKeyOf(SHROOM_FEATURE_ID);
@@ -69,6 +77,14 @@ public class FeatureRegistry {
         BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN),
         GenerationStep.Feature.VEGETAL_DECORATION,
         SHADOWVEIL_PLACED_KEY);
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.PALE_GARDEN),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        BLAZING_MARIGOLD_PLACED_KEY);
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        SLIME_BERRY_PLACED_KEY);
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(
             BiomeKeys.DARK_FOREST,

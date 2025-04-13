@@ -112,6 +112,30 @@ public class ModFeatures {
       PlantPlacementModifiers
   );
 
+  public static final VegetationBlockFeatureConfig BLAZING_MARIGOLD_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
+      ModBlocks.BlazingMarigold.getDefaultState(), BlockTags.DIRT);
+
+  public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> BLAZING_MARIGOLD = new ConfiguredFeature<>(
+      FeatureRegistry.VEGETATION_BLOCK_FEATURE,
+      BLAZING_MARIGOLD_FEATURE_CONFIG);
+
+  public static PlacedFeature BLAZING_MARIGOLD_PLACED = new PlacedFeature(
+      RegistryEntry.of(BLAZING_MARIGOLD),
+      PlantPlacementModifiers
+  );
+
+  public static final VegetationBlockFeatureConfig SLIME_BERRY_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
+      ModBlocks.SlimeBerry.getDefaultState(), BlockTags.DIRT);
+
+  public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> SLIME_BERRY = new ConfiguredFeature<>(
+      FeatureRegistry.VEGETATION_BLOCK_FEATURE,
+      SLIME_BERRY_FEATURE_CONFIG);
+
+  public static PlacedFeature SLIME_BERRY_PLACED = new PlacedFeature(
+      RegistryEntry.of(SLIME_BERRY),
+      PlantPlacementModifiers
+  );
+
   public static final VegetationBlockFeatureConfig SHROOM_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
       ModBlocks.Shroom.getDefaultState(), BlockTags.DIRT);
 
@@ -142,6 +166,8 @@ public class ModFeatures {
     ctx.configuredFeatures().register(FeatureRegistry.CRIMSON_MEGA_TREE_CONFIGURED_KEY, CRIMSON_MEGA_TREE);
     ctx.configuredFeatures().register(FeatureRegistry.BERRY_BUSH_CONFIGURED_KEY, BERRY_BUSH);
     ctx.configuredFeatures().register(FeatureRegistry.SHADOWVEIL_CONFIGURED_KEY, SHADOWVEIL);
+    ctx.configuredFeatures().register(FeatureRegistry.BLAZING_MARIGOLD_CONFIGURED_KEY, BLAZING_MARIGOLD);
+    ctx.configuredFeatures().register(FeatureRegistry.SLIME_BERRY_CONFIGURED_KEY, SLIME_BERRY);
     ctx.configuredFeatures().register(FeatureRegistry.SHROOM_CONFIGURED_KEY, SHROOM);
     ctx.configuredFeatures().register(FeatureRegistry.FROST_PUMPKIN_CONFIGURED_KEY, FROST_PUMPKIN);
 
@@ -158,6 +184,12 @@ public class ModFeatures {
     ctx.placedFeatures().register(
         FeatureRegistry.SHADOWVEIL_PLACED_KEY,
         SHADOWVEIL_PLACED);
+    ctx.placedFeatures().register(
+        FeatureRegistry.BLAZING_MARIGOLD_PLACED_KEY,
+        BLAZING_MARIGOLD_PLACED);
+    ctx.placedFeatures().register(
+        FeatureRegistry.SLIME_BERRY_PLACED_KEY,
+        SLIME_BERRY_PLACED);
     ctx.placedFeatures().register(
         FeatureRegistry.SHROOM_PLACED_KEY,
         SHROOM_PLACED);

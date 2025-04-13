@@ -6,7 +6,6 @@ import faceless.artent.potions.block.*;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.registry.FeatureRegistry;
 import net.minecraft.block.*;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -17,28 +16,12 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class ModBlocks {
-
-  /**
-   * A shortcut to always return {@code false} a context predicate, used as
-   * {@code settings.solidBlock(Blocks::never)}.
-   * Copied from new.minecraft.block.Blocks
-   */
-  private static boolean never(BlockState state, BlockView world, BlockPos pos) {
-    return false;
-  }
-
-  private static boolean never(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
-    return false;
-  }
-
   public static Block BrewingCauldron;
   public static Item BrewingCauldronItem;
 
@@ -53,6 +36,12 @@ public final class ModBlocks {
 
   public static Block Shadowveil;
   public static Item ShadowveilItem;
+
+  public static Block BlazingMarigold;
+  public static Item BlazingMarigoldItem;
+
+  public static Block SlimeBerry;
+  public static Item SlimeBerryItem;
 
   public static Block[] berryBush;
   public static Item[] berryBushItem;
@@ -116,7 +105,7 @@ public final class ModBlocks {
 
     pair = register(
         "shroom",
-        (settings) -> new Shroom(settings),
+        faceless.artent.potions.block.Shroom::new,
         Block.Settings
             .copy(Blocks.BROWN_MUSHROOM)
             .mapColor(MapColor.BROWN)
@@ -140,6 +129,22 @@ public final class ModBlocks {
         ModItemGroups.Potions);
     Shadowveil = pair.getLeft();
     ShadowveilItem = pair.getRight();
+
+    pair = register(
+        "blazing_marigold",
+        (settings) -> new FlowerBlock(StatusEffects.FIRE_RESISTANCE, 5, settings),
+        Block.Settings.copy(Blocks.ALLIUM).nonOpaque().luminance((state) -> 5).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS),
+        ModItemGroups.Potions);
+    BlazingMarigold = pair.getLeft();
+    BlazingMarigoldItem = pair.getRight();
+
+    pair = register(
+        "slime_berry",
+        (settings) -> new FlowerBlock(StatusEffects.NAUSEA, 5, settings),
+        Block.Settings.copy(Blocks.ALLIUM).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.SLIME),
+        ModItemGroups.Potions);
+    SlimeBerry = pair.getLeft();
+    SlimeBerryItem = pair.getRight();
 
     berryBush = new Block[4];
     berryBushItem = new Item[4];
