@@ -20,15 +20,18 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class FeatureRegistry {
   public static final Identifier CRIMSON_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_tree");
-  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREE_CONFIGURED_KEY = configuredKeyOf(CRIMSON_TREE_FEATURE_ID);
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREE_CONFIGURED_KEY = configuredKeyOf(
+      CRIMSON_TREE_FEATURE_ID);
   public static RegistryKey<PlacedFeature> CRIMSON_TREE_PLACED_KEY = placedKeyOf(CRIMSON_TREE_FEATURE_ID);
 
   public static final Identifier CRIMSON_MEGA_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_mega_tree");
-  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_MEGA_TREE_CONFIGURED_KEY = configuredKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_MEGA_TREE_CONFIGURED_KEY = configuredKeyOf(
+      CRIMSON_MEGA_TREE_FEATURE_ID);
   public static RegistryKey<PlacedFeature> CRIMSON_MEGA_TREE_PLACED_KEY = placedKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
 
   public static final Identifier CRIMSON_TREES_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_trees");
-  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREES_CONFIGURED_KEY = configuredKeyOf(CRIMSON_TREES_FEATURE_ID);
+  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREES_CONFIGURED_KEY = configuredKeyOf(
+      CRIMSON_TREES_FEATURE_ID);
   public static RegistryKey<PlacedFeature> CRIMSON_TREES_PLACED_KEY = placedKeyOf(CRIMSON_TREES_FEATURE_ID);
 
   public static final Identifier BERRY_BUSH_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "berry_bush");
@@ -37,7 +40,8 @@ public class FeatureRegistry {
   public static final Feature<BerryBushFeatureConfig> BERRY_BUSH_FEATURE = new BerryBushFeature(BerryBushFeatureConfig.CODEC);
 
   public static final Identifier VEGETATION_BLOCK_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "vegetation_bock");
-  public static final Feature<VegetationBlockFeatureConfig> VEGETATION_BLOCK_FEATURE = new VegetationBlockFeature(VegetationBlockFeatureConfig.CODEC);
+  public static final Feature<VegetationBlockFeatureConfig> VEGETATION_BLOCK_FEATURE = new VegetationBlockFeature(
+      VegetationBlockFeatureConfig.CODEC);
 
   public static final Identifier SHADOWVEIL_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "demonveil");
   public static RegistryKey<ConfiguredFeature<?, ?>> SHADOWVEIL_CONFIGURED_KEY = configuredKeyOf(SHADOWVEIL_FEATURE_ID);
@@ -48,7 +52,8 @@ public class FeatureRegistry {
   public static RegistryKey<PlacedFeature> SHROOM_PLACED_KEY = placedKeyOf(SHROOM_FEATURE_ID);
 
   public static final Identifier FROST_PUMPKIN_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "frost_pumpkin");
-  public static RegistryKey<ConfiguredFeature<?, ?>> FROST_PUMPKIN_CONFIGURED_KEY = configuredKeyOf(FROST_PUMPKIN_FEATURE_ID);
+  public static RegistryKey<ConfiguredFeature<?, ?>> FROST_PUMPKIN_CONFIGURED_KEY = configuredKeyOf(
+      FROST_PUMPKIN_FEATURE_ID);
   public static RegistryKey<PlacedFeature> FROST_PUMPKIN_PLACED_KEY = placedKeyOf(FROST_PUMPKIN_FEATURE_ID);
 
   public void register() {
@@ -65,7 +70,14 @@ public class FeatureRegistry {
         GenerationStep.Feature.VEGETAL_DECORATION,
         SHADOWVEIL_PLACED_KEY);
     BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
+        BiomeSelectors.includeByKey(
+            BiomeKeys.DARK_FOREST,
+            BiomeKeys.FOREST,
+            BiomeKeys.MUSHROOM_FIELDS,
+            BiomeKeys.DRIPSTONE_CAVES,
+            BiomeKeys.LUSH_CAVES,
+            BiomeKeys.JUNGLE,
+            BiomeKeys.SPARSE_JUNGLE),
         GenerationStep.Feature.VEGETAL_DECORATION,
         SHROOM_PLACED_KEY);
     BiomeModifications.addFeature(

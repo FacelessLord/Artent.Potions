@@ -116,7 +116,7 @@ public final class ModBlocks {
 
     pair = register(
         "shroom",
-        (settings) -> new MushroomPlantBlock(null, settings),
+        (settings) -> new Shroom(settings),
         Block.Settings
             .copy(Blocks.BROWN_MUSHROOM)
             .mapColor(MapColor.BROWN)
