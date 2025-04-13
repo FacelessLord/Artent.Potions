@@ -10,6 +10,7 @@ import faceless.artent.potions.network.CauldronSyncPayload;
 import faceless.artent.potions.objects.BrewingRecipes;
 import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.objects.ModBlocks;
+import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.registry.BrewingRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BrewingCauldronBlockEntity extends BlockEntity {
   public List<BrewingIngredient> ingredients = new ArrayList<>();
@@ -72,7 +74,9 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
             pos.getZ() + 1 - 2 * one16th);
         var items = world.getEntitiesByClass(ItemEntity.class, box, ie -> BrewingRecipes.IsIngredient(ie.getStack()));
         if (!items.isEmpty()) {
-          var brewingCooldown = state.getBlock() == ModBlocks.BrewingCauldronCopper ? CopperBrewingCooldown : BrewingCooldown;
+          var brewingCooldown = state.getBlock() == ModBlocks.BrewingCauldronCopper
+              ? CopperBrewingCooldown
+              : BrewingCooldown;
           var first = items.getFirst();
           var brewable = (IBrewable) first;
           if ((brewable.getBrewingTime() > brewingCooldown)) {
@@ -81,6 +85,31 @@ public class BrewingCauldronBlockEntity extends BlockEntity {
         }
         waterAmount--;
         fuelAmount--;
+
+        var brewingState = this.getBrewingState();
+        var random = new Random();
+
+        if (!brewingState.IsFinishing() || !(world instanceof ServerWorld serverWorld)) return;
+        serverWorld.spawnParticles(
+            ModParticles.SPLASH,
+            (double) pos.getX() + 0.2d + random.nextDouble() * 0.6d,
+            pos.getY() + waterAmount / 1000f * 15f / 32f + 3 / 8d,
+            (double) pos.getZ() + 0.2d + random.nextDouble() * 0.6d,
+            1,
+            0.0,
+            0.0,
+            0.0,
+            0.001);
+        serverWorld.spawnParticles(
+            ModParticles.BUBBLE,
+            (double) pos.getX() + 0.2d + random.nextDouble() * 0.6d,
+            pos.getY() + waterAmount / 1000f * 15f / 32f + 3 / 8d,
+            (double) pos.getZ() + 0.2d + random.nextDouble() * 0.6d,
+            1,
+            0.0,
+            0.0,
+            0.0,
+            0.001);
       }
       if (world.getTime() % 20 == 0) {
         updateBlock();

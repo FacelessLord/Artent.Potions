@@ -84,6 +84,7 @@ public final class ModBlocks {
             .mapColor(MapColor.GRAY)
             .requiresTool()
             .nonOpaque()
+            .ticksRandomly()
             .luminance(state -> state.get(faceless.artent.potions.block.BrewingCauldron.IS_BURNING) ? 15 : 0)
             .strength(2f),
         ModItemGroups.Potions);
@@ -98,6 +99,7 @@ public final class ModBlocks {
             .mapColor(MapColor.GRAY)
             .requiresTool()
             .nonOpaque()
+            .ticksRandomly()
             .luminance(state -> state.get(faceless.artent.potions.block.BrewingCauldron.IS_BURNING) ? 15 : 0)
             .strength(2f),
         ModItemGroups.Potions);
