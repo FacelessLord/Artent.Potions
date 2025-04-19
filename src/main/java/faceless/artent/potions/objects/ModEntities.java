@@ -1,11 +1,11 @@
 package faceless.artent.potions.objects;
 
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.entity.FrostedGolem;
 import faceless.artent.potions.entity.ManaChicken;
 import faceless.artent.potions.entity.ThrowablePotionPhialEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
@@ -32,4 +32,12 @@ public class ModEntities {
       .build(RegistryKey.of(
           Registries.ENTITY_TYPE.getKey(),
           Identifier.of(ArtentPotions.MODID, "mana_chicken")));
+  public static EntityType<FrostedGolem> FROSTED_GOLEM = EntityType.Builder
+      .create(FrostedGolem::new, SpawnGroup.CREATURE)
+      .dimensions(3, 5.85f)
+      .eyeHeight(5.5f)
+      .maxTrackingRange(10)
+      .build(RegistryKey.of(
+          Registries.ENTITY_TYPE.getKey(),
+          Identifier.of(ArtentPotions.MODID, "frosted_golem")));
 }

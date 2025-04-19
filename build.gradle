@@ -29,9 +29,16 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     mavenLocal()
+//    maven {
+//        name = "Jared"
+//        url = "https://maven.blamejared.com/" // for JEI and Patchouli
+//    }
     maven {
-        name = "Jared"
-        url = "https://maven.blamejared.com/" // for JEI and Patchouli
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroup("software.bernie.geckolib")
+        }
     }
 }
 
@@ -44,7 +51,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "faceless.artent.core:Artent.Core:${project.artent_core_version}"
-    modImplementation "vazkii.patchouli:Patchouli:1.21-87-FABRIC"
+//    modImplementation "vazkii.patchouli:Patchouli:1.21-87-FABRIC"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
 }
 
 processResources {

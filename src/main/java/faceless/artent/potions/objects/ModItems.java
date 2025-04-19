@@ -37,6 +37,7 @@ public final class ModItems {
   public static Item[] berries = new Item[5];
 
   public static Item ManaChickenSpawnEgg;
+  public static Item FrostedGolemSpawnEgg;
   public static Item ManaFeather;
   public static Item Acorn;
   public static Item StoneScale;
@@ -107,6 +108,10 @@ public final class ModItems {
     ManaChickenSpawnEgg = register(
         "mana_chicken_spawn_egg",
         (Item.Settings settings) -> new SpawnEggItem(ModEntities.MANA_CHICKEN, settings),
+        new Item.Settings(), ModItemGroups.Potions);
+    FrostedGolemSpawnEgg = register(
+        "frosted_golem_spawn_egg",
+        (Item.Settings settings) -> new SpawnEggItem(ModEntities.FROSTED_GOLEM, settings),
         new Item.Settings(), ModItemGroups.Potions);
 
     ManaFeather = register(
