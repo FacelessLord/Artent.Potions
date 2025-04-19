@@ -2,7 +2,7 @@ package faceless.artent.potions.client.registry;
 
 
 import faceless.artent.core.registries.IRegistry;
-import faceless.artent.potions.client.entity.FrostedGolemEntityRegistry;
+import faceless.artent.potions.client.entity.FrostedGolemEntityRenderer;
 import faceless.artent.potions.client.entity.ManaChickenEntityRenderer;
 import faceless.artent.potions.objects.ModEntities;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -13,6 +13,6 @@ public class EntityRenderersRegistry implements IRegistry {
   public void register() {
     EntityRendererRegistry.register(ModEntities.POTION_PHIAL, FlyingItemEntityRenderer::new);
     EntityRendererRegistry.register(ModEntities.MANA_CHICKEN, ManaChickenEntityRenderer::new);
-    EntityRendererRegistry.register(ModEntities.FROSTED_GOLEM, FrostedGolemEntityRegistry::new);
+    EntityRendererRegistry.register(ModEntities.FROSTED_GOLEM, FrostedGolemEntityRenderer::new);
   }
 }
