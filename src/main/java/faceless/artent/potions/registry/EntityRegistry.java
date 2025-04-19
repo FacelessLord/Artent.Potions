@@ -16,6 +16,7 @@ public class EntityRegistry implements IRegistry {
   @Override
   public void register() {
     register("potion_phial_entity", ModEntities.POTION_PHIAL);
+    register("frosted_snowball", ModEntities.FROSTED_SNOWBALL);
     register("mana_chicken", ModEntities.MANA_CHICKEN);
     FabricDefaultAttributeRegistry.register(ModEntities.MANA_CHICKEN, ManaChicken.createChickenAttributes());
     register("frosted_golem", ModEntities.FROSTED_GOLEM);

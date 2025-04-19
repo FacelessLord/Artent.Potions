@@ -85,7 +85,7 @@ public class ModPotionEffects {
           AttributeUuids.StoneSkin,
           1.5,
           EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-  public static final StatusEffect FREEZING = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red, false)
+  public static final StatusEffect FREEZING = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.LightBlue, false)
       .addAttributeModifier(
           EntityAttributes.MOVEMENT_SPEED,
           AttributeUuids.Freezing,

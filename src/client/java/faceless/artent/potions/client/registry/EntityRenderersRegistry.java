@@ -12,6 +12,7 @@ public class EntityRenderersRegistry implements IRegistry {
   @Override
   public void register() {
     EntityRendererRegistry.register(ModEntities.POTION_PHIAL, FlyingItemEntityRenderer::new);
+    EntityRendererRegistry.register(ModEntities.FROSTED_SNOWBALL, FlyingItemEntityRenderer::new);
     EntityRendererRegistry.register(ModEntities.MANA_CHICKEN, ManaChickenEntityRenderer::new);
     EntityRendererRegistry.register(ModEntities.FROSTED_GOLEM, FrostedGolemEntityRenderer::new);
   }
