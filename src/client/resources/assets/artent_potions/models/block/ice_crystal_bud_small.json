@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "artent_potions:block/ice_crystal_bud_small"
+  }
+}

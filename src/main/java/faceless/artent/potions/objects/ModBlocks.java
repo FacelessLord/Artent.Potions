@@ -64,8 +64,19 @@ public final class ModBlocks {
   public static Block FrostPumpkin;
   public static Item FrostPumpkinItem;
 
+  public static Block IceCrystalBlock;
+  public static Item IceCrystalBlock_Item;
+  public static IceCrystalCluster IceCrystalBud_Small;
+  public static Item IceCrystalBud_Small_Item;
+  public static IceCrystalCluster IceCrystalBud_Medium;
+  public static Item IceCrystalBud_Medium_Item;
+  public static IceCrystalCluster IceCrystalBud_Large;
+  public static Item IceCrystalBud_Large_Item;
+  public static IceCrystalCluster IceCrystalBud_Cluster;
+  public static Item IceCrystalBud_Cluster_Item;
+
   public void register() {
-    var pair = register(
+    var BrewingCauldronPair = register(
         "cauldron",
         BrewingCauldron::new,
         Block.Settings
@@ -77,10 +88,10 @@ public final class ModBlocks {
             .luminance(state -> state.get(faceless.artent.potions.block.BrewingCauldron.IS_BURNING) ? 15 : 0)
             .strength(2f),
         ModItemGroups.Potions);
-    BrewingCauldron = pair.getLeft();
-    BrewingCauldronItem = pair.getRight();
+    BrewingCauldron = BrewingCauldronPair.getLeft();
+    BrewingCauldronItem = BrewingCauldronPair.getRight();
 
-    pair = register(
+    var BrewingCauldronCopperPair = register(
         "cauldron_copper",
         BrewingCauldronCopper::new,
         Block.Settings
@@ -92,18 +103,18 @@ public final class ModBlocks {
             .luminance(state -> state.get(faceless.artent.potions.block.BrewingCauldron.IS_BURNING) ? 15 : 0)
             .strength(2f),
         ModItemGroups.Potions);
-    BrewingCauldronCopper = pair.getLeft();
-    BrewingCauldronCopperItem = pair.getRight();
+    BrewingCauldronCopper = BrewingCauldronCopperPair.getLeft();
+    BrewingCauldronCopperItem = BrewingCauldronCopperPair.getRight();
 
-    pair = register(
+    var CauldronFluidPair = register(
         "cauldron_fluid",
         Block::new,
         Block.Settings.copy(Blocks.WATER).mapColor(MapColor.GRAY).nonOpaque().dropsNothing(),
         null);
-    CauldronFluid = pair.getLeft();
-    CauldronFluidItem = pair.getRight();
+    CauldronFluid = CauldronFluidPair.getLeft();
+    CauldronFluidItem = CauldronFluidPair.getRight();
 
-    pair = register(
+    var ShroomPair = register(
         "shroom",
         faceless.artent.potions.block.Shroom::new,
         Block.Settings
@@ -118,48 +129,54 @@ public final class ModBlocks {
             .postProcess((a, b, c) -> true),
         ModItemGroups.Potions,
         faceless.artent.potions.item.ShroomItem::new
-                   );
-    Shroom = pair.getLeft();
-    ShroomItem = pair.getRight();
+                                  );
+    Shroom = ShroomPair.getLeft();
+    ShroomItem = ShroomPair.getRight();
 
-    pair = register(
+    var ShadowveilPair = register(
         "shadowveil",
         (settings) -> new FlowerBlock(StatusEffects.BAD_OMEN, 5, settings),
         Block.Settings.copy(Blocks.ALLIUM).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
-    Shadowveil = pair.getLeft();
-    ShadowveilItem = pair.getRight();
+    Shadowveil = ShadowveilPair.getLeft();
+    ShadowveilItem = ShadowveilPair.getRight();
 
-    pair = register(
+    var BlazingMarigoldPair = register(
         "blazing_marigold",
         (settings) -> new FlowerBlock(StatusEffects.FIRE_RESISTANCE, 5, settings),
-        Block.Settings.copy(Blocks.ALLIUM).nonOpaque().luminance((state) -> 5).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS),
+        Block.Settings
+            .copy(Blocks.ALLIUM)
+            .nonOpaque()
+            .luminance((state) -> 5)
+            .noCollision()
+            .breakInstantly()
+            .sounds(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
-    BlazingMarigold = pair.getLeft();
-    BlazingMarigoldItem = pair.getRight();
+    BlazingMarigold = BlazingMarigoldPair.getLeft();
+    BlazingMarigoldItem = BlazingMarigoldPair.getRight();
 
-    pair = register(
+    var SlimeBerryPair = register(
         "slime_berry",
         (settings) -> new FlowerBlock(StatusEffects.NAUSEA, 5, settings),
         Block.Settings.copy(Blocks.ALLIUM).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.SLIME),
         ModItemGroups.Potions);
-    SlimeBerry = pair.getLeft();
-    SlimeBerryItem = pair.getRight();
+    SlimeBerry = SlimeBerryPair.getLeft();
+    SlimeBerryItem = SlimeBerryPair.getRight();
 
     berryBush = new Block[4];
     berryBushItem = new Item[4];
     for (int type = 0; type < berryBush.length; type++) {
       int finalType = type;
-      pair = register(
+      var berryBushPair = register(
           Ingredients.GetBerryName(type) + "_bush",
           (settings) -> new BerryBush(finalType, settings),
           Block.Settings.copy(Blocks.ACACIA_LEAVES).mapColor(MapColor.GREEN).nonOpaque().sounds(BlockSoundGroup.GRASS),
           ModItemGroups.Potions);
-      berryBush[type] = pair.getLeft();
-      berryBushItem[type] = pair.getRight();
+      berryBush[type] = berryBushPair.getLeft();
+      berryBushItem[type] = berryBushPair.getRight();
     }
 
-    pair = register(
+    var CrimsonwoodLogPair = register(
         "crimsonwood_log",
         PillarBlock::new,
         Block.Settings
@@ -169,18 +186,18 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.WOOD)
             .burnable(),
         ModItemGroups.Potions);
-    CrimsonwoodLog = pair.getLeft();
-    CrimsonwoodLogItem = pair.getRight();
+    CrimsonwoodLog = CrimsonwoodLogPair.getLeft();
+    CrimsonwoodLogItem = CrimsonwoodLogPair.getRight();
 
-    pair = register(
+    var CrimsonwoodLeavesPair = register(
         "crimsonwood_leaves",
         CrimsonwoodLeaves::new,
         Blocks.createLeavesSettings(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
-    CrimsonwoodLeaves = pair.getLeft();
-    CrimsonwoodLeavesItem = pair.getRight();
+    CrimsonwoodLeaves = CrimsonwoodLeavesPair.getLeft();
+    CrimsonwoodLeavesItem = CrimsonwoodLeavesPair.getRight();
 
-    pair = register(
+    var CrimsonwoodPlanksPair = register(
         "crimsonwood_planks",
         Block::new,
         Block.Settings
@@ -190,8 +207,8 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.WOOD)
             .burnable(),
         ModItemGroups.Potions);
-    CrimsonwoodPlanks = pair.getLeft();
-    CrimsonwoodPlanksItem = pair.getRight();
+    CrimsonwoodPlanks = CrimsonwoodPlanksPair.getLeft();
+    CrimsonwoodPlanksItem = CrimsonwoodPlanksPair.getRight();
 
     var crimsonSaplingGenerator = new SaplingGenerator(
         ArtentPotions.MODID + "_crimsonwood",
@@ -199,7 +216,7 @@ public final class ModBlocks {
         Optional.of(FeatureRegistry.CRIMSON_TREE_CONFIGURED_KEY),
         Optional.empty());
 
-    pair = register(
+    var CrimsonwoodSaplingPair = register(
         "crimsonwood_sapling",
         (settings) -> new CrimsonwoodSapling(crimsonSaplingGenerator, settings),
         Block.Settings
@@ -210,10 +227,10 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.GRASS)
             .burnable(),
         ModItemGroups.Potions);
-    CrimsonwoodSapling = pair.getLeft();
-    CrimsonwoodSaplingItem = pair.getRight();
+    CrimsonwoodSapling = CrimsonwoodSaplingPair.getLeft();
+    CrimsonwoodSaplingItem = CrimsonwoodSaplingPair.getRight();
 
-    pair = register(
+    var FermentingBarrelPair = register(
         "fermenting_barrel",
         FermentingBarrel::new,
         Block.Settings
@@ -223,10 +240,10 @@ public final class ModBlocks {
             .strength(2.0f, 3.0f)
             .sounds(BlockSoundGroup.WOOD),
         ModItemGroups.Potions);
-    FermentingBarrel = pair.getLeft();
-    FermentingBarrelItem = pair.getRight();
+    FermentingBarrel = FermentingBarrelPair.getLeft();
+    FermentingBarrelItem = FermentingBarrelPair.getRight();
 
-    pair = register(
+    var FrostPumpkinPair = register(
         "frost_pumpkin",
         FrostPumpkin::new,
         Block.Settings
@@ -234,8 +251,66 @@ public final class ModBlocks {
             .mapColor(MapColor.CYAN)
             .nonOpaque(),
         ModItemGroups.Potions);
-    FrostPumpkin = pair.getLeft();
-    FrostPumpkinItem = pair.getRight();
+    FrostPumpkin = FrostPumpkinPair.getLeft();
+    FrostPumpkinItem = FrostPumpkinPair.getRight();
+
+    var IceCrystalBlockPair = register(
+        "ice_crystal_block",
+        Block::new,
+        Block.Settings
+            .copy(Blocks.AMETHYST_BLOCK)
+            .mapColor(MapColor.CYAN)
+            .nonOpaque(),
+        ModItemGroups.Potions);
+    IceCrystalBlock = IceCrystalBlockPair.getLeft();
+    IceCrystalBlock_Item = IceCrystalBlockPair.getRight();
+
+    var IceCrystalBud_SmallPair = register(
+        "ice_crystal_bud_small",
+        (settings) -> new IceCrystalCluster(3.0f, 4.0f, settings),
+        Block.Settings
+            .copy(Blocks.SMALL_AMETHYST_BUD)
+            .mapColor(MapColor.CYAN)
+            .nonOpaque(),
+        ModItemGroups.Potions);
+    IceCrystalBud_Small = IceCrystalBud_SmallPair.getLeft();
+    IceCrystalBud_Small_Item = IceCrystalBud_SmallPair.getRight();
+
+    var IceCrystalBud_MediumPair = register(
+        "ice_crystal_bud_medium",
+        (settings) -> new IceCrystalCluster(4.0f, 3.0f, settings),
+        Block.Settings
+            .copy(Blocks.MEDIUM_AMETHYST_BUD)
+            .mapColor(MapColor.CYAN)
+            .ticksRandomly()
+            .nonOpaque(),
+        ModItemGroups.Potions);
+    IceCrystalBud_Medium = IceCrystalBud_MediumPair.getLeft();
+    IceCrystalBud_Medium_Item = IceCrystalBud_MediumPair.getRight();
+
+    var IceCrystalBud_LargePair = register(
+        "ice_crystal_bud_large",
+        (settings) -> new IceCrystalCluster(5.0f, 3.0f, settings),
+        Block.Settings
+            .copy(Blocks.LARGE_AMETHYST_BUD)
+            .mapColor(MapColor.CYAN)
+            .ticksRandomly()
+            .nonOpaque(),
+        ModItemGroups.Potions);
+    IceCrystalBud_Large = IceCrystalBud_LargePair.getLeft();
+    IceCrystalBud_Large_Item = IceCrystalBud_LargePair.getRight();
+
+    var IceCrystalBud_ClusterPair = register(
+        "ice_crystal_cluster",
+        (settings) -> new IceCrystalCluster(7.0f, 3.0f, settings),
+        Block.Settings
+            .copy(Blocks.AMETHYST_CLUSTER)
+            .mapColor(MapColor.CYAN)
+            .ticksRandomly()
+            .nonOpaque(),
+        ModItemGroups.Potions);
+    IceCrystalBud_Cluster = IceCrystalBud_ClusterPair.getLeft();
+    IceCrystalBud_Cluster_Item = IceCrystalBud_ClusterPair.getRight();
 
     FireBlock fireBlock = (FireBlock) Blocks.FIRE;
     fireBlock.registerFlammableBlock(CrimsonwoodLog, 5, 20);
@@ -244,13 +319,13 @@ public final class ModBlocks {
     fireBlock.registerFlammableBlock(CrimsonwoodSapling, 30, 60);
   }
 
-  public static Pair<Block, Item> register(
+  public static <TBlock extends Block> Pair<TBlock, Item> register(
       String keyString,
-      Function<AbstractBlock.Settings, Block> factory,
+      Function<AbstractBlock.Settings, TBlock> factory,
       AbstractBlock.Settings settings,
       ArtentItemGroupBuilder groupBuilder) {
     var key = keyOf(keyString);
-    Block block = factory.apply(settings.registryKey(key));
+    TBlock block = factory.apply(settings.registryKey(key));
     Registry.register(Registries.BLOCK, key, block);
 
     var itemKey = keyOf(key);

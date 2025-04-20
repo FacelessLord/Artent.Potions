@@ -1,6 +1,8 @@
 package faceless.artent.potions.entity;
 
 import faceless.artent.potions.api.ActionQueue;
+import faceless.artent.potions.block.IceCrystalCluster;
+import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.EntityType;
@@ -23,8 +25,10 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -140,6 +144,25 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
 
           entity.addStatusEffect(new StatusEffectInstance(StatusEffectsRegistry.FREEZING, frozenTime), this);
           entity.setFrozenTicks(entity.getFrozenTicks() + frozenTime / 10);
+        }
+
+        if (serverWorld.getTime() % 20 == 1) {
+          var x = serverWorld.random.nextInt(8) - 4;
+          var z = serverWorld.random.nextInt(8) - 4;
+
+          var growPos = serverWorld.getTopPosition(
+              Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+              new BlockPos(x + this.getBlockX(), this.getBlockY(), z + this.getBlockZ())).down();
+          var blockState = serverWorld.getBlockState(growPos);
+          if (blockState.getBlock() instanceof IceCrystalCluster cluster) {
+            var nextState = IceCrystalCluster.createNextStage(blockState);
+            serverWorld.setBlockState(growPos, nextState);
+          } else if (ModBlocks.IceCrystalBud_Cluster.canPlaceAt(
+              ModBlocks.IceCrystalBud_Small.getDefaultState(),
+              serverWorld,
+              growPos)) {
+            serverWorld.setBlockState(growPos.up(), ModBlocks.IceCrystalBud_Small.getDefaultState());
+          }
         }
       }
     } else if (isFrozen) {

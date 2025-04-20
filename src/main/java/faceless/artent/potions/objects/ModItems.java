@@ -41,6 +41,7 @@ public final class ModItems {
   public static Item ManaFeather;
   public static Item Acorn;
   public static Item StoneScale;
+  public static Item IceCrystalShard;
 
   public void register() {
     for (int i = 0; i < berries.length; i++) {
@@ -126,6 +127,11 @@ public final class ModItems {
         ModItemGroups.Potions);
     StoneScale = register(
         "stone_scale",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    IceCrystalShard = register(
+        "ice_crystal_shard",
         Item::new,
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
