@@ -47,7 +47,7 @@ public class ModEntities {
       .create(FrostedGolem::new, SpawnGroup.CREATURE)
       .dimensions(3, 5.85f)
       .eyeHeight(5.5f)
-      .maxTrackingRange(10)
+      .maxTrackingRange(40)
       .build(RegistryKey.of(
           Registries.ENTITY_TYPE.getKey(),
           Identifier.of(ArtentPotions.MODID, "frosted_golem")));

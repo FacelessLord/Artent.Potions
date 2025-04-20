@@ -1,6 +1,7 @@
 package faceless.artent.potions.entity;
 
 import faceless.artent.potions.api.ActionQueue;
+import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,8 +19,11 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -104,9 +109,12 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     super.tick();
     this.actionQueue.tickQueue();
 
-
     var isFrozen = this.getDataTracker().get(IS_FROZEN);
-    if (this.getWorld() instanceof ServerWorld) {
+
+    if (isFrozen && !this.goalSelector.getGoals().isEmpty()) {
+      this.onFrozen();
+    }
+    if (this.getWorld() instanceof ServerWorld serverWorld) {
       if (this.hasStatusEffect(StatusEffectsRegistry.FREEZING)) {
         if (!isFrozen) {
           this.getDataTracker().set(IS_FROZEN, true);
@@ -119,6 +127,40 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
         this.markEffectsDirty();
         isFrozen = false;
         this.initGoals();
+      }
+
+      if (isFrozen) {
+        var entities = serverWorld.getEntitiesByClass(
+            LivingEntity.class,
+            Box.of(this.getBlockPos().down(6).toCenterPos(), 9, 12, 9),
+            e -> e != this);
+        for (var entity : entities) {
+          var dist = this.getBlockPos().toCenterPos().subtract(entity.getPos()).length();
+          var frozenTime = 100 - (int) (dist * dist);
+
+          entity.addStatusEffect(new StatusEffectInstance(StatusEffectsRegistry.FREEZING, frozenTime), this);
+          entity.setFrozenTicks(entity.getFrozenTicks() + frozenTime / 10);
+        }
+      }
+    } else if (isFrozen) {
+      for (int i = 0; i < 40; i++) {
+        var world = this.getWorld();
+        var angle = world.random.nextDouble() * Math.PI * 2;
+        var height = world.random.nextDouble() * 12 - 6;
+        var range = Math.sqrt(world.random.nextDouble()) * 6 + 3;
+
+        var x = this.getX() + Math.cos(angle) * range;
+        var y = this.getY() + height;
+        var z = this.getZ() + Math.sin(angle) * range;
+
+        world.addParticle(
+            ModParticles.SNOW_STORM,
+            x,
+            y,
+            z,
+            Math.sin(angle) * 0.1 * range,
+            0.0,
+            -Math.cos(angle) * 0.1 * range);
       }
     }
 
