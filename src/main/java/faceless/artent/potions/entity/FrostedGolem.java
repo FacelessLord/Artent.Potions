@@ -5,6 +5,8 @@ import faceless.artent.potions.block.IceCrystalCluster;
 import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -21,8 +23,7 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -30,11 +31,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
@@ -47,16 +50,10 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   private final AnimationController<FrostedGolem> animationController;
   private final ActionQueue actionQueue;
 
-  public FrostedGolem(
-      EntityType<? extends SnowGolemEntity> entityType,
-      World world) {
+  public FrostedGolem(EntityType<? extends SnowGolemEntity> entityType, World world) {
     super(entityType, world);
     this.instanceCache = GeckoLibUtil.createInstanceCache(this);
-    this.animationController = new AnimationController<>(
-        this,
-        "full",
-        5,
-        this::handleAnimation);
+    this.animationController = new AnimationController<>(this, "full", 5, this::handleAnimation);
     this.actionQueue = new ActionQueue(this.age);
   }
 
@@ -82,7 +79,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   public static DefaultAttributeContainer.Builder createFrostedGolemAttributes() {
     return MobEntity
         .createMobAttributes()
-        .add(EntityAttributes.MAX_HEALTH, 4.0F)
+        .add(EntityAttributes.MAX_HEALTH, 40.0F)
         .add(EntityAttributes.MOVEMENT_SPEED, 0.2F)
         .add(EntityAttributes.FOLLOW_RANGE, 20F)
         .add(EntityAttributes.SAFE_FALL_DISTANCE, 5F);
@@ -112,83 +109,30 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   public void tick() {
     super.tick();
     this.actionQueue.tickQueue();
+//
+//    var currentAnimation = animationController.getCurrentAnimation();
+//    if(currentAnimation != null && Objects.equals(currentAnimation.animation().name(), "ground_down")) {
+//      this.fallDistance = -3;
+//    }
 
-    var isFrozen = this.getDataTracker().get(IS_FROZEN);
+    var isFrozen = getIsFrozen();
 
     if (isFrozen && !this.goalSelector.getGoals().isEmpty()) {
-      this.onFrozen();
-    }
-    if (this.getWorld() instanceof ServerWorld serverWorld) {
-      if (this.hasStatusEffect(StatusEffectsRegistry.FREEZING)) {
-        if (!isFrozen) {
-          this.getDataTracker().set(IS_FROZEN, true);
-          this.markEffectsDirty();
-          isFrozen = true;
-          this.onFrozen();
-        }
-      } else if (isFrozen) {
-        this.getDataTracker().set(IS_FROZEN, false);
-        this.markEffectsDirty();
-        isFrozen = false;
-        this.initGoals();
-      }
-
-      if (isFrozen) {
-        var entities = serverWorld.getEntitiesByClass(
-            LivingEntity.class,
-            Box.of(this.getBlockPos().down(6).toCenterPos(), 9, 12, 9),
-            e -> e != this);
-        for (var entity : entities) {
-          var dist = this.getBlockPos().toCenterPos().subtract(entity.getPos()).length();
-          var frozenTime = 100 - (int) (dist * dist);
-
-          entity.addStatusEffect(new StatusEffectInstance(StatusEffectsRegistry.FREEZING, frozenTime), this);
-          entity.setFrozenTicks(entity.getFrozenTicks() + frozenTime / 10);
-        }
-
-        if (serverWorld.getTime() % 20 == 1) {
-          var x = serverWorld.random.nextInt(8) - 4;
-          var z = serverWorld.random.nextInt(8) - 4;
-
-          var growPos = serverWorld.getTopPosition(
-              Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-              new BlockPos(x + this.getBlockX(), this.getBlockY(), z + this.getBlockZ())).down();
-          var blockState = serverWorld.getBlockState(growPos);
-          if (blockState.getBlock() instanceof IceCrystalCluster cluster) {
-            var nextState = IceCrystalCluster.createNextStage(blockState);
-            serverWorld.setBlockState(growPos, nextState);
-          } else if (ModBlocks.IceCrystalBud_Cluster.canPlaceAt(
-              ModBlocks.IceCrystalBud_Small.getDefaultState(),
-              serverWorld,
-              growPos)) {
-            serverWorld.setBlockState(growPos.up(), ModBlocks.IceCrystalBud_Small.getDefaultState());
-          }
-        }
-      }
-    } else if (isFrozen) {
-      for (int i = 0; i < 40; i++) {
-        var world = this.getWorld();
-        var angle = world.random.nextDouble() * Math.PI * 2;
-        var height = world.random.nextDouble() * 12 - 6;
-        var range = Math.sqrt(world.random.nextDouble()) * 6 + 3;
-
-        var x = this.getX() + Math.cos(angle) * range;
-        var y = this.getY() + height;
-        var z = this.getZ() + Math.sin(angle) * range;
-
-        world.addParticle(
-            ModParticles.SNOW_STORM,
-            x,
-            y,
-            z,
-            Math.sin(angle) * 0.1 * range,
-            0.0,
-            -Math.cos(angle) * 0.1 * range);
-      }
+      this.updateGoalsWhenFrozen();
     }
 
     if (isFrozen) {
-      frozenTick();
+      frozenAnimationTick();
+
+      if (this.getWorld() instanceof ServerWorld serverWorld) {
+        freezeNearbyEntities(serverWorld);
+
+        if (serverWorld.getTime() % 20 == 1) {
+          generateCrystalClusters(serverWorld);
+        }
+      } else {
+        spawnSnowStormParticles();
+      }
     } else {
       var animation = animationController.getCurrentAnimation();
       if (this.getVelocity().length() > 0.05) {
@@ -199,7 +143,123 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     }
   }
 
-  private void frozenTick() {
+  private void spawnSnowStormParticles() {
+    for (int i = 0; i < 160; i++) {
+      var world = this.getWorld();
+      var angle = world.random.nextDouble() * Math.PI * 2;
+      var height = world.random.nextDouble() * 12 - 6;
+      var range = Math.sqrt(world.random.nextDouble()) * 6 + 3;
+
+      var x = this.getX() + Math.cos(angle) * range;
+      var y = this.getY() + height;
+      var z = this.getZ() + Math.sin(angle) * range;
+
+      world.addParticle(
+          ModParticles.SNOW_STORM,
+          x,
+          y,
+          z,
+          Math.sin(angle) * 0.1 * range,
+          0.0,
+          -Math.cos(angle) * 0.1 * range);
+    }
+  }
+
+  private void generateCrystalClusters(ServerWorld serverWorld) {
+    var angle = serverWorld.random.nextDouble() * Math.TAU;
+    var range = serverWorld.random.nextInt(4) + 3;
+    var x = (int) Math.floor(range * Math.sin(angle));
+    var z = (int) Math.floor(range * Math.cos(angle));
+
+    var growPos = serverWorld.getTopPosition(
+        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        new BlockPos(
+            x + this.getBlockX(),
+            this.getBlockY(),
+            z + this.getBlockZ())).down();
+
+    var isSnowOnTop = serverWorld.getBlockState(growPos.up()).isIn(BlockTags.SNOW);
+    if (isSnowOnTop) {
+      growPos = growPos.up();
+    }
+    var blockState = serverWorld.getBlockState(growPos);
+
+    var canPlaceCluster = ModBlocks.IceCrystalBud_Cluster.canPlaceAt(
+        ModBlocks.IceCrystalBud_Small.getDefaultState(),
+        serverWorld,
+        growPos);
+
+    var targetIsCluster = blockState.getBlock() instanceof IceCrystalCluster;
+
+    if (targetIsCluster) {
+      var nextState = IceCrystalCluster.createNextStage(blockState);
+      serverWorld.setBlockState(growPos, nextState);
+    } else if (!isSnowOnTop) {
+      serverWorld.setBlockState(growPos.up(), Blocks.SNOW.getDefaultState());
+    } else if (canPlaceCluster) {
+      serverWorld.setBlockState(growPos, ModBlocks.IceCrystalBud_Small.getDefaultState());
+    }
+  }
+
+  private void freezeNearbyEntities(ServerWorld serverWorld) {
+    var entities = serverWorld.getEntitiesByClass(
+        LivingEntity.class,
+        Box.of(this.getBlockPos().down(6).toCenterPos(), 9, 12, 9),
+        e -> e != this);
+    for (var entity : entities) {
+      var dist = this.getBlockPos().toCenterPos().subtract(entity.getPos()).length();
+      var frozenTime = 100 - (int) (dist * dist);
+
+      entity.addStatusEffect(new StatusEffectInstance(StatusEffectsRegistry.FREEZING, frozenTime), this);
+      entity.setFrozenTicks(entity.getFrozenTicks() + frozenTime / 10);
+    }
+  }
+
+  private Boolean getIsFrozen() {
+    return this.getDataTracker().get(IS_FROZEN);
+  }
+
+  private void setIsFrozen(boolean isFrozen) {
+    this.getDataTracker().set(IS_FROZEN, isFrozen);
+  }
+
+  @Override
+  protected void onStatusEffectApplied(StatusEffectInstance effect, @Nullable Entity source) {
+    super.onStatusEffectApplied(effect, source);
+    var isServer = this.getWorld() instanceof ServerWorld;
+    var freezingEffectAdded = effect.getEffectType() == StatusEffectsRegistry.FREEZING;
+    var isFrozen = getIsFrozen();
+
+    if (isServer && freezingEffectAdded && !isFrozen) {
+      setIsFrozen(true);
+      this.markEffectsDirty();
+      this.updateGoalsWhenFrozen();
+    }
+  }
+
+  @Override
+  protected void onStatusEffectsRemoved(Collection<StatusEffectInstance> effects) {
+    super.onStatusEffectsRemoved(effects);
+    var isServer = this.getWorld() instanceof ServerWorld;
+    var freezingEffectRemoved = effects
+        .stream()
+        .anyMatch(effect -> effect.getEffectType() == StatusEffectsRegistry.FREEZING);
+    var isFrozen = getIsFrozen();
+
+    if (isServer && freezingEffectRemoved && isFrozen) {
+      setIsFrozen(false);
+      this.markEffectsDirty();
+      this.initGoals();
+
+      this.fallDistance = -4;
+      var animation = animationController.getCurrentAnimation();
+      if (animation == null || !Objects.equals(animation.animation().name(), "ground_down")) {
+        this.triggerAnim("full", "ground_down");
+      }
+    }
+  }
+
+  private void frozenAnimationTick() {
     var world = this.getWorld();
     var pos = this.getBlockPos();
     var under1 = world.getBlockState(pos.down());
@@ -214,7 +274,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     }
   }
 
-  private void onFrozen() {
+  private void updateGoalsWhenFrozen() {
     this.goalSelector.clear(goal -> true);
     this.targetSelector.clear(goal -> true);
   }
@@ -225,16 +285,12 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     this.actionQueue.enqueueAction(
         () -> {
           var handVec = this.getRotationVector(this.getPitch(), this.getHeadYaw()).multiply(3);
-          var snowballPos = new Vec3d(
-              this.getX() + handVec.getX(),
-              this.getEyeY(),
-              this.getZ() + handVec.getZ());
+          var snowballPos = new Vec3d(this.getX() + handVec.getX(), this.getEyeY(), this.getZ() + handVec.getZ());
           var d = target.getX() - snowballPos.getX();
           var e = target.getEyeY() - snowballPos.getY();
           var f = target.getZ() - snowballPos.getZ();
 
-          var pitch = (float) -(Math.atan2(e, Math.hypot(d, f)) * 180 /
-                                Math.PI);
+          var pitch = (float) -(Math.atan2(e, Math.hypot(d, f)) * 180 / Math.PI);
           var yaw = (float) -(Math.atan2(f, -d) * 180 / Math.PI - 90);
 
           this.setYaw(yaw);
@@ -251,10 +307,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
                 itemStack);
             snowball.setOwner(this);
             snowball.setVelocity(this.getRotationVector().multiply(2));
-            ProjectileEntity.spawn(
-                snowball,
-                serverWorld,
-                itemStack);
+            ProjectileEntity.spawn(snowball, serverWorld, itemStack);
           }
 
           this.playSound(
@@ -272,13 +325,13 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   @Override
   public void readCustomDataFromNbt(NbtCompound nbt) {
     super.readCustomDataFromNbt(nbt);
-    this.getDataTracker().set(IS_FROZEN, nbt.getBoolean("isFrozen"));
+    setIsFrozen(nbt.getBoolean("isFrozen"));
   }
 
   @Override
   public void writeCustomDataToNbt(NbtCompound nbt) {
     super.writeCustomDataToNbt(nbt);
-    nbt.putBoolean("isFrozen", this.getDataTracker().get(IS_FROZEN));
+    nbt.putBoolean("isFrozen", getIsFrozen());
   }
 
   @Override
@@ -292,7 +345,8 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     controllerRegistrar.add(animationController
                                 .triggerableAnim("attack", ATTACK)
                                 .triggerableAnim("walk", WALK)
-                                .triggerableAnim("flight", FLIGHT));
+                                .triggerableAnim("flight", FLIGHT)
+                                .triggerableAnim("ground_down", GROUND_DOWN));
   }
 
   @Override
