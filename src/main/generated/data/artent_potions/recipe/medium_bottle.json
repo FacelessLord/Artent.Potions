@@ -7,11 +7,12 @@
     "g": "minecraft:glass"
   },
   "pattern": [
-    "c",
-    "g"
+    " c ",
+    "g g",
+    " g "
   ],
   "result": {
-    "count": 3,
-    "id": "artent_potions:small_concentrate"
+    "count": 1,
+    "id": "artent_potions:medium_bottle"
   }
 }

@@ -13,17 +13,18 @@ public class ArtentClientHook {
 
   public void loadClient() {
     System.out.println("Artent.Potions Network Hook client side load");
-    ClientPlayNetworking.registerGlobalReceiver(CauldronSyncPayload.PayloadId, (payload, context) -> {
-      BlockPos pos = payload.pos();
-      var client = context.client();
-      client.execute(() -> {
-        if (client.player == null) return;
-        var world = client.player.getWorld();
-        if (world == null) return;
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (!(blockEntity instanceof BrewingCauldronBlockEntity cauldron) || blockEntity.getWorld() == null) return;
-        cauldron.acceptPayload(payload);
-      });
-    });
+    ClientPlayNetworking.registerGlobalReceiver(
+        CauldronSyncPayload.PayloadId, (payload, context) -> {
+          BlockPos pos = payload.pos();
+          var client = context.client();
+          client.execute(() -> {
+            if (client.player == null) return;
+            var world = client.player.getWorld();
+            if (world == null) return;
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (!(blockEntity instanceof BrewingCauldronBlockEntity cauldron) || blockEntity.getWorld() == null) return;
+            cauldron.acceptPayload(payload);
+          });
+        });
   }
 }

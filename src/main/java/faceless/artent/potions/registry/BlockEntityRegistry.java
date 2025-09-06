@@ -17,10 +17,11 @@ import net.minecraft.util.Identifier;
 public class BlockEntityRegistry implements IRegistry {
     @Override
     public void register() {
-        ModBlockEntities.BrewingCauldron = register(BrewingCauldronBlockEntity::new,
-                "cauldron_entity",
-                ModBlocks.BrewingCauldron,
-                ModBlocks.BrewingCauldronCopper);
+        ModBlockEntities.BrewingCauldron = register(
+            BrewingCauldronBlockEntity::new,
+            "cauldron_entity",
+            ModBlocks.BrewingCauldron,
+            ModBlocks.BrewingCauldronCopper);
         ModBlockEntities.FermentingBarrel = register(FermentingBarrelBlockEntity::new,
                 "fermenting_barrel",
                 ModBlocks.FermentingBarrel);

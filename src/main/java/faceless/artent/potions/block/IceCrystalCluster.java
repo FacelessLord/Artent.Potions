@@ -109,6 +109,17 @@ public class IceCrystalCluster extends Block implements Waterloggable {
   }
 
   @Override
+  public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    super.randomTick(state, world, pos, random);
+    var coldModifier = world.getBiome(pos).value().canSetSnow(world, pos) ? 0 : 0.1;
+    var lightModifier = Math.max(0, (world.getLightLevel(LightType.BLOCK, pos) - 7) / 45f);
+    if (world.random.nextDouble() > 1 - lightModifier - coldModifier) {
+      world.setBlockState(pos, createPrevStage(state));
+    }
+  }
+
+
+  @Override
   @Nullable
   public BlockState getPlacementState(ItemPlacementContext ctx) {
     World worldAccess = ctx.getWorld();
@@ -175,7 +186,9 @@ public class IceCrystalCluster extends Block implements Waterloggable {
   public static BlockState createPrevStage(BlockState state) {
     var prevBlock = getPrevBlock(state.getBlock());
     if (prevBlock == Blocks.AIR) {
-      return state.get(WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+      return state.get(WATERLOGGED)
+          ? Blocks.WATER.getDefaultState()
+          : Blocks.WATER.getDefaultState().with(FluidBlock.LEVEL, 5);
     }
     return prevBlock
         .getDefaultState()

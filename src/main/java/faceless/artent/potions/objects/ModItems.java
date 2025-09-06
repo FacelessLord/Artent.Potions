@@ -15,25 +15,23 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
 import java.util.function.Function;
 
 import static faceless.artent.potions.registry.DataComponentRegistry.CONCENTRATE_AMOUNT;
 import static faceless.artent.potions.registry.DataComponentRegistry.POTION_KEY;
 
 public final class ModItems {
-  public static Item EmptyPhial;
-  public static Item EmptyPhialExplosive;
-  public static Item PotionPhial;
-  public static Item PotionPhialExplosive;
-
   public static FoodComponent Berry = new FoodComponent(2, 0.1f, false);
 
   public static Item CrimsonLeaf;
   public static Item GoldenBucket;
-  public static Item GoldenBucketFilled;
-  public static Item SmallConcentrate;
-  public static Item MediumConcentrate;
-  public static Item BigConcentrate;
+  public static Item SmallBottleExplosive;
+  public static Item MediumBottleExplosive;
+  public static Item BigBottleExplosive;
+  public static Item SmallBottle;
+  public static Item MediumBottle;
+  public static Item BigBottle;
   public static Item[] berries = new Item[5];
 
   public static Item ManaChickenSpawnEgg;
@@ -53,56 +51,59 @@ public final class ModItems {
     }
 
     CrimsonLeaf = register("crimson_leaf", Item::new, new Item.Settings().maxCount(64), ModItemGroups.Potions);
-    GoldenBucket = register("golden_bucket", Item::new, new Item.Settings().maxCount(1), ModItemGroups.Potions);
-    GoldenBucketFilled = register(
-        "golden_bucket_filled",
-        FilledGoldenBucket::new,
+    GoldenBucket = register(
+        "golden_bucket",
+        GoldenBucket::new,
         new Item.Settings().maxCount(1),
         null);
 
-    EmptyPhial = register("empty_phial", Item::new, new Item.Settings().maxCount(64), ModItemGroups.Potions);
-    EmptyPhialExplosive = register(
-        "empty_phial_explosive",
-        Item::new,
-        new Item.Settings().maxCount(64),
-        ModItemGroups.Potions);
-    PotionPhial = register(
-        "potion_phial",
-        PotionPhial::new,
-        new Item.Settings().component(POTION_KEY, "").maxCount(64),
-        null);
-
-    PotionPhialExplosive = register(
-        "potion_phial_explosive",
-        PotionPhialExplosive::new,
-        new Item.Settings().component(POTION_KEY, "").maxCount(64),
-        null);
-
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhial, ModItemGroups.Potions);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.PotionPhialExplosive, ModItemGroups.Potions);
-
-    SmallConcentrate = register(
-        "small_concentrate",
-        (settings) -> new ConcentrateItem(settings, "small", 1),
+    SmallBottle = register(
+        "small_bottle",
+        (settings) -> new PotionBottleItem(settings, "small", 1),
         new Item.Settings()
-            .component(POTION_KEY, null)
-            .component(CONCENTRATE_AMOUNT, 0)
+            .component(POTION_KEY, List.of())
+            .component(CONCENTRATE_AMOUNT, 1)
             .maxCount(64),
         null);
-    MediumConcentrate = register(
-        "medium_concentrate",
-        (settings) -> new ConcentrateItem(settings, "medium", 3),
+    MediumBottle = register(
+        "medium_bottle",
+        (settings) -> new PotionBottleItem(settings, "medium", 3),
         new Item.Settings()
-            .component(POTION_KEY, null)
-            .component(CONCENTRATE_AMOUNT, 0)
+            .component(POTION_KEY, List.of())
+            .component(CONCENTRATE_AMOUNT, 3)
             .maxCount(1),
         null);
-    BigConcentrate = register(
-        "big_concentrate",
-        (settings) -> new ConcentrateItem(settings, "big", 9),
+    BigBottle = register(
+        "big_bottle",
+        (settings) -> new PotionBottleItem(settings, "big", 9),
         new Item.Settings()
-            .component(POTION_KEY, null)
-            .component(CONCENTRATE_AMOUNT, 0)
+            .component(POTION_KEY, List.of())
+            .component(CONCENTRATE_AMOUNT, 9)
+            .maxCount(1),
+        null);
+
+    SmallBottleExplosive = register(
+        "explosive_small_bottle",
+        (settings) -> new ExplosivePotionBottleItem(settings, "small", 1),
+        new Item.Settings()
+            .component(POTION_KEY, List.of())
+            .component(CONCENTRATE_AMOUNT, 1)
+            .maxCount(64),
+        null);
+    MediumBottleExplosive = register(
+        "explosive_medium_bottle",
+        (settings) -> new ExplosivePotionBottleItem(settings, "medium", 3),
+        new Item.Settings()
+            .component(POTION_KEY, List.of())
+            .component(CONCENTRATE_AMOUNT, 3)
+            .maxCount(1),
+        null);
+    BigBottleExplosive = register(
+        "explosive_big_bottle",
+        (settings) -> new ExplosivePotionBottleItem(settings, "big", 9),
+        new Item.Settings()
+            .component(POTION_KEY, List.of())
+            .component(CONCENTRATE_AMOUNT, 9)
             .maxCount(1),
         null);
 
@@ -136,9 +137,13 @@ public final class ModItems {
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
 
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.SmallConcentrate, 1, ModItemGroups.Potions);
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.MediumConcentrate, 3, ModItemGroups.Potions);
-    AlchemicalPotionUtil.appendFermentedPotionStacks(ModItems.BigConcentrate, 9, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.SmallBottle, 1, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.MediumBottle, 3, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.BigBottle, 9, ModItemGroups.Potions);
+
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.SmallBottleExplosive, 1, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.MediumBottleExplosive, 3, ModItemGroups.Potions);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.BigBottleExplosive, 9, ModItemGroups.Potions);
 
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodLeaves.asItem(), 0.5F);
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodSapling.asItem(), 0.5F);

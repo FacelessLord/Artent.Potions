@@ -24,13 +24,11 @@ public class BrewingCauldronRenderer implements BlockEntityRenderer<BrewingCauld
       MatrixStack matrices,
       VertexConsumerProvider vertexConsumers,
       int light,
-      int overlay
-                    ) {
+      int overlay) {
     var waterLevel = entity.waterAmount;
     var waterColor = entity.color;
     var world = entity.getWorld();
-    if (world == null)
-      return;
+    if (world == null) return;
 
     BlockRenderManager blockRenderManager = MinecraftClient.getInstance().getBlockRenderManager();
     var state = ModBlocks.CauldronFluid.getDefaultState();

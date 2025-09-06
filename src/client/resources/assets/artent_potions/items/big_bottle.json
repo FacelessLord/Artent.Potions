@@ -5,14 +5,14 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_phial"
+                    "model": "artent_potions:item/big_bottle"
                 },
                 "threshold": 0
             },
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_0",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_0",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -25,7 +25,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_1",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_1",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -38,7 +38,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_2",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_2",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -51,7 +51,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_3",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_3",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -64,7 +64,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_4",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_4",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -77,7 +77,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_5",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_5",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -90,7 +90,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_6",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_6",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -103,7 +103,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_7",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_7",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -116,7 +116,7 @@
             {
                 "model": {
                     "type": "minecraft:model",
-                    "model": "artent_potions:item/big_concentrate_models/big_concentrate_8",
+                    "model": "artent_potions:item/big_bottle_models/big_bottle_8",
                     "tints": [
                         {
                             "type": "artent_potions:potion_color",
@@ -129,7 +129,7 @@
         ],
         "fallback": {
             "type": "minecraft:model",
-            "model": "artent_potions:item/big_concentrate_phial"
+            "model": "artent_potions:item/big_bottle"
         },
         "property": "artent_potions:concentrate_amount"
     }

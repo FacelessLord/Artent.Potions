@@ -4,12 +4,14 @@ import com.mojang.serialization.MapCodec;
 import faceless.artent.core.api.ChatUtils;
 import faceless.artent.core.api.MiscUtils;
 import faceless.artent.core.item.INamed;
+import faceless.artent.potions.api.IPotionContainerItem;
+import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.FermentingBarrelBlockEntity;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
-import faceless.artent.potions.item.ConcentrateItem;
+import faceless.artent.potions.item.PotionBottleItem;
 import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.objects.ModItems;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
+import faceless.artent.potions.registry.FermentationRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -36,6 +38,7 @@ import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.stream.Stream;
 
 public class FermentingBarrel extends BlockWithEntity implements INamed {
   public static final MapCodec<FermentingBarrel> CODEC = FermentingBarrel.createCodec(FermentingBarrel::new);
@@ -81,116 +84,60 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
 
   @Override
   protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-    var be = (FermentingBarrelBlockEntity) world.getBlockEntity(pos);
-    if (be == null) return ActionResult.FAIL;
+    if (!(world.getBlockEntity(pos) instanceof FermentingBarrelBlockEntity barrel))
+      return ActionResult.FAIL;
+
     var stack = player.getEquippedStack(player.getActiveHand() == Hand.MAIN_HAND
                                             ? EquipmentSlot.MAINHAND
                                             : EquipmentSlot.OFFHAND);
+    var item = stack.getItem();
 
-    if (stack.getItem() == ModItems.GoldenBucketFilled) {
-      if (be.potionKey.isEmpty()) {
-        var potion = AlchemicalPotionUtil.getPotion(stack);
-        if (potion != null) {
-          be.setPotionId(potion.id);
-          player.setStackInHand(
-              player.getActiveHand(),
-              ItemUsage.exchangeStack(stack, player, new ItemStack(ModItems.GoldenBucket)));
-          ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled");
-          return ActionResult.SUCCESS;
-        }
-      } else ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.already");
-      return ActionResult.FAIL;
-    } else if (stack.getItem() == ModItems.PotionPhial) {
-      var potion = AlchemicalPotionUtil.getPotion(stack);
-      if (potion == null || !AlchemicalPotionRegistry.fermentedPotionIsRegistered(potion.id)) {
-        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.potion.infermentable");
-        return ActionResult.FAIL;
-      }
-      if (be.potionKey.isEmpty()) {
-        be.setPotionId(potion.id, 3);
-        if (!player.isCreative()) {
-          stack.decrement(1);
-          MiscUtils.giveOrDropItem(world, pos, player, new ItemStack(ModItems.EmptyPhial));
-        }
+    if (item instanceof IPotionContainerItem) {
+      var barrelInterface = PotionContainerUtil.createInterface(barrel);
+      var potionInterface = PotionContainerUtil.createInterface(stack);
+      var transferResult = PotionContainerUtil.transferBetweenContainers(player, potionInterface, barrelInterface);
+
+      if (transferResult == PotionContainerUtil.TransferResult.DifferentPotions) {
+        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.different");
+      } else if (transferResult == PotionContainerUtil.TransferResult.BIsFull
+                 || transferResult == PotionContainerUtil.TransferResult.BothIsFull) {
+        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.already");
+      } else if (transferResult == PotionContainerUtil.TransferResult.MovedToB) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled");
-        return ActionResult.SUCCESS;
-      } else if (be.potionKey.equals(potion.id)) {
-        if (be.portionsLeft <= 6) {
-          be.setPotionId(potion.id, be.portionsLeft + 3);
-          if (!player.isCreative()) {
-            stack.decrement(1);
-            MiscUtils.giveOrDropItem(world, pos, player, new ItemStack(ModItems.EmptyPhial));
-          }
-          ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled");
-          return ActionResult.SUCCESS;
-        } else ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.already");
-        return ActionResult.FAIL;
-      } else ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.different");
-      return ActionResult.FAIL;
-    } else if (be.isFermented()) {
-      ActionResult result = fillConcentrate(world, pos, player, stack, be);
-      if (result == ActionResult.FAIL) return result;
+      } else if (transferResult == PotionContainerUtil.TransferResult.MovedToA) {
+        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.emptied");
+      } else if (transferResult == PotionContainerUtil.TransferResult.BCantContain) {
+        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.infermentable");
+      }
     }
+
     if (stack.isEmpty() && world.isClient()) {
-      if (be.isFermented()) {
+      var effects = AlchemicalPotionUtil.getPotionEffects(stack);
+      var potionNames = AlchemicalPotionUtil.getPotionNames(effects);
+      if (barrel.isFermented()) {
         player.sendMessage(
             Text
                 .translatable("text.artent_potions.barrel.fermented."
-                              + be.portionsLeft
+                              + barrel.potionAmount
                               + "/"
                               + 9
                               + ".of")
-                .append(Text.translatable(be.potionKey)), false);
+                .append(potionNames), false);
         return ActionResult.SUCCESS;
       } else {
-        if (!be.potionKey.isEmpty()) player.sendMessage(
+        if (!barrel.potions.isEmpty()) player.sendMessage(
             Text
-                .translatable("text.artent_potions.barrel.fermenting." + be.portionsLeft + "/" + 9)
-                .append(Text.translatable(be.potionKey))
+                .translatable("text.artent_potions.barrel.fermenting." + barrel.potionAmount + "/" + 9)
+                .append(potionNames)
                 .append(Text.translatable("text.artent_potions.fermentation.time.prefix"))
                 .append(Text.translatable(String.valueOf((FermentingBarrelBlockEntity.FERMENTATION_TIME
-                                                          - be.fermentedTime) / 20)))
+                                                          - barrel.fermentedTime) / 20)))
                 .append(Text.translatable("text.artent_potions.fermentation.time.suffix")), false);
         else player.sendMessage(Text.translatable("text.artent_potions.barrel.empty"), false);
         return ActionResult.SUCCESS;
       }
     }
     return ActionResult.PASS;
-  }
-
-  private static ActionResult fillConcentrate(
-      World world,
-      BlockPos pos,
-      PlayerEntity player,
-      ItemStack stack,
-      FermentingBarrelBlockEntity be) {
-    var barrelPotion = AlchemicalPotionRegistry.getFermentedPotions().getOrDefault(be.potionKey, null);
-    if (barrelPotion == null) return ActionResult.FAIL;
-    var potionKey = barrelPotion.id;
-    var item = stack.getItem();
-
-    if (item instanceof ConcentrateItem container) {
-      var itemPotion = AlchemicalPotionUtil.getFermentedPotion(stack);
-      var containerSize = container.getMaxSize(stack);
-
-      if (itemPotion == null || itemPotion.id == null) {
-        var amount = be.takePotionPortions(containerSize);
-        if (amount == 0) return ActionResult.FAIL;
-        if (!player.isCreative()) {
-          stack.decrement(containerSize);
-        }
-
-        var containerStack = new ItemStack(container);
-        container.setConcentrateAmount(containerStack, potionKey, amount);
-        MiscUtils.giveOrDropItem(world, pos, player, containerStack);
-      } else if (itemPotion.id.equals(potionKey)) {
-        var concentrateAmount = container.getConcentrateAmount(stack);
-        var amount = be.takePotionPortions(Math.min(containerSize - concentrateAmount, containerSize));
-        if (amount == 0) return ActionResult.FAIL;
-        container.setConcentrateAmount(stack, amount + concentrateAmount);
-      }
-    }
-    return ActionResult.SUCCESS;
   }
 
   @Override

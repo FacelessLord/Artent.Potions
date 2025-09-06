@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_fermenting_barrel": {
+    "has_cauldron": {
       "conditions": {
         "items": [
           {
-            "items": "artent_potions:fermenting_barrel"
+            "items": "artent_potions:cauldron"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "artent_potions:medium_concentrate"
+        "recipe": "artent_potions:explosive_medium_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_fermenting_barrel"
+      "has_cauldron"
     ]
   ],
   "rewards": {
     "recipes": [
-      "artent_potions:medium_concentrate"
+      "artent_potions:explosive_medium_bottle"
     ]
   }
 }

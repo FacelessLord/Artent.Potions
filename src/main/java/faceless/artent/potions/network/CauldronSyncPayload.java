@@ -1,7 +1,10 @@
 package faceless.artent.potions.network;
 
+import faceless.artent.core.math.Color;
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
+import faceless.artent.potions.registry.AlchemicalPotionRegistry;
 import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -14,7 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record CauldronSyncPayload(
-    BlockPos pos, int fuelAmount, int waterAmount, int portionsLeft, List<BrewingIngredient> ingredients
+    BlockPos pos,
+    int fuelAmount,
+    int waterAmount,
+    int portionsLeft,
+    int crystalsRequired,
+    Color color,
+    List<BrewingIngredient> ingredients,
+    List<AlchemicalPotion> potions
 ) implements CustomPayload {
 
   public static final Id<CauldronSyncPayload> PayloadId = new Id<>(Identifier.of(
@@ -28,14 +38,25 @@ public record CauldronSyncPayload(
       buf.writeInt(value.fuelAmount);
       buf.writeInt(value.waterAmount);
       buf.writeInt(value.portionsLeft);
+      buf.writeInt(value.crystalsRequired);
+      buf.writeInt(value.color.toHex());
 
       var ingredientCount = value.ingredients.size();
       buf.writeInt(ingredientCount);
+
+      var potionsCount = value.potions.size();
+      buf.writeInt(potionsCount);
+
       for (int i = 0; i < ingredientCount; i++) {
         var ingredient = value.ingredients.get(i);
         var id = Registries.ITEM.getId(ingredient.item());
         buf.writeString(id.toString());
         buf.writeInt(ingredient.meta());
+      }
+
+      for (int i = 0; i < potionsCount; i++) {
+        var potion = value.potions.get(i);
+        buf.writeString(potion.id);
       }
     }
 
@@ -45,7 +66,12 @@ public record CauldronSyncPayload(
       var fuelAmount = buf.readInt();
       var waterAmount = buf.readInt();
       var portionsLeft = buf.readInt();
+      var crystalsRequired = buf.readInt();
+      var colorHex = buf.readInt();
+      var color = colorHex == 0 ? Color.Blue : Color.fromInt(colorHex);
+
       var ingredientCount = buf.readInt();
+      var potionsCount = buf.readInt();
 
       var ingredients = new ArrayList<BrewingIngredient>(ingredientCount);
       for (int i = 0; i < ingredientCount; i++) {
@@ -61,7 +87,28 @@ public record CauldronSyncPayload(
         ingredients.add(ingredient);
       }
 
-      return new CauldronSyncPayload(pos, fuelAmount, waterAmount, portionsLeft, ingredients);
+      var potions = new ArrayList<AlchemicalPotion>(potionsCount);
+      for (int i = 0; i < potionsCount; i++) {
+        var id = buf.readString();
+
+        var potion = AlchemicalPotionRegistry.getPotion(id);
+        if (potion == null) {
+          System.out.println("Unknown potion with identifier '" + id + "' in cauldron. Removing it.");
+          crystalsRequired = Math.max(0, crystalsRequired - 1);
+          continue;
+        }
+        potions.add(potion);
+      }
+
+      return new CauldronSyncPayload(
+          pos,
+          fuelAmount,
+          waterAmount,
+          portionsLeft,
+          crystalsRequired,
+          color,
+          ingredients,
+          potions);
     }
   };
 

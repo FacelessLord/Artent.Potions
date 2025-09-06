@@ -20,8 +20,11 @@ public class ArtentServerHook {
         entity.getPos(),
         entity.fuelAmount,
         entity.waterAmount,
-        entity.portionsLeft,
-        entity.ingredients);
+        entity.potionAmount,
+        entity.crystalsRequired,
+        entity.color,
+        entity.ingredients,
+        entity.potions);
     ServerPlayNetworking.send((ServerPlayerEntity) player, payload);
   }
 }

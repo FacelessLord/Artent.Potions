@@ -2,7 +2,8 @@ package faceless.artent.potions.client.tint;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
+import faceless.artent.core.math.Color;
+import faceless.artent.potions.api.IPotionContainerItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.item.tint.TintSource;
@@ -27,11 +28,19 @@ public record ArtentPotionTintSource(int defaultColor) implements TintSource {
 
   @Override
   public int getTint(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user) {
-    var potion = AlchemicalPotionUtil.getPotion(stack);
-    if (potion == null)
-      return ColorHelper.zeroAlpha(defaultColor);
-
-    return ColorHelper.fullAlpha(potion.color.asInt());
+    if (stack.getItem() instanceof IPotionContainerItem potionBottle) {
+      if (!potionBottle.hasPotion(stack))
+        return ColorHelper.zeroAlpha(defaultColor);
+      var potions = potionBottle.getPotions(stack);
+      return potions
+          .stream()
+          .map((potion) -> potion.color)
+          .reduce(Color::add)
+          .map(Color::asInt)
+          .map(ColorHelper::fullAlpha)
+          .orElse(defaultColor);
+    }
+    return ColorHelper.zeroAlpha(defaultColor);
   }
 
   @Override

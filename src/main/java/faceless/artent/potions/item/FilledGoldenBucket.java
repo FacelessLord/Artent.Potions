@@ -15,6 +15,6 @@ public class FilledGoldenBucket extends Item {
 
   @Override
   public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-    AlchemicalPotionUtil.createEffectTooltip(stack, tooltip);
+    AlchemicalPotionUtil.createEffectListTooltip(stack, tooltip);
   }
 }

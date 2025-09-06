@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "artent:phial",
+  "group": "artent:concentrate_phial_explosive",
   "key": {
     "c": "minecraft:clay_ball",
-    "g": "minecraft:glass_pane",
+    "g": "minecraft:glass",
     "p": "minecraft:gunpowder"
   },
   "pattern": [
-    " gc",
-    "gpg",
-    " g "
+    "c",
+    "p",
+    "g"
   ],
   "result": {
     "count": 3,
-    "id": "artent_potions:empty_phial_explosive"
+    "id": "artent_potions:explosive_small_bottle"
   }
 }

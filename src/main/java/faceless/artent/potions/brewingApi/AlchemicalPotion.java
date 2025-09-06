@@ -15,9 +15,9 @@ public class AlchemicalPotion {
     public ArtentStatusEffect[] statusEffects;
     private final ImmutableList<StatusEffectInstance> effects;
 
-    public AlchemicalPotion(String id, Color color, StatusEffectInstance... effects) {
+    public AlchemicalPotion(String id, StatusEffectInstance... effects) {
         this.id = ArtentPotions.MODID + "." + id;
-        this.color = color;
+        this.color = Color.Red;
         this.statusEffects = getArtentStatusEffects(effects);
         this.effects = ImmutableList.copyOf(effects);
     }

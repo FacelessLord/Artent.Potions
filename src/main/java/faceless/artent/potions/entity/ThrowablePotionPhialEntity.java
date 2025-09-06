@@ -1,5 +1,6 @@
 package faceless.artent.potions.entity;
 
+import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.objects.ModEntities;
 import faceless.artent.potions.objects.ModItems;
@@ -40,7 +41,7 @@ public class ThrowablePotionPhialEntity extends ThrownItemEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return ModItems.PotionPhialExplosive;
+    return ModItems.SmallBottleExplosive;
   }
 
   @Override
@@ -60,16 +61,24 @@ public class ThrowablePotionPhialEntity extends ThrownItemEntity {
       return;
     }
     ItemStack itemStack = this.getStack();
-    var potion = AlchemicalPotionUtil.getPotion(itemStack);
+    var amount = 1;
+    if (itemStack.getItem() instanceof IPotionContainerItem potion) {
+      amount = potion.getPotionAmount(itemStack);
+    }
     List<StatusEffectInstance> list = AlchemicalPotionUtil.getPotionEffects(itemStack);
     if (list.isEmpty()) {
       this.damageEntitiesHurtByWater(serverWorld);
     } else {
-      this.applySplashPotion(serverWorld, list,
-                             hitResult.getType() ==
-                                 HitResult.Type.ENTITY ? ((EntityHitResult) hitResult).getEntity() : null);
+      this.applySplashPotion(
+          serverWorld,
+          list,
+          hitResult.getType() == HitResult.Type.ENTITY
+              ? ((EntityHitResult) hitResult).getEntity()
+              : null, amount);
     }
-    int i = potion.hasInstantEffect() ? WorldEvents.INSTANT_SPLASH_POTION_SPLASHED : WorldEvents.SPLASH_POTION_SPLASHED;
+    int i = list.stream().anyMatch((potion) -> !potion.getEffectType().value().isInstant())
+        ? WorldEvents.SPLASH_POTION_SPLASHED
+        : WorldEvents.INSTANT_SPLASH_POTION_SPLASHED;
     this.getWorld().syncWorldEvent(i, this.getBlockPos(), AlchemicalPotionUtil.getColor(itemStack));
     this.discard();
   }
@@ -90,27 +99,34 @@ public class ThrowablePotionPhialEntity extends ThrownItemEntity {
     }
   }
 
-  private void applySplashPotion(ServerWorld serverWorld, List<StatusEffectInstance> statusEffects, @Nullable Entity entity) {
+  private void applySplashPotion(
+      ServerWorld serverWorld,
+      List<StatusEffectInstance> statusEffects,
+      @Nullable Entity entity, int amount) {
     Box box = this.getBoundingBox().expand(4.0, 2.0, 4.0);
     List<LivingEntity> list = this.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
     if (!list.isEmpty()) {
       Entity entity2 = this.getEffectCause();
       for (LivingEntity livingEntity : list) {
         double d;
-        if (!livingEntity.isAffectedBySplashPotions() || !((d = this.squaredDistanceTo(livingEntity)) < 16.0))
-          continue;
+        if (!livingEntity.isAffectedBySplashPotions() || !((d = this.squaredDistanceTo(livingEntity)) < 16.0)) continue;
         double e = 1.0 - Math.sqrt(d) / 4.0;
         if (livingEntity == entity) {
           e = 1.0;
         }
         for (StatusEffectInstance statusEffectInstance : statusEffects) {
           var statusEffect = statusEffectInstance.getEffectType();
+          var effectAmplifier = statusEffectInstance.getAmplifier() + amount - 1;
           if (statusEffect.value().isInstant()) {
-            statusEffect.value().applyInstantEffect(serverWorld, this,
-                                                    this.getOwner(),
-                                                    livingEntity,
-                                                    statusEffectInstance.getAmplifier(),
-                                                    e);
+            statusEffect
+                .value()
+                .applyInstantEffect(
+                    serverWorld,
+                    this,
+                    this.getOwner(),
+                    livingEntity,
+                    effectAmplifier,
+                    e);
             continue;
           }
           int i = (int) (e * (double) statusEffectInstance.getDuration() + 0.5);
@@ -119,10 +135,9 @@ public class ThrowablePotionPhialEntity extends ThrownItemEntity {
               new StatusEffectInstance(
                   statusEffect,
                   i,
-                  statusEffectInstance.getAmplifier(),
+                  effectAmplifier,
                   statusEffectInstance.isAmbient(),
-                  statusEffectInstance.shouldShowParticles()),
-              entity2);
+                  statusEffectInstance.shouldShowParticles()), entity2);
         }
       }
     }

@@ -39,6 +39,14 @@ public class BrewingAutomata {
     Edges.get(source).add(edge);
   }
 
+  public void addRecipe(AlchemicalPotion[] potions, BrewingIngredient... ingredients) {
+    var newIngredients = new ArrayList<>(List.of(ingredients));
+    for (AlchemicalPotion potion : potions) {
+      addRecipe(potion, newIngredients.toArray(BrewingIngredient[]::new));
+      newIngredients.add(ingredients[ingredients.length - 1]);
+    }
+  }
+
   public void addRecipe(AlchemicalPotion potion, BrewingIngredient... ingredients) {
     var color = Color.Blue;
     var state = zeroState;
@@ -72,12 +80,12 @@ public class BrewingAutomata {
   public record Edge(State Source, State Target, BrewingIngredient Character) {
   }
 
-  public record State(int id, boolean IsFinishing, AlchemicalPotion BrewedPotion) {
+  public record State(int id, boolean isFinishing, AlchemicalPotion brewedPotion) {
     @Override
     public String toString() {
       if (id == -1) return "Invalid State";
       if (id == 0) return "Initial State";
-      return "State{" + "IsFinishing=" + IsFinishing + ", BrewedPotion=" + BrewedPotion + '}';
+      return "State{" + "isFinishing=" + isFinishing + ", brewedPotion=" + brewedPotion + '}';
     }
   }
 }

@@ -1,12 +1,13 @@
 package faceless.artent.potions.block;
 
 import com.mojang.serialization.MapCodec;
+import faceless.artent.core.api.ChatUtils;
 import faceless.artent.core.item.INamed;
+import faceless.artent.potions.api.IPotionContainerItem;
+import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.objects.ModBlockEntities;
-import faceless.artent.potions.objects.ModItems;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -20,7 +21,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -89,38 +89,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed {
                                             ? EquipmentSlot.MAINHAND
                                             : EquipmentSlot.OFFHAND);
 
-    var brewingState = cauldron.getBrewingState();
-    if (stack.getItem() == ModItems.EmptyPhial) {
-      if (brewingState.IsFinishing()) {
-        var potion = brewingState.BrewedPotion();
-        var potionStack = new ItemStack(ModItems.PotionPhial);
-        AlchemicalPotionUtil.setPotion(potionStack, potion);
-        player.giveItemStack(potionStack);
-        stack.decrement(1);
-        cauldron.consumePortions(3);
-        if (stack.getCount() == 1) return ActionResult.CONSUME;
-      }
-    } else if (stack.getItem() == ModItems.EmptyPhialExplosive) {
-      if (brewingState.IsFinishing()) {
-        var potion = brewingState.BrewedPotion();
-        var potionStack = new ItemStack(ModItems.PotionPhialExplosive);
-        AlchemicalPotionUtil.setPotion(potionStack, potion);
-
-        player.giveItemStack(potionStack);
-        stack.decrement(1);
-        cauldron.consumePortions(3);
-        if (stack.getCount() == 1) return ActionResult.CONSUME;
-      }
-    } else if (stack.getItem() == ModItems.GoldenBucket) {
-      if (brewingState.IsFinishing()) {
-        if (AlchemicalPotionRegistry.fermentedPotionIsRegistered(brewingState.BrewedPotion().id)) {
-          var filledBucket = new ItemStack(ModItems.GoldenBucketFilled);
-          AlchemicalPotionUtil.setPotion(filledBucket, brewingState.BrewedPotion());
-          player.setStackInHand(player.getActiveHand(), ItemUsage.exchangeStack(stack, player, filledBucket));
-          cauldron.clearCauldron();
-        } else player.sendMessage(Text.translatable("text.artent_potions.potion.infermentable"), false);
-      }
-    } else if (stack.getItem() == Items.WATER_BUCKET) {
+    if (stack.getItem() == Items.WATER_BUCKET) {
       fillCauldron(world, pos, cauldron, player, player.getActiveHand(), stack);
     } else if (world.getFuelRegistry().isFuel(stack)) {
       addFuel(cauldron, player, player.getActiveHand(), stack);
@@ -133,6 +102,48 @@ public class BrewingCauldron extends BlockWithEntity implements INamed {
       state = state.with(IS_BURNING, false);
       world.setBlockState(pos, state, Block.NOTIFY_LISTENERS);
     }
+
+    var item = stack.getItem();
+    if (item instanceof IPotionContainerItem potion) {
+      var cauldronInterface = PotionContainerUtil.createInterface(cauldron);
+      var potionInterface = PotionContainerUtil.createInterface(stack);
+      var transferResult = PotionContainerUtil.transferBetweenContainers(player, potionInterface, cauldronInterface);
+      if(transferResult == PotionContainerUtil.TransferResult.AIsEmpty || transferResult == PotionContainerUtil.TransferResult.BIsEmpty) {
+        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.potion.nothing_to_move");
+      }
+    }
+//
+//    if (stack.getItem() == ModItems.EmptyPhial) {
+//      if (brewingState.isFinishing()) {
+//        var potion = brewingState.brewedPotion();
+//        var potionStack = new ItemStack(ModItems.PotionPhial);
+//        AlchemicalPotionUtil.setPotion(potionStack, potion);
+//        player.giveItemStack(potionStack);
+//        stack.decrement(1);
+//        cauldron.consumePortions(3);
+//        if (stack.getCount() == 1) return ActionResult.CONSUME;
+//      }
+//    } else if (stack.getItem() == ModItems.EmptyPhialExplosive) {
+//      if (brewingState.isFinishing()) {
+//        var potion = brewingState.brewedPotion();
+//        var potionStack = new ItemStack(ModItems.PotionPhialExplosive);
+//        AlchemicalPotionUtil.setPotion(potionStack, potion);
+//
+//        player.giveItemStack(potionStack);
+//        stack.decrement(1);
+//        cauldron.consumePortions(3);
+//        if (stack.getCount() == 1) return ActionResult.CONSUME;
+//      }
+//    } else if (stack.getItem() == ModItems.GoldenBucket) {
+//      if (brewingState.isFinishing()) {
+//        if (AlchemicalPotionRegistry.fermentedPotionIsRegistered(brewingState.brewedPotion().id)) {
+//          var filledBucket = new ItemStack(ModItems.GoldenBucketFilled);
+//          AlchemicalPotionUtil.setPotion(filledBucket, brewingState.brewedPotion());
+//          player.setStackInHand(player.getActiveHand(), ItemUsage.exchangeStack(stack, player, filledBucket));
+//          cauldron.clearCauldron();
+//        } else player.sendMessage(Text.translatable("text.artent_potions.potion.infermentable"), false);
+//      }
+//    } else
 
     return ActionResult.SUCCESS;
   }

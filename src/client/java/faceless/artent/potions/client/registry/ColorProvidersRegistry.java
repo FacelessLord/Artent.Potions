@@ -15,28 +15,31 @@ import org.jetbrains.annotations.Nullable;
 public class ColorProvidersRegistry implements IRegistry {
   @Override
   public void register() {
-    ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> {
-      if (view == null) return 0;
-      var be = view.getBlockEntity(pos);
-      if (be instanceof BrewingCauldronBlockEntity cauldron) {
-        return cauldron.color.toHex();
-      }
-      return 0;
-    }, ModBlocks.CauldronFluid);
+    ColorProviderRegistry.BLOCK.register(
+        (state, view, pos, tintIndex) -> {
+          if (view == null) return 0;
+          var be = view.getBlockEntity(pos);
+          if (be instanceof BrewingCauldronBlockEntity cauldron) {
+            return cauldron.color.toHex();
+          }
+          return 0;
+        }, ModBlocks.CauldronFluid);
 
     var grassColorTinter0 = getGrassColorTintForIndex(0);
     var grassColorTinter1 = getGrassColorTintForIndex(1);
 
-    ColorProviderRegistry.BLOCK.register(grassColorTinter0, ModBlocks.Shadowveil,  ModBlocks.SlimeBerry, ModBlocks.BlazingMarigold);
+    ColorProviderRegistry.BLOCK.register(
+        grassColorTinter0,
+        ModBlocks.Shadowveil,
+        ModBlocks.SlimeBerry,
+        ModBlocks.BlazingMarigold);
 
     ColorProviderRegistry.BLOCK.register(
         (BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) -> {
-          if (tintIndex == 0)
-            return grassColorTinter0.getColor(state, world, pos, tintIndex);
+          if (tintIndex == 0) return grassColorTinter0.getColor(state, world, pos, tintIndex);
           if (tintIndex == 1) {
             var age = state.get(BerryBush.AGE);
-            if (age == 0)
-              return Color.White.asInt();
+            if (age == 0) return Color.White.asInt();
             if (age == 1) {
               var grassColor = grassColorTinter1.getColor(state, world, pos, tintIndex);
               var greenBerryColorInitial = new Color(92, 242, 0);
@@ -62,11 +65,7 @@ public class ColorProvidersRegistry implements IRegistry {
             };
           }
           return Color.White.asInt();
-        },
-        ModBlocks.berryBush[0],
-        ModBlocks.berryBush[1],
-        ModBlocks.berryBush[2],
-        ModBlocks.berryBush[3]);
+        }, ModBlocks.berryBush[0], ModBlocks.berryBush[1], ModBlocks.berryBush[2], ModBlocks.berryBush[3]);
   }
 
   public static BlockColorProvider getGrassColorTintForIndex(int index) {
