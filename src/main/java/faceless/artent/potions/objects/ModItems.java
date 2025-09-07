@@ -40,6 +40,7 @@ public final class ModItems {
   public static Item Acorn;
   public static Item StoneScale;
   public static Item IceCrystalShard;
+  public static Item DebugBrewBook;
 
   public void register() {
     for (int i = 0; i < berries.length; i++) {
@@ -55,7 +56,7 @@ public final class ModItems {
         "golden_bucket",
         GoldenBucket::new,
         new Item.Settings().maxCount(1),
-        null);
+        ModItemGroups.Potions);
 
     SmallBottle = register(
         "small_bottle",
@@ -134,6 +135,11 @@ public final class ModItems {
     IceCrystalShard = register(
         "ice_crystal_shard",
         Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    DebugBrewBook = register(
+        "brew_book",
+        DebugBrewBook::new,
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
 

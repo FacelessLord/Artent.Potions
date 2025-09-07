@@ -12,10 +12,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.ColorHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class AlchemicalPotionUtil {
@@ -136,5 +139,14 @@ public class AlchemicalPotionUtil {
         .skip(1)
         .forEach(baseText::append);
     return baseText;
+  }
+
+  public static @NotNull Optional<Integer> getPotionListColor(List<AlchemicalPotion> potions) {
+    return potions
+        .stream()
+        .map((potion) -> potion.color)
+        .reduce(Color::add)
+        .map(Color::asInt)
+        .map(ColorHelper::fullAlpha);
   }
 }

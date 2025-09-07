@@ -19,7 +19,6 @@ public class ArtentServerHook {
     var payload = new CauldronSyncPayload(
         entity.getPos(),
         entity.fuelAmount,
-        entity.waterAmount,
         entity.potionAmount,
         entity.crystalsRequired,
         entity.color,

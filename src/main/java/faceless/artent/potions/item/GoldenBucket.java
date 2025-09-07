@@ -5,7 +5,6 @@ import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.brewingApi.PotionDataUtil;
 import faceless.artent.potions.registry.AlchemicalPotionRegistry;
-import faceless.artent.potions.registry.FermentationRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -25,12 +24,15 @@ public class GoldenBucket extends Item implements IPotionContainerItem {
 
   @Override
   public List<AlchemicalPotion> getPotions(ItemStack stack) {
-    return AlchemicalPotionUtil.getPotions(stack);
+    var keys = PotionDataUtil.getPotionsKeys(stack);
+    if (keys == null)
+      keys = List.of();
+    return keys.stream().map(AlchemicalPotionRegistry::getPotion).toList();
   }
 
   @Override
   public void setPotions(ItemStack stack, List<AlchemicalPotion> potions) {
-    AlchemicalPotionUtil.setPotions(stack, potions);
+    PotionDataUtil.setPotionKeys(stack, potions.stream().map(potion -> potion.id).toList());
   }
 
   @Override

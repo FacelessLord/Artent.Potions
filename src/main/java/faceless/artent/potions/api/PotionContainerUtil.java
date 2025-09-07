@@ -16,10 +16,10 @@ public class PotionContainerUtil {
     if (!a.isValid() || !b.isValid()) return TransferResult.InvalidContainers;
 
     var aPotion = a.getPotions();
-    var aAmount = aPotion.isEmpty() ? 0 : a.getMaxPotionAmount();
+    var aAmount = a.getPotionAmount();
     var aSize = a.getMaxPotionAmount();
     var bPotion = b.getPotions();
-    var bAmount = bPotion.isEmpty() ? 0 : b.getMaxPotionAmount();
+    var bAmount = b.getPotionAmount();
     var bSize = b.getMaxPotionAmount();
 
     if (bAmount == 0) {

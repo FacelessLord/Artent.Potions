@@ -94,8 +94,10 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
 
     if (item instanceof IPotionContainerItem) {
       var barrelInterface = PotionContainerUtil.createInterface(barrel);
-      var potionInterface = PotionContainerUtil.createInterface(stack);
+      var updatedBottle = stack.copyWithCount(1);
+      var potionInterface = PotionContainerUtil.createInterface(updatedBottle);
       var transferResult = PotionContainerUtil.transferBetweenContainers(player, potionInterface, barrelInterface);
+      player.setStackInHand(player.getActiveHand(), ItemUsage.exchangeStack(stack, player, updatedBottle));
 
       if (transferResult == PotionContainerUtil.TransferResult.DifferentPotions) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.different");

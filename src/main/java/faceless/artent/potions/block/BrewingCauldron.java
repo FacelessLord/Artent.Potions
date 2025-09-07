@@ -1,9 +1,13 @@
 package faceless.artent.potions.block;
 
+import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.serialization.MapCodec;
 import faceless.artent.core.api.ChatUtils;
 import faceless.artent.core.item.INamed;
+import faceless.artent.core.math.Color;
+import faceless.artent.potions.api.IDebuggableBlock;
 import faceless.artent.potions.api.IPotionContainerItem;
+import faceless.artent.potions.api.PotionContainerInterface;
 import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
@@ -31,7 +35,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-public class BrewingCauldron extends BlockWithEntity implements INamed {
+import java.util.ArrayList;
+import java.util.List;
+
+public class BrewingCauldron extends BlockWithEntity implements INamed, IDebuggableBlock {
   public static final MapCodec<BrewingCauldron> CODEC = BrewingCauldron.createCodec(BrewingCauldron::new);
   public static final BooleanProperty HAS_COAL = BooleanProperty.of("has_coal");
   public static final BooleanProperty IS_BURNING = BooleanProperty.of("is_burning");
@@ -97,7 +104,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed {
       setOnFire(world, pos, state, cauldron, player, stack);
     } else if (stack.isEmpty()) {
       if (player.isSneaking()) {
-        cauldron.clearCauldron();
+        cauldron.clear();
       }
       state = state.with(IS_BURNING, false);
       world.setBlockState(pos, state, Block.NOTIFY_LISTENERS);
@@ -106,11 +113,25 @@ public class BrewingCauldron extends BlockWithEntity implements INamed {
     var item = stack.getItem();
     if (item instanceof IPotionContainerItem potion) {
       var cauldronInterface = PotionContainerUtil.createInterface(cauldron);
-      var potionInterface = PotionContainerUtil.createInterface(stack);
+      var updatedBottle = stack.copyWithCount(1);
+      var potionInterface = PotionContainerUtil.createInterface(updatedBottle);
+      var srcBottlePotion = potionInterface.getPotions();
+
       var transferResult = PotionContainerUtil.transferBetweenContainers(player, potionInterface, cauldronInterface);
-      if(transferResult == PotionContainerUtil.TransferResult.AIsEmpty || transferResult == PotionContainerUtil.TransferResult.BIsEmpty) {
+
+      var resultStack = ItemUsage.exchangeStack(stack, player, updatedBottle);
+      player.setStackInHand(player.getActiveHand(), resultStack);
+
+      if (transferResult == PotionContainerUtil.TransferResult.AIsEmpty
+          || transferResult == PotionContainerUtil.TransferResult.BIsEmpty) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.potion.nothing_to_move");
+      } else if (transferResult == PotionContainerUtil.TransferResult.MovedToB) {
+        cauldron.color = AlchemicalPotionUtil
+            .getPotionListColor(srcBottlePotion)
+            .map(Color::fromInt)
+            .orElse(Color.Blue);
       }
+      cauldron.updateBlock();
     }
 //
 //    if (stack.getItem() == ModItems.EmptyPhial) {
@@ -183,7 +204,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed {
       PlayerEntity player,
       Hand hand,
       ItemStack stack) {
-    cauldron.waterAmount = 1000;
+    cauldron.potionAmount = 9;
     cauldron.updateBlock();
     if (!world.isClient) {
       if (!player.getAbilities().creativeMode) {
@@ -220,5 +241,32 @@ public class BrewingCauldron extends BlockWithEntity implements INamed {
   @Override
   public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
     return state.get(HAS_COAL) ? SHAPE_WITH_COAL : SHAPE;
+  }
+
+  @Override
+  public void fillDebugInfo(World world, BlockPos pos, BlockState state, List<String> debugInfo) {
+    debugInfo.add("IS_BURNING: " + state.get(IS_BURNING, false));
+    debugInfo.add("HAS_COAL: " + state.get(HAS_COAL, false));
+
+    var be = world.getBlockEntity(pos);
+    if (!(be instanceof BrewingCauldronBlockEntity cauldron)) {
+      debugInfo.add("No blockEntity");
+      return;
+    }
+    debugInfo.add("Fuel amount: " + cauldron.fuelAmount);
+    debugInfo.add("Potion amount: " + cauldron.potionAmount);
+    debugInfo.add("Color: " + cauldron.color.toString());
+    debugInfo.add("Crystals required: " + cauldron.crystalsRequired);
+    debugInfo.add("Ingredients: " + String.join(
+        ", ",
+        cauldron.ingredients
+            .stream()
+            .map((i) -> i.item().getName().toString())
+            .toList()));
+    var potions = new ArrayList<>(cauldron.potions);
+    debugInfo.add("Potions: " + String.join(", ", potions.stream().map((i) -> i.id).toList()));
+    debugInfo.add("Potion amount: " + cauldron.getPotionAmount() + "/" + cauldron.getMaxPotionAmount());
+    debugInfo.add("Can extract potion: " + cauldron.canExtractPotion());
+    debugInfo.add("Is finishing state: " + cauldron.getBrewingState().isFinishing());
   }
 }

@@ -1,5 +1,6 @@
 package faceless.artent.potions.item;
 
+import faceless.artent.potions.api.IDebuggableItem;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
@@ -18,7 +19,6 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -29,7 +29,7 @@ import net.minecraft.world.event.GameEvent;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class PotionBottleItem extends Item implements IPotionContainerItem {
+public class PotionBottleItem extends Item implements IPotionContainerItem, IDebuggableItem {
   private static final Text NONE_TEXT = Text.translatable("effect.none").formatted(Formatting.GRAY);
   public String type;
   public int size;
@@ -42,12 +42,15 @@ public class PotionBottleItem extends Item implements IPotionContainerItem {
 
   @Override
   public List<AlchemicalPotion> getPotions(ItemStack stack) {
-    return PotionDataUtil.getPotionsKeys(stack).stream().map(AlchemicalPotionRegistry::getPotion).toList();
+    var keys = PotionDataUtil.getPotionsKeys(stack);
+    if(keys == null)
+      keys = List.of();
+    return keys.stream().map(AlchemicalPotionRegistry::getPotion).toList();
   }
 
   @Override
   public void setPotions(ItemStack stack, List<AlchemicalPotion> potions) {
-    AlchemicalPotionUtil.setPotions(stack, potions);
+    PotionDataUtil.setPotionKeys(stack, potions.stream().map(potion -> potion.id).toList());
   }
 
   @Override
@@ -75,7 +78,7 @@ public class PotionBottleItem extends Item implements IPotionContainerItem {
     var translationId = getPhialBaseNameTranslationId();
 
     if (effects.isEmpty()) return Text.translatable(translationId + ".empty");
-    if (!AlchemicalPotionUtil.hasPotion(stack))
+    if (!hasPotion(stack))
       return Text.translatable(translationId).append(Text.translatable("text.artent_potions.potion.unidentified"));
 
     var text = Text.translatable(translationId);
@@ -182,5 +185,15 @@ public class PotionBottleItem extends Item implements IPotionContainerItem {
       }
     }
     return stack;
+  }
+
+  @Override
+  public void fillDebugInfo(ItemStack stack, List<String> debugInfo) {
+    if (hasPotion(stack)) {
+      debugInfo.add("Potions: " + String.join(", ", getPotions(stack).stream().map((i) -> i.id).toList()));
+    } else {
+      debugInfo.add("No potions");
+    }
+    debugInfo.add("Potion amount: " + getPotionAmount(stack) + "/" + getMaxPotionAmount(stack));
   }
 }

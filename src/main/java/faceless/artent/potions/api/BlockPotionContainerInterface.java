@@ -13,52 +13,52 @@ public class BlockPotionContainerInterface extends PotionContainerInterface {
   }
 
   @Override
-  boolean isValid() {
+  public boolean isValid() {
     return container != null;
   }
 
   @Override
-  int getMaxPotionAmount() {
+  public int getMaxPotionAmount() {
     return container.getMaxPotionAmount();
   }
 
   @Override
-  int getPotionAmount() {
+  public int getPotionAmount() {
     return container.getPotionAmount();
   }
 
   @Override
-  void setPotionAmount(int amount) {
+  public void setPotionAmount(int amount) {
     container.setPotionAmount(amount);
   }
 
   @Override
-  List<AlchemicalPotion> getPotions() {
+  public List<AlchemicalPotion> getPotions() {
     return container.getPotions();
   }
 
   @Override
-  void clear() {
+  public void clear() {
     container.clear();
   }
 
   @Override
-  boolean canExtractPotion() {
+  public boolean canExtractPotion() {
     return container.canExtractPotion();
   }
 
   @Override
-  void setPotions(List<AlchemicalPotion> potions) {
+  public void setPotions(List<AlchemicalPotion> potions) {
     container.setPotions(potions);
   }
 
   @Override
-  boolean canContainPotion(List<AlchemicalPotion> potion) {
+  public boolean canContainPotion(List<AlchemicalPotion> potion) {
     return container.canContainPotion(potion);
   }
 
   @Override
-  void onCanNotContainPotion(PlayerEntity player, List<AlchemicalPotion> potion) {
+  public void onCanNotContainPotion(PlayerEntity player, List<AlchemicalPotion> potion) {
     container.onCanNotContainPotion(player, potion);
   }
 }

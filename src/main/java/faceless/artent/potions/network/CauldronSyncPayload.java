@@ -19,7 +19,6 @@ import java.util.List;
 public record CauldronSyncPayload(
     BlockPos pos,
     int fuelAmount,
-    int waterAmount,
     int portionsLeft,
     int crystalsRequired,
     Color color,
@@ -36,7 +35,6 @@ public record CauldronSyncPayload(
     public void encode(RegistryByteBuf buf, CauldronSyncPayload value) {
       buf.writeBlockPos(value.pos);
       buf.writeInt(value.fuelAmount);
-      buf.writeInt(value.waterAmount);
       buf.writeInt(value.portionsLeft);
       buf.writeInt(value.crystalsRequired);
       buf.writeInt(value.color.toHex());
@@ -64,7 +62,6 @@ public record CauldronSyncPayload(
     public CauldronSyncPayload decode(RegistryByteBuf buf) {
       var pos = buf.readBlockPos();
       var fuelAmount = buf.readInt();
-      var waterAmount = buf.readInt();
       var portionsLeft = buf.readInt();
       var crystalsRequired = buf.readInt();
       var colorHex = buf.readInt();
@@ -103,7 +100,6 @@ public record CauldronSyncPayload(
       return new CauldronSyncPayload(
           pos,
           fuelAmount,
-          waterAmount,
           portionsLeft,
           crystalsRequired,
           color,

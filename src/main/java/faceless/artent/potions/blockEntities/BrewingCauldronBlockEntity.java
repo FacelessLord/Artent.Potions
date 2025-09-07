@@ -45,8 +45,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   public List<BrewingIngredient> ingredients = new ArrayList<>();
   public int fuelAmount = 0;
-  public int waterAmount = 0;
-  public int potionAmount = 9;
+  public int potionAmount = 0;
   public Color color = Color.Blue;
   public List<AlchemicalPotion> potions = new ArrayList<>();
   public int crystalsRequired = 0;
@@ -57,7 +56,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   public void tick(World world, BlockPos pos, BlockState state) {
     updateBurningState(world, pos, state);
-    if (!state.get(BrewingCauldron.IS_BURNING) || waterAmount <= 0) return;
+    if (!state.get(BrewingCauldron.IS_BURNING)) return;
 
     brewIngredients(world, pos, state);
 
@@ -94,7 +93,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     serverWorld.spawnParticles(
         ModParticles.SPLASH,
         (double) pos.getX() + 0.2d + random.nextDouble() * 0.6d,
-        pos.getY() + waterAmount / 1000f * 15f / 32f + 3 / 8d,
+        pos.getY() + potionAmount / (float) getMaxPotionAmount() * 15f / 32f + 3 / 8d,
         (double) pos.getZ() + 0.2d + random.nextDouble() * 0.6d,
         1,
         0.0,
@@ -104,7 +103,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     serverWorld.spawnParticles(
         ModParticles.BUBBLE,
         (double) pos.getX() + 0.2d + random.nextDouble() * 0.6d,
-        pos.getY() + waterAmount / 1000f * 15f / 32f + 3 / 8d,
+        pos.getY() + potionAmount / (float) getMaxPotionAmount() * 15f / 32f + 3 / 8d,
         (double) pos.getZ() + 0.2d + random.nextDouble() * 0.6d,
         1,
         0.0,
@@ -130,7 +129,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
       world.setBlockState(pos, state, Block.NOTIFY_LISTENERS);
     }
     if (state.get(BrewingCauldron.IS_BURNING)) {
-      waterAmount--;
       fuelAmount--;
       markDirty();
     }
@@ -144,25 +142,46 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var ingredient = BrewingRecipes.AsIngredient(stack);
     var isCrystal = stack.getItem() == ModItems.IceCrystalShard;
 
+    handleLeveledPotions(ingredient);
+
     if (stack.getCount() > 1) {
       item.resetPickupDelay();
       brewable.setBrewingTime(0);
       stack.setCount(stack.getCount() - 1);
     } else {
       item.setDespawnImmediately();
-      updateBrewingState();
     }
 
     if (isCrystal) {
       crystalsRequired--;
-      updateBrewingState();
     } else if (ingredient != null) {
       ingredients.add(ingredient);
       if (ingredients.size() == 1) color = BrewingRegistry.Ingredients.get(ingredient);
       else color = color.add(BrewingRegistry.Ingredients.get(ingredient));
     }
 
+    updateBrewingState();
     updateBlock();
+  }
+
+  private void handleLeveledPotions(BrewingIngredient ingredient) {
+    if (!ingredients.isEmpty() || potions.isEmpty()) return;
+
+    var lastPotion = potions.getLast();
+    var automataState = BrewingRecipes.RecipeAutomata.LastIngredients.get(lastPotion.id);
+    if (automataState == null) return;
+
+    var edges = BrewingRecipes.RecipeAutomata.Edges.get(automataState);
+    if (edges == null) return;
+
+    var possibleEdges = edges.stream().filter(e -> e.Character() == ingredient).toList();
+    if (possibleEdges.isEmpty()) return;
+
+    var newPotion = possibleEdges.getFirst();
+    if (newPotion.Target().brewedPotion() != null) {
+      potions.removeLast();
+      potions.add(newPotion.Target().brewedPotion());
+    }
   }
 
   public AddFuelResultType addFuel(ItemStack stack, boolean consumeStack) {
@@ -196,7 +215,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   public void acceptPayload(CauldronSyncPayload payload) {
     this.fuelAmount = payload.fuelAmount();
-    this.waterAmount = payload.waterAmount();
     this.potionAmount = payload.portionsLeft();
     this.crystalsRequired = payload.crystalsRequired();
     this.color = payload.color();
@@ -208,7 +226,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
     var fuelAmount = nbt.getInt("fuelAmount");
-    var waterAmount = nbt.getInt("waterAmount");
     var portionsLeft = nbt.getInt("portionsLeft");
     var crystalsRequired = nbt.getInt("crystalsRequired");
     var colorHex = nbt.getInt("color");
@@ -245,7 +262,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var payload = new CauldronSyncPayload(
         null,
         fuelAmount,
-        waterAmount,
         portionsLeft,
         crystalsRequired,
         color,
@@ -258,7 +274,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.writeNbt(nbt, registryLookup);
     nbt.putInt("fuelAmount", fuelAmount);
-    nbt.putInt("waterAmount", waterAmount);
     nbt.putInt("portionsLeft", potionAmount);
     nbt.putInt("crystalsRequired", crystalsRequired);
     nbt.putInt("color", color.toHex());
@@ -290,15 +305,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   @Nullable
   public Packet<ClientPlayPacketListener> toUpdatePacket() {
     return BlockEntityUpdateS2CPacket.create(this, BlockEntity::createNbt);
-  }
-
-  public void clearCauldron() {
-    ingredients.clear();
-    color = Color.Blue;
-    waterAmount = 0;
-    potionAmount = 9;
-    potions = new ArrayList<>();
-    updateBlock();
   }
 
   public void updateBlock() {
@@ -334,29 +340,22 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   @Override
   public List<AlchemicalPotion> getPotions() {
-    var state = this.getBrewingState();
-    var notBrewedPotion = state.isFinishing() && crystalsRequired == potions.size() ? state.brewedPotion() : null;
-    var resultPotions = new ArrayList<>(potions);
-    if (notBrewedPotion != null)
-      resultPotions.add(notBrewedPotion);
-    return resultPotions;
+    return potions;
   }
 
   @Override
   public void clear() {
-    potions.clear();
-    potionAmount = 9;
+    ingredients.clear();
     color = Color.Blue;
+    potions.clear();
+    potionAmount = 0;
     crystalsRequired = 0;
-    waterAmount = 0;
     updateBlock();
   }
 
   @Override
   public boolean canExtractPotion() {
-    var brewingState = getBrewingState();
-    var potionIsBrewed = brewingState.isFinishing() || !potions.isEmpty() && ingredients.isEmpty();
-    return potionIsBrewed && waterAmount > 0 && potionAmount > 0;
+    return !potions.isEmpty();
   }
 
   @Override

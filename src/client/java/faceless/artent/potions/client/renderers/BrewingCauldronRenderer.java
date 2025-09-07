@@ -25,7 +25,8 @@ public class BrewingCauldronRenderer implements BlockEntityRenderer<BrewingCauld
       VertexConsumerProvider vertexConsumers,
       int light,
       int overlay) {
-    var waterLevel = entity.waterAmount;
+    var potionAmount = entity.potionAmount;
+    var maxPotionAmount = entity.getMaxPotionAmount();
     var waterColor = entity.color;
     var world = entity.getWorld();
     if (world == null) return;
@@ -38,7 +39,7 @@ public class BrewingCauldronRenderer implements BlockEntityRenderer<BrewingCauld
     RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     RenderSystem.clearColor(waterColor.getRedF(), waterColor.getGreenF(), waterColor.getBlueF(), 0.25f);
     matrices.translate(2 / 16d, 4 / 16d - 1 / 128f, 2 / 16d);
-    matrices.scale(12f / 16f, waterLevel / 1000f * 15f / 32f, 12f / 16f);
+    matrices.scale(12f / 16f, potionAmount / (float)maxPotionAmount * 15f / 32f, 12f / 16f);
 
     blockRenderManager.renderBlock(
         state,

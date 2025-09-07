@@ -9,6 +9,7 @@ import faceless.artent.potions.registry.BrewingRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 public class BrewingAutomata {
@@ -16,6 +17,8 @@ public class BrewingAutomata {
   public State zeroState = new State(0, false, null);
   public State invalidState = new State(-1, false, null);
   public int nextId = 1;
+
+  public Hashtable<String, State> LastIngredients = new Hashtable<>();
 
   public State getStateFromIngredients(List<BrewingIngredient> ingredients) {
     var state = zeroState;
@@ -42,12 +45,14 @@ public class BrewingAutomata {
   public void addRecipe(AlchemicalPotion[] potions, BrewingIngredient... ingredients) {
     var newIngredients = new ArrayList<>(List.of(ingredients));
     for (AlchemicalPotion potion : potions) {
-      addRecipe(potion, newIngredients.toArray(BrewingIngredient[]::new));
-      newIngredients.add(ingredients[ingredients.length - 1]);
+      var potionState = addRecipe(potion, newIngredients.toArray(BrewingIngredient[]::new));
+      var lastIngredient = ingredients[ingredients.length - 1];
+      newIngredients.add(lastIngredient);
+      LastIngredients.put(potion.id, potionState);
     }
   }
 
-  public void addRecipe(AlchemicalPotion potion, BrewingIngredient... ingredients) {
+  public State addRecipe(AlchemicalPotion potion, BrewingIngredient... ingredients) {
     var color = Color.Blue;
     var state = zeroState;
     var i = 0;
@@ -75,6 +80,7 @@ public class BrewingAutomata {
     Color finalColor = color;
     // TODO add more blue color to potions like true blue, purple, cyan, emerald green,
     Arrays.stream(potion.statusEffects).forEach(s -> MiscUtils.setStatusEffectColor(s, finalColor.toHex()));
+    return state;
   }
 
   public record Edge(State Source, State Target, BrewingIngredient Character) {
