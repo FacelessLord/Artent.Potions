@@ -20,8 +20,6 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -182,6 +180,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
       potions.removeLast();
       potions.add(newPotion.Target().brewedPotion());
     }
+    markDirty();
   }
 
   public AddFuelResultType addFuel(ItemStack stack, boolean consumeStack) {
@@ -195,6 +194,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     }
     if (time == 0) return AddFuelResultType.Fail;
     this.fuelAmount += time * (consumeStack ? stack.getCount() : 1);
+    markDirty();
     updateBlock();
     return consumeStack || stack.getCount() == 1 ? AddFuelResultType.ConsumeStack : AddFuelResultType.ConsumeItem;
   }
@@ -210,6 +210,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
       potions.add(brewingState.brewedPotion());
       ingredients.clear();
       crystalsRequired = potions.size();
+      markDirty();
     }
   }
 
@@ -220,6 +221,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     this.color = payload.color();
     this.ingredients = payload.ingredients();
     this.potions = payload.potions();
+    markDirty();
   }
 
   @Override
@@ -231,10 +233,14 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var colorHex = nbt.getInt("color");
     var color = colorHex == 0 ? Color.Blue : Color.fromInt(colorHex);
 
-    var ingredientsTag = nbt.getList("ingredients", NbtCompound.LIST_TYPE);
-    var ingredients = new ArrayList<BrewingIngredient>(ingredientsTag.size());
-    for (net.minecraft.nbt.NbtElement nbtElement : ingredientsTag) {
-      var ingredientTag = (NbtCompound) nbtElement;
+    var ingredientsCount = nbt.getInt("ingredientCount");
+    var ingredientsTag = nbt.getCompound("ingredients");
+    var potionCount = nbt.getInt("potionCount");
+    var potionsTag = nbt.getCompound("potions");
+
+    var ingredients = new ArrayList<BrewingIngredient>(ingredientsCount);
+    for (int i = 0; i < ingredientsCount; i++) {
+      var ingredientTag = ingredientsTag.getCompound("" + i);
       var id = ingredientTag.getString("id");
       var item = Registries.ITEM.get(Identifier.of(id));
       if (item == Items.AIR) {
@@ -245,11 +251,10 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
       var ingredient = new BrewingIngredient(item, meta);
       ingredients.add(ingredient);
     }
-    var potionsTag = nbt.getList("potions", NbtCompound.LIST_TYPE);
-    var potions = new ArrayList<AlchemicalPotion>(potionsTag.size());
-    for (net.minecraft.nbt.NbtElement nbtElement : potionsTag) {
-      var potionTag = (NbtString) nbtElement;
-      var id = potionTag.asString();
+
+    var potions = new ArrayList<AlchemicalPotion>(potionCount);
+    for (int i = 0; i < potionCount; i++) {
+      var id = potionsTag.getString(i + "");
       var potion = AlchemicalPotionRegistry.getPotion(id);
       if (potion == null) {
         System.out.println("Unknown potion with identifier '" + id + "' in cauldron. Removing it.");
@@ -258,7 +263,6 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
       }
       potions.add(potion);
     }
-
     var payload = new CauldronSyncPayload(
         null,
         fuelAmount,
@@ -277,22 +281,24 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     nbt.putInt("portionsLeft", potionAmount);
     nbt.putInt("crystalsRequired", crystalsRequired);
     nbt.putInt("color", color.toHex());
+    nbt.putInt("ingredientCount", ingredients.size());
+    nbt.putInt("potionCount", potions.size());
 
-    var ingredientsTag = new NbtList();
+    var ingredientsTag = new NbtCompound();
     for (int i = 0; i < ingredients.size(); i++) {
       var ingredient = ingredients.get(i);
       var ingredientTag = new NbtCompound();
       var id = Registries.ITEM.getId(ingredient.item());
       ingredientTag.putString("id", id.toString());
       ingredientTag.putInt("meta", ingredient.meta());
-      ingredientsTag.add(i, ingredientTag);
+      ingredientsTag.put(i + "", ingredientTag);
     }
     nbt.put("ingredients", ingredientsTag);
 
-    var potionsTag = new NbtList();
+    var potionsTag = new NbtCompound();
     for (int i = 0; i < potions.size(); i++) {
       var potion = potions.get(i);
-      potionsTag.add(i, NbtString.of(potion.id));
+      potionsTag.putString(i + "", potion.id);
     }
     nbt.put("potions", potionsTag);
   }
@@ -318,6 +324,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     for (var player : PlayerLookup.tracking((ServerWorld) world, pos)) {
       ArtentServerHook.packetSyncCauldron(player, this);
     }
+    markDirty();
   }
 
   @Override
@@ -336,6 +343,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     if (amount == 0) {
       clear();
     }
+    markDirty();
   }
 
   @Override
@@ -350,6 +358,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     potions.clear();
     potionAmount = 0;
     crystalsRequired = 0;
+    markDirty();
     updateBlock();
   }
 
@@ -361,6 +370,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   @Override
   public void setPotions(List<AlchemicalPotion> potions) {
     this.potions = potions;
+    markDirty();
   }
 
   public enum AddFuelResultType {

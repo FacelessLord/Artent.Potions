@@ -131,6 +131,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
             .map(Color::fromInt)
             .orElse(Color.Blue);
       }
+      cauldron.markDirty();
       cauldron.updateBlock();
     }
 //
@@ -195,6 +196,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
       newStack.setCount(stack.getCount() - 1);
       player.setStackInHand(hand, newStack);
     }
+    cauldron.markDirty();
   }
 
   public void fillCauldron(
@@ -205,6 +207,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
       Hand hand,
       ItemStack stack) {
     cauldron.potionAmount = 9;
+    cauldron.markDirty();
     cauldron.updateBlock();
     if (!world.isClient) {
       if (!player.getAbilities().creativeMode) {
