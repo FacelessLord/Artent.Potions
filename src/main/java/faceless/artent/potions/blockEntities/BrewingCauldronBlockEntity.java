@@ -69,11 +69,10 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   private void brewIngredients(World world, BlockPos pos, BlockState state) {
     var waterBox = getWaterBox(pos);
-    var brewingState = getBrewingState();
     var items = world.getEntitiesByClass(
         ItemEntity.class,
         waterBox,
-        ie -> (brewingState.isFinishing() && ie.getStack().getItem() == ModItems.IceCrystalShard)
+        ie -> (canExtractPotion() && ie.getStack().getItem() == ModItems.IceCrystalShard)
               || BrewingRecipes.IsIngredient(ie.getStack()));
     if (items.isEmpty()) return;
 
