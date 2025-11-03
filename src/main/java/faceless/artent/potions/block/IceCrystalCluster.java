@@ -24,8 +24,6 @@ import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 public class IceCrystalCluster extends Block implements Waterloggable {
-  private final float height;
-  private final float xzOffset;
   public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
   public static final EnumProperty<Direction> FACING = Properties.FACING;
   protected final VoxelShape northShape;
@@ -57,6 +55,7 @@ public class IceCrystalCluster extends Block implements Waterloggable {
         16.0f - xzOffset,
         16.0);
     this.southShape = Block.createCuboidShape(xzOffset, xzOffset, 0.0, 16.0f - xzOffset, 16.0f - xzOffset, height);
+    //noinspection SuspiciousNameCombination
     this.eastShape = Block.createCuboidShape(0.0, xzOffset, xzOffset, height, 16.0f - xzOffset, 16.0f - xzOffset);
     this.westShape = Block.createCuboidShape(
         16.0f - height,
@@ -65,8 +64,6 @@ public class IceCrystalCluster extends Block implements Waterloggable {
         16.0,
         16.0f - xzOffset,
         16.0f - xzOffset);
-    this.height = height;
-    this.xzOffset = xzOffset;
   }
 
   @Override

@@ -138,15 +138,5 @@ public class VanillaBiomeParametersMixin {
           0.0F,
           registryKey);
     }
-
-//    this.writeBiomeParameters(
-//        parameters,
-//        MultiNoiseUtil.ParameterRange.combine(this.temperatureParameters[1], this.temperatureParameters[3]),
-//        this.defaultParameter,
-//        this.farInlandContinentalness,
-//        this.erosionParameters[2],
-//        weirdness,
-//        0.0F,
-//        ModBiomes.CRIMSON_FOREST_BIOME_KEY);
   }
 }

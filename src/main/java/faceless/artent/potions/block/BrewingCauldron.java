@@ -133,38 +133,6 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
       cauldron.markDirty();
       cauldron.updateBlock();
     }
-//
-//    if (stack.getItem() == ModItems.EmptyPhial) {
-//      if (brewingState.isFinishing()) {
-//        var potion = brewingState.brewedPotion();
-//        var potionStack = new ItemStack(ModItems.PotionPhial);
-//        AlchemicalPotionUtil.setPotion(potionStack, potion);
-//        player.giveItemStack(potionStack);
-//        stack.decrement(1);
-//        cauldron.consumePortions(3);
-//        if (stack.getCount() == 1) return ActionResult.CONSUME;
-//      }
-//    } else if (stack.getItem() == ModItems.EmptyPhialExplosive) {
-//      if (brewingState.isFinishing()) {
-//        var potion = brewingState.brewedPotion();
-//        var potionStack = new ItemStack(ModItems.PotionPhialExplosive);
-//        AlchemicalPotionUtil.setPotion(potionStack, potion);
-//
-//        player.giveItemStack(potionStack);
-//        stack.decrement(1);
-//        cauldron.consumePortions(3);
-//        if (stack.getCount() == 1) return ActionResult.CONSUME;
-//      }
-//    } else if (stack.getItem() == ModItems.GoldenBucket) {
-//      if (brewingState.isFinishing()) {
-//        if (AlchemicalPotionRegistry.fermentedPotionIsRegistered(brewingState.brewedPotion().id)) {
-//          var filledBucket = new ItemStack(ModItems.GoldenBucketFilled);
-//          AlchemicalPotionUtil.setPotion(filledBucket, brewingState.brewedPotion());
-//          player.setStackInHand(player.getActiveHand(), ItemUsage.exchangeStack(stack, player, filledBucket));
-//          cauldron.clearCauldron();
-//        } else player.sendMessage(Text.translatable("text.artent_potions.potion.infermentable"), false);
-//      }
-//    } else
 
     return ActionResult.SUCCESS;
   }

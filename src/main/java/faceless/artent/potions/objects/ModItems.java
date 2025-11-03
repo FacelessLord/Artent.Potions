@@ -22,7 +22,7 @@ import static faceless.artent.potions.registry.DataComponentRegistry.CONCENTRATE
 import static faceless.artent.potions.registry.DataComponentRegistry.POTION_KEY;
 
 public final class ModItems {
-  public static FoodComponent Berry = new FoodComponent(2, 0.1f, false);
+  public static final FoodComponent Berry = new FoodComponent(2, 0.1f, false);
 
   public static Item CrimsonLeaf;
   public static Item GoldenBucket;
@@ -32,7 +32,7 @@ public final class ModItems {
   public static Item SmallBottle;
   public static Item MediumBottle;
   public static Item BigBottle;
-  public static Item[] berries = new Item[5];
+  public static final Item[] berries = new Item[5];
 
   public static Item ManaChickenSpawnEgg;
   public static Item FrostedGolemSpawnEgg;

@@ -8,8 +8,8 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 public class DamageSourceRegistry {
-  public static Identifier BleedingDamageId = Identifier.of(ArtentPotions.MODID, "bleeding");
-  public static RegistryKey<DamageType> BleedingDamageKey = RegistryKey.of(
+  public static final Identifier BleedingDamageId = Identifier.of(ArtentPotions.MODID, "bleeding");
+  public static final RegistryKey<DamageType> BleedingDamageKey = RegistryKey.of(
       RegistryKeys.DAMAGE_TYPE,
       BleedingDamageId);
 

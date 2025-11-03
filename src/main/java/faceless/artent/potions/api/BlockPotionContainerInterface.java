@@ -13,8 +13,8 @@ public class BlockPotionContainerInterface extends PotionContainerInterface {
   }
 
   @Override
-  public boolean isValid() {
-    return container != null;
+  public boolean isInvalid() {
+    return container == null;
   }
 
   @Override

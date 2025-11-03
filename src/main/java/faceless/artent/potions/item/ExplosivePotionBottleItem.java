@@ -1,27 +1,14 @@
 package faceless.artent.potions.item;
 
-import faceless.artent.potions.api.IPotionContainerItem;
-import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
-import faceless.artent.potions.brewingApi.PotionDataUtil;
 import faceless.artent.potions.entity.ThrowablePotionPhialEntity;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.consume.UseAction;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-
-import java.util.List;
 
 public class ExplosivePotionBottleItem extends PotionBottleItem {
 

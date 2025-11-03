@@ -51,7 +51,7 @@ public class ModFeatures {
   public static final ConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>> CRIMSON_TREE = new ConfiguredFeature<>(
       TreeFeature.TREE,
       CRIMSON_TREE_CONFIG);
-  public static PlacedFeature CRIMSONWOOD_TREE_PLACED = new PlacedFeature(
+  public static final PlacedFeature CRIMSONWOOD_TREE_PLACED = new PlacedFeature(
       RegistryEntry.of(CRIMSON_TREE),
       treeModifiers(ModBlocks.CrimsonwoodSapling));
 
@@ -67,7 +67,7 @@ public class ModFeatures {
   public static final ConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>> CRIMSON_MEGA_TREE = new ConfiguredFeature<>(
       TreeFeature.TREE,
       CRIMSON_MEGA_TREE_CONFIG);
-  public static PlacedFeature CRIMSONWOOD_MEGA_TREE_PLACED = new PlacedFeature(
+  public static final PlacedFeature CRIMSONWOOD_MEGA_TREE_PLACED = new PlacedFeature(
       RegistryEntry.of(CRIMSON_MEGA_TREE),
       treeModifiers(ModBlocks.CrimsonwoodSapling));
 
@@ -95,7 +95,7 @@ public class ModFeatures {
     PlantPlacementModifiers = modifiers;
   }
 
-  public static PlacedFeature BERRY_BUSH_PLACED = new PlacedFeature(
+  public static final PlacedFeature BERRY_BUSH_PLACED = new PlacedFeature(
       RegistryEntry.of(BERRY_BUSH),
       PlantPlacementModifiers
   );
@@ -107,7 +107,7 @@ public class ModFeatures {
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
       SHADOWVEIL_FEATURE_CONFIG);
 
-  public static PlacedFeature SHADOWVEIL_PLACED = new PlacedFeature(
+  public static final PlacedFeature SHADOWVEIL_PLACED = new PlacedFeature(
       RegistryEntry.of(SHADOWVEIL),
       PlantPlacementModifiers
   );
@@ -119,7 +119,7 @@ public class ModFeatures {
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
       BLAZING_MARIGOLD_FEATURE_CONFIG);
 
-  public static PlacedFeature BLAZING_MARIGOLD_PLACED = new PlacedFeature(
+  public static final PlacedFeature BLAZING_MARIGOLD_PLACED = new PlacedFeature(
       RegistryEntry.of(BLAZING_MARIGOLD),
       PlantPlacementModifiers
   );
@@ -131,7 +131,7 @@ public class ModFeatures {
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
       SLIME_BERRY_FEATURE_CONFIG);
 
-  public static PlacedFeature SLIME_BERRY_PLACED = new PlacedFeature(
+  public static final PlacedFeature SLIME_BERRY_PLACED = new PlacedFeature(
       RegistryEntry.of(SLIME_BERRY),
       PlantPlacementModifiers
   );
@@ -143,7 +143,7 @@ public class ModFeatures {
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
       SHROOM_FEATURE_CONFIG);
 
-  public static PlacedFeature SHROOM_PLACED = new PlacedFeature(
+  public static final PlacedFeature SHROOM_PLACED = new PlacedFeature(
       RegistryEntry.of(SHROOM),
       PlantPlacementModifiers
   );
@@ -156,7 +156,7 @@ public class ModFeatures {
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
       FROST_PUMPKIN_FEATURE_CONFIG);
 
-  public static PlacedFeature FROST_PUMPKIN_PLACED = new PlacedFeature(
+  public static final PlacedFeature FROST_PUMPKIN_PLACED = new PlacedFeature(
       RegistryEntry.of(FROST_PUMPKIN),
       PlantPlacementModifiers
   );

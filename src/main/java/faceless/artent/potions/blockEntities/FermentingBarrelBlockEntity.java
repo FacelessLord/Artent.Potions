@@ -45,19 +45,6 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
     return !potions.isEmpty() && fermentedTime >= FERMENTATION_TIME;
   }
 
-  public int takePotionPortions(int amount) {
-    if (amount > potionAmount) {
-      var portionsReturned = potionAmount;
-      clear();
-      return portionsReturned;
-    } else {
-      potionAmount -= amount;
-      if (potionAmount <= 0) clear();
-
-      return amount;
-    }
-  }
-
   @Override
   public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);

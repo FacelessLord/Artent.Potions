@@ -27,15 +27,13 @@ public class AlchemicalPotionRegistry implements IRegistry {
     return PotionsList;
   }
 
-  public static List<String> getFermentedPotions() {
-    return FermentedPotionsList;
-  }
-
   @Override
   public void register() {
     register(POISON);
+    registerFermented(INSTANT_HARM);
     register(STRENGTH);
     register(VAMPIRISM);
+    registerFermented(FERMENTED_VAMPIRISM);
     register(HOLY_WATER);
     registerFermented(FERMENTED_HOLY_WATER);
     register(BERSERK);
@@ -88,9 +86,5 @@ public class AlchemicalPotionRegistry implements IRegistry {
       FermentedPotionsMap.put(potion.id, potion);
       FermentedPotionsList.add(potion.id);
     }
-  }
-
-  public static boolean fermentedPotionIsRegistered(String id) {
-    return FermentedPotionsMap.containsKey(id);
   }
 }

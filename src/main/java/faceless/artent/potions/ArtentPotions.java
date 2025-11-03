@@ -16,22 +16,22 @@ public class ArtentPotions implements ModInitializer {
   // That way, it's clear which mod wrote info, warnings, and errors.
   public static final Logger LOGGER = LoggerFactory.getLogger("artent_potions");
 
-  public static BlockEntityRegistry BlockEntities = new BlockEntityRegistry();
-  public static ItemGroupRegistry ItemGroups = new ItemGroupRegistry();
-  public static ArtentServerHook ServerHook = new ArtentServerHook();
+  public static final BlockEntityRegistry BlockEntities = new BlockEntityRegistry();
+  public static final ItemGroupRegistry ItemGroups = new ItemGroupRegistry();
+  public static final ArtentServerHook ServerHook = new ArtentServerHook();
 
-  public static ModItems Items = new ModItems();
-  public static ModBlocks Blocks = new ModBlocks();
-  public static EntityRegistry Entities = new EntityRegistry();
-  public static AlchemicalPotionRegistry Potions = new AlchemicalPotionRegistry();
-  public static FermentationRegistry FermentedPotions = new FermentationRegistry();
-  public static BrewingRegistry Brewing = new BrewingRegistry();
-  public static CommandRegistry Commands = new CommandRegistry();
-  public static StatusEffectsRegistry StatusEffects = new StatusEffectsRegistry();
-  public static DataComponentRegistry DataComponents = new DataComponentRegistry();
-  public static FeatureRegistry Features = new FeatureRegistry();
-  public static ArtentLootTableModifiers LootTableModifiers = new ArtentLootTableModifiers();
-  public static ModParticles Particles = new ModParticles();
+  public static final ModItems Items = new ModItems();
+  public static final ModBlocks Blocks = new ModBlocks();
+  public static final EntityRegistry Entities = new EntityRegistry();
+  public static final AlchemicalPotionRegistry Potions = new AlchemicalPotionRegistry();
+  public static final FermentationRegistry FermentedPotions = new FermentationRegistry();
+  public static final BrewingRegistry Brewing = new BrewingRegistry();
+  public static final CommandRegistry Commands = new CommandRegistry();
+  public static final StatusEffectsRegistry StatusEffects = new StatusEffectsRegistry();
+  public static final DataComponentRegistry DataComponents = new DataComponentRegistry();
+  public static final FeatureRegistry Features = new FeatureRegistry();
+  public static final ArtentLootTableModifiers LootTableModifiers = new ArtentLootTableModifiers();
+  public static final ModParticles Particles = new ModParticles();
 
   @Override
   public void onInitialize() {

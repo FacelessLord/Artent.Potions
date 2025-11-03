@@ -31,8 +31,8 @@ import java.util.stream.Stream;
 
 public class PotionBottleItem extends Item implements IPotionContainerItem, IDebuggableItem {
   private static final Text NONE_TEXT = Text.translatable("effect.none").formatted(Formatting.GRAY);
-  public String type;
-  public int size;
+  public final String type;
+  public final int size;
 
   public PotionBottleItem(Settings settings, String type, int size) {
     super(settings);

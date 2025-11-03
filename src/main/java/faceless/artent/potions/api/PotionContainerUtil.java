@@ -6,14 +6,14 @@ import net.minecraft.item.ItemStack;
 
 public class PotionContainerUtil {
 
-  // if b is empty, put max from a
-  // else if a not at max, max fill a (if possible. Next otherwise)
-  // else if b not at max, max fill b (if possible. Next otherwise)
+  // if `b` is empty, put max from `a`
+  // else if `a` is not at max, max fill `a` (if possible. Next otherwise)
+  // else if `b` is not at max, max fill `b` (if possible. Next otherwise)
   public static TransferResult transferBetweenContainers(
       PlayerEntity player,
       PotionContainerInterface a,
       PotionContainerInterface b) {
-    if (!a.isValid() || !b.isValid()) return TransferResult.InvalidContainers;
+    if (a.isInvalid() || b.isInvalid()) return TransferResult.InvalidContainers;
 
     var aPotion = a.getPotions();
     var aAmount = a.getPotionAmount();

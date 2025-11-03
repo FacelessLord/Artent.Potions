@@ -20,23 +20,23 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class FeatureRegistry {
   public static final Identifier CRIMSON_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_tree");
-  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREE_CONFIGURED_KEY = configuredKeyOf(
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREE_CONFIGURED_KEY = configuredKeyOf(
       CRIMSON_TREE_FEATURE_ID);
   public static RegistryKey<PlacedFeature> CRIMSON_TREE_PLACED_KEY = placedKeyOf(CRIMSON_TREE_FEATURE_ID);
 
   public static final Identifier CRIMSON_MEGA_TREE_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_mega_tree");
-  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_MEGA_TREE_CONFIGURED_KEY = configuredKeyOf(
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_MEGA_TREE_CONFIGURED_KEY = configuredKeyOf(
       CRIMSON_MEGA_TREE_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> CRIMSON_MEGA_TREE_PLACED_KEY = placedKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> CRIMSON_MEGA_TREE_PLACED_KEY = placedKeyOf(CRIMSON_MEGA_TREE_FEATURE_ID);
 
   public static final Identifier CRIMSON_TREES_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "crimson_trees");
-  public static RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREES_CONFIGURED_KEY = configuredKeyOf(
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_TREES_CONFIGURED_KEY = configuredKeyOf(
       CRIMSON_TREES_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> CRIMSON_TREES_PLACED_KEY = placedKeyOf(CRIMSON_TREES_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> CRIMSON_TREES_PLACED_KEY = placedKeyOf(CRIMSON_TREES_FEATURE_ID);
 
   public static final Identifier BERRY_BUSH_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "berry_bush");
-  public static RegistryKey<ConfiguredFeature<?, ?>> BERRY_BUSH_CONFIGURED_KEY = configuredKeyOf(BERRY_BUSH_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> BERRY_BUSH_PLACED_KEY = placedKeyOf(BERRY_BUSH_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BERRY_BUSH_CONFIGURED_KEY = configuredKeyOf(BERRY_BUSH_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> BERRY_BUSH_PLACED_KEY = placedKeyOf(BERRY_BUSH_FEATURE_ID);
   public static final Feature<BerryBushFeatureConfig> BERRY_BUSH_FEATURE = new BerryBushFeature(BerryBushFeatureConfig.CODEC);
 
   public static final Identifier VEGETATION_BLOCK_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "vegetation_bock");
@@ -44,25 +44,25 @@ public class FeatureRegistry {
       VegetationBlockFeatureConfig.CODEC);
 
   public static final Identifier SHADOWVEIL_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "demonveil");
-  public static RegistryKey<ConfiguredFeature<?, ?>> SHADOWVEIL_CONFIGURED_KEY = configuredKeyOf(SHADOWVEIL_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> SHADOWVEIL_PLACED_KEY = placedKeyOf(SHADOWVEIL_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SHADOWVEIL_CONFIGURED_KEY = configuredKeyOf(SHADOWVEIL_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> SHADOWVEIL_PLACED_KEY = placedKeyOf(SHADOWVEIL_FEATURE_ID);
 
   public static final Identifier BLAZING_MARIGOLD_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "blazing_marigold");
-  public static RegistryKey<ConfiguredFeature<?, ?>> BLAZING_MARIGOLD_CONFIGURED_KEY = configuredKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> BLAZING_MARIGOLD_PLACED_KEY = placedKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BLAZING_MARIGOLD_CONFIGURED_KEY = configuredKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> BLAZING_MARIGOLD_PLACED_KEY = placedKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
 
   public static final Identifier SLIME_BERRY_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "slime_berry");
-  public static RegistryKey<ConfiguredFeature<?, ?>> SLIME_BERRY_CONFIGURED_KEY = configuredKeyOf(SLIME_BERRY_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> SLIME_BERRY_PLACED_KEY = placedKeyOf(SLIME_BERRY_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SLIME_BERRY_CONFIGURED_KEY = configuredKeyOf(SLIME_BERRY_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> SLIME_BERRY_PLACED_KEY = placedKeyOf(SLIME_BERRY_FEATURE_ID);
 
   public static final Identifier SHROOM_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "shroom");
-  public static RegistryKey<ConfiguredFeature<?, ?>> SHROOM_CONFIGURED_KEY = configuredKeyOf(SHROOM_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> SHROOM_PLACED_KEY = placedKeyOf(SHROOM_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SHROOM_CONFIGURED_KEY = configuredKeyOf(SHROOM_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> SHROOM_PLACED_KEY = placedKeyOf(SHROOM_FEATURE_ID);
 
   public static final Identifier FROST_PUMPKIN_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "frost_pumpkin");
-  public static RegistryKey<ConfiguredFeature<?, ?>> FROST_PUMPKIN_CONFIGURED_KEY = configuredKeyOf(
+  public static final RegistryKey<ConfiguredFeature<?, ?>> FROST_PUMPKIN_CONFIGURED_KEY = configuredKeyOf(
       FROST_PUMPKIN_FEATURE_ID);
-  public static RegistryKey<PlacedFeature> FROST_PUMPKIN_PLACED_KEY = placedKeyOf(FROST_PUMPKIN_FEATURE_ID);
+  public static final RegistryKey<PlacedFeature> FROST_PUMPKIN_PLACED_KEY = placedKeyOf(FROST_PUMPKIN_FEATURE_ID);
 
   public void register() {
     Registry.register(Registries.FEATURE, BERRY_BUSH_FEATURE_ID, BERRY_BUSH_FEATURE);

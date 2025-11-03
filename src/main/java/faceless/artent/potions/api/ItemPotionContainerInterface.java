@@ -21,53 +21,71 @@ public class ItemPotionContainerInterface extends PotionContainerInterface {
   }
 
   @Override
-  public boolean isValid() {
-    return getContainer() != null;
+  public boolean isInvalid() {
+    return getContainer() == null;
   }
+
 
   @Override
   public int getMaxPotionAmount() {
-    return getContainer().getMaxPotionAmount(stack);
+    var container = getContainer();
+    assert container != null;
+    return container.getMaxPotionAmount(stack);
   }
 
   @Override
   public int getPotionAmount() {
-    return getContainer().getPotionAmount(stack);
+    var container = getContainer();
+    assert container != null;
+    return container.getPotionAmount(stack);
   }
 
   @Override
   public void setPotionAmount(int amount) {
-    getContainer().setPotionAmount(stack, amount);
+    var container = getContainer();
+    assert container != null;
+    container.setPotionAmount(stack, amount);
   }
 
   @Override
   public List<AlchemicalPotion> getPotions() {
-    return getContainer().getPotions(stack);
+    var container = getContainer();
+    assert container != null;
+    return container.getPotions(stack);
   }
 
   @Override
   public void clear() {
     var container = getContainer();
+    assert container != null;
     container.overridePotion(stack, List.of(), 0);
   }
 
   @Override
   public boolean canExtractPotion() {
-    return getContainer().canExtractPotion(stack);
+    var container = getContainer();
+    assert container != null;
+    return container.canExtractPotion(stack);
   }
 
   @Override
   public void setPotions(List<AlchemicalPotion> potions) {
-    getContainer().setPotions(stack, potions);
+    var container = getContainer();
+    assert container != null;
+    container.setPotions(stack, potions);
   }
 
   @Override
   public boolean canContainPotion(List<AlchemicalPotion> potion) {
-    return getContainer().canContainPotion(potion);
+    var container = getContainer();
+    assert container != null;
+    return container.canContainPotion(potion);
   }
 
   @Override
   public void onCanNotContainPotion(PlayerEntity player, List<AlchemicalPotion> potion) {
-    getContainer().onCanNotContainPotion(player, potion);
+    var container = getContainer();
+    assert container != null;
+    container.onCanNotContainPotion(player, potion);
   }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PotionStack {
   private List<AlchemicalPotion> potions;
-  private int amount = 0;
+  private int amount;
 
   public PotionStack(int amount, List<AlchemicalPotion> potions) {
     this.amount = amount;

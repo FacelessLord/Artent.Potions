@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class AlchemicalPotion {
-    public String id;
+    public final String id;
     public Color color;
-    public ArtentStatusEffect[] statusEffects;
+    public final ArtentStatusEffect[] statusEffects;
     private final ImmutableList<StatusEffectInstance> effects;
 
     public AlchemicalPotion(String id, StatusEffectInstance... effects) {
@@ -33,16 +33,6 @@ public class AlchemicalPotion {
 
     public List<StatusEffectInstance> getEffects() {
         return this.effects;
-    }
-
-    public boolean hasInstantEffect() {
-        if (!this.effects.isEmpty()) {
-            for (StatusEffectInstance statusEffectInstance : this.effects) {
-                if (!statusEffectInstance.getEffectType().value().isInstant()) continue;
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

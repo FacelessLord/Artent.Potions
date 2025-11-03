@@ -14,7 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class ModEntities {
-  public static EntityType<ThrowablePotionPhialEntity> POTION_PHIAL = EntityType.Builder
+  public static final EntityType<ThrowablePotionPhialEntity> POTION_PHIAL = EntityType.Builder
       .create(
           (EntityType<ThrowablePotionPhialEntity> type, World world) -> new ThrowablePotionPhialEntity(type, world),
           SpawnGroup.MISC)
@@ -24,7 +24,7 @@ public class ModEntities {
       .build(RegistryKey.of(
           Registries.ENTITY_TYPE.getKey(),
           Identifier.of(ArtentPotions.MODID, "potion_phial_entity")));
-  public static EntityType<FrostedSnowball> FROSTED_SNOWBALL = EntityType.Builder
+  public static final EntityType<FrostedSnowball> FROSTED_SNOWBALL = EntityType.Builder
       .create(
           (EntityType<FrostedSnowball> type, World world) -> new FrostedSnowball(type, world),
           SpawnGroup.MISC)
@@ -34,7 +34,7 @@ public class ModEntities {
       .build(RegistryKey.of(
           Registries.ENTITY_TYPE.getKey(),
           Identifier.of(ArtentPotions.MODID, "frosted_snowball")));
-  public static EntityType<ManaChicken> MANA_CHICKEN = EntityType.Builder
+  public static final EntityType<ManaChicken> MANA_CHICKEN = EntityType.Builder
       .create(ManaChicken::new, SpawnGroup.CREATURE)
       .dimensions(0.4F, 0.7F)
       .eyeHeight(0.644F)
@@ -43,7 +43,7 @@ public class ModEntities {
       .build(RegistryKey.of(
           Registries.ENTITY_TYPE.getKey(),
           Identifier.of(ArtentPotions.MODID, "mana_chicken")));
-  public static EntityType<FrostedGolem> FROSTED_GOLEM = EntityType.Builder
+  public static final EntityType<FrostedGolem> FROSTED_GOLEM = EntityType.Builder
       .create(FrostedGolem::new, SpawnGroup.CREATURE)
       .dimensions(3, 5.85f)
       .eyeHeight(5.5f)

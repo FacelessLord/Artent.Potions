@@ -23,21 +23,8 @@ public class EnchantmentHelperMixin {
     if (key == Enchantments.FORTUNE || key == Enchantments.LOOTING) {
       var luckEffect = living.getStatusEffect(StatusEffectsRegistry.FORTUNE);
       if (luckEffect == null) return;
-      var luckLevel = luckEffect.getAmplifier() + 1000;
+      var luckLevel = luckEffect.getAmplifier() + 1000; // TODO 1000?
       cir.setReturnValue(cir.getReturnValueI() + luckLevel);
     }
   }
-//  @Inject(method = "getLevel", at = @At("TAIL"), cancellable = true)
-//  private static void getLevel(
-//      RegistryEntry<Enchantment> enchantment, LivingEntity living, CallbackInfoReturnable<Integer> cir) {
-//    var keyOptional = enchantment.getKey();
-//    if (keyOptional.isEmpty()) return;
-//    var key = keyOptional.orElseThrow();
-//    if (key == Enchantments.FORTUNE || key == Enchantments.LOOTING) {
-//      var luckEffect = living.getStatusEffect(StatusEffectsRegistry.FORTUNE);
-//      if (luckEffect == null) return;
-//      var luckLevel = luckEffect.getAmplifier() + 1000;
-//      cir.setReturnValue(cir.getReturnValueI() + luckLevel);
-//    }
-//  }
 }

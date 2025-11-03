@@ -2,16 +2,12 @@ package faceless.artent.potions.block;
 
 import com.mojang.serialization.MapCodec;
 import faceless.artent.core.api.ChatUtils;
-import faceless.artent.core.api.MiscUtils;
 import faceless.artent.core.item.INamed;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.FermentingBarrelBlockEntity;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
-import faceless.artent.potions.item.PotionBottleItem;
 import faceless.artent.potions.objects.ModBlockEntities;
-import faceless.artent.potions.objects.ModItems;
-import faceless.artent.potions.registry.FermentationRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -38,7 +34,6 @@ import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
-import java.util.stream.Stream;
 
 public class FermentingBarrel extends BlockWithEntity implements INamed {
   public static final MapCodec<FermentingBarrel> CODEC = FermentingBarrel.createCodec(FermentingBarrel::new);
@@ -84,8 +79,7 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
 
   @Override
   protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-    if (!(world.getBlockEntity(pos) instanceof FermentingBarrelBlockEntity barrel))
-      return ActionResult.FAIL;
+    if (!(world.getBlockEntity(pos) instanceof FermentingBarrelBlockEntity barrel)) return ActionResult.FAIL;
 
     var stack = player.getEquippedStack(player.getActiveHand() == Hand.MAIN_HAND
                                             ? EquipmentSlot.MAINHAND
@@ -101,15 +95,20 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
 
       if (transferResult == PotionContainerUtil.TransferResult.DifferentPotions) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.different");
+        return ActionResult.FAIL;
       } else if (transferResult == PotionContainerUtil.TransferResult.BIsFull
                  || transferResult == PotionContainerUtil.TransferResult.BothIsFull) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled.already");
+        return ActionResult.FAIL;
       } else if (transferResult == PotionContainerUtil.TransferResult.MovedToB) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.filled");
+        return ActionResult.SUCCESS;
       } else if (transferResult == PotionContainerUtil.TransferResult.MovedToA) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.emptied");
+        return ActionResult.SUCCESS;
       } else if (transferResult == PotionContainerUtil.TransferResult.BCantContain) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.barrel.infermentable");
+        return ActionResult.FAIL;
       }
     }
 
@@ -125,7 +124,6 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
                               + 9
                               + ".of")
                 .append(potionNames), false);
-        return ActionResult.SUCCESS;
       } else {
         if (!barrel.potions.isEmpty()) player.sendMessage(
             Text
@@ -136,8 +134,8 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
                                                           - barrel.fermentedTime) / 20)))
                 .append(Text.translatable("text.artent_potions.fermentation.time.suffix")), false);
         else player.sendMessage(Text.translatable("text.artent_potions.barrel.empty"), false);
-        return ActionResult.SUCCESS;
       }
+      return ActionResult.SUCCESS;
     }
     return ActionResult.PASS;
   }

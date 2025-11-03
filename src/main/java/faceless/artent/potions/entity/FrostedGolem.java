@@ -109,11 +109,6 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   public void tick() {
     super.tick();
     this.actionQueue.tickQueue();
-//
-//    var currentAnimation = animationController.getCurrentAnimation();
-//    if(currentAnimation != null && Objects.equals(currentAnimation.animation().name(), "ground_down")) {
-//      this.fallDistance = -3;
-//    }
 
     var isFrozen = getIsFrozen();
 

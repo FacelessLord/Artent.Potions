@@ -7,8 +7,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 public class CommandRegistry implements IRegistry {
   @Override
   public void register() {
-    CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-      dispatcher.register(ModCommands.ArtentPotionsCommand);
-    });
+    CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
+        ModCommands.ArtentPotionsCommand));
   }
 }

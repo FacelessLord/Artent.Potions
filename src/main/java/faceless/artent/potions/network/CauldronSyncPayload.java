@@ -29,7 +29,7 @@ public record CauldronSyncPayload(
   public static final Id<CauldronSyncPayload> PayloadId = new Id<>(Identifier.of(
       ArtentPotions.MODID,
       "packet.cauldron.sync"));
-  public static final PacketCodec<RegistryByteBuf, CauldronSyncPayload> CODEC = new PacketCodec<RegistryByteBuf, CauldronSyncPayload>() {
+  public static final PacketCodec<RegistryByteBuf, CauldronSyncPayload> CODEC = new PacketCodec<>() {
 
     @Override
     public void encode(RegistryByteBuf buf, CauldronSyncPayload value) {

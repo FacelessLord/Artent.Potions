@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PotionContainerInterface {
-  public abstract boolean isValid();
+  public abstract boolean isInvalid();
 
   public abstract int getMaxPotionAmount();
 

@@ -13,12 +13,12 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class BrewingAutomata {
-  public DefaultedDict<State, List<Edge>> Edges = new DefaultedDict<>(ArrayList::new);
-  public State zeroState = new State(0, false, null);
-  public State invalidState = new State(-1, false, null);
+  public final DefaultedDict<State, List<Edge>> Edges = new DefaultedDict<>(ArrayList::new);
+  public final State zeroState = new State(0, false, null);
+  public final State invalidState = new State(-1, false, null);
   public int nextId = 1;
 
-  public Hashtable<String, State> LastIngredients = new Hashtable<>();
+  public final Hashtable<String, State> LastIngredients = new Hashtable<>();
 
   public State getStateFromIngredients(List<BrewingIngredient> ingredients) {
     var state = zeroState;

@@ -9,7 +9,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
 public class ModCommands {
-  public static LiteralArgumentBuilder<ServerCommandSource> ArtentPotionsCommand = CommandManager
+  public static final LiteralArgumentBuilder<ServerCommandSource> ArtentPotionsCommand = CommandManager
       .literal("artent")
       .requires(source -> source.hasPermissionLevel(2))
       .then(CommandManager

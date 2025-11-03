@@ -49,9 +49,4 @@ public class GoldenBucket extends Item implements IPotionContainerItem {
   public void setPotionAmount(ItemStack stack, int amount) {
     PotionDataUtil.setConcentrateAmount(stack, amount);
   }
-
-  @Override
-  public boolean canContainPotion(List<AlchemicalPotion> potion) {
-    return true;
-  }
 }

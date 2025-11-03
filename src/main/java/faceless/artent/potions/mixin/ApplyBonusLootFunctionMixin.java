@@ -47,7 +47,7 @@ public class ApplyBonusLootFunctionMixin {
     if (key == Enchantments.FORTUNE || key == Enchantments.LOOTING) {
       var luckEffect = living.getStatusEffect(StatusEffectsRegistry.FORTUNE);
       if (luckEffect == null) return EnchantmentHelper.getLevel(enchantment, stack);
-      var luckLevel = luckEffect.getAmplifier() + 1;
+      var luckLevel = luckEffect.getAmplifier() + 1000;
       return EnchantmentHelper.getLevel(enchantment, stack) + luckLevel;
     }
     return EnchantmentHelper.getLevel(enchantment, stack);
