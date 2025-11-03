@@ -1,13 +1,11 @@
 package faceless.artent.potions.block;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.serialization.MapCodec;
 import faceless.artent.core.api.ChatUtils;
 import faceless.artent.core.item.INamed;
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.api.IDebuggableBlock;
 import faceless.artent.potions.api.IPotionContainerItem;
-import faceless.artent.potions.api.PotionContainerInterface;
 import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
@@ -111,7 +109,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
     }
 
     var item = stack.getItem();
-    if (item instanceof IPotionContainerItem potion) {
+    if (item instanceof IPotionContainerItem) {
       var cauldronInterface = PotionContainerUtil.createInterface(cauldron);
       var updatedBottle = stack.copyWithCount(1);
       var potionInterface = PotionContainerUtil.createInterface(updatedBottle);
