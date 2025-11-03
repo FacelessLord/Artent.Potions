@@ -366,7 +366,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   @Override
   public boolean canExtractPotion() {
-    return !potions.isEmpty();
+    return !potions.isEmpty() && ingredients.isEmpty();
   }
 
   @Override

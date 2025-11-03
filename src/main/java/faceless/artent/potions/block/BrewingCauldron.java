@@ -126,6 +126,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
           || transferResult == PotionContainerUtil.TransferResult.BIsEmpty) {
         ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.potion.nothing_to_move");
       } else if (transferResult == PotionContainerUtil.TransferResult.MovedToB) {
+        cauldron.crystalsRequired = cauldron.potions.size();
         cauldron.color = AlchemicalPotionUtil
             .getPotionListColor(srcBottlePotion)
             .map(Color::fromInt)
