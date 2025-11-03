@@ -139,7 +139,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var ingredient = BrewingRecipes.AsIngredient(stack);
     var isCrystal = stack.getItem() == ModItems.IceCrystalShard;
 
-    handleLeveledPotions(ingredient);
+    var potionLeveledUp = handleLeveledPotions(ingredient);
 
     if (stack.getCount() > 1) {
       item.resetPickupDelay();
@@ -148,38 +148,41 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     } else {
       item.setDespawnImmediately();
     }
-
-    if (isCrystal) {
-      crystalsRequired--;
-    } else if (ingredient != null) {
-      ingredients.add(ingredient);
-      if (ingredients.size() == 1) color = BrewingRegistry.Ingredients.get(ingredient);
-      else color = color.add(BrewingRegistry.Ingredients.get(ingredient));
+    if (!potionLeveledUp) {
+      if (isCrystal) {
+        crystalsRequired--;
+      } else if (ingredient != null) {
+        ingredients.add(ingredient);
+        if (ingredients.size() == 1) color = BrewingRegistry.Ingredients.get(ingredient);
+        else color = color.add(BrewingRegistry.Ingredients.get(ingredient));
+      }
     }
-
+    // Only there brewing state can be finishing. After that `ingredients` will empty and `potions` will be extended
     updateBrewingState();
     updateBlock();
   }
 
-  private void handleLeveledPotions(BrewingIngredient ingredient) {
-    if (!ingredients.isEmpty() || potions.isEmpty()) return;
+  private boolean handleLeveledPotions(BrewingIngredient ingredient) {
+    if (!ingredients.isEmpty() || potions.isEmpty()) return false;
 
     var lastPotion = potions.getLast();
     var automataState = BrewingRecipes.RecipeAutomata.LastIngredients.get(lastPotion.id);
-    if (automataState == null) return;
+    if (automataState == null) return false;
 
     var edges = BrewingRecipes.RecipeAutomata.Edges.get(automataState);
-    if (edges == null) return;
+    if (edges == null) return false;
 
-    var possibleEdges = edges.stream().filter(e -> e.Character() == ingredient).toList();
-    if (possibleEdges.isEmpty()) return;
+    var possibleEdges = edges.stream().filter(e -> e.Character().equals(ingredient)).toList();
+    if (possibleEdges.isEmpty()) return false;
 
     var newPotion = possibleEdges.getFirst();
     if (newPotion.Target().brewedPotion() != null) {
       potions.removeLast();
       potions.add(newPotion.Target().brewedPotion());
+      markDirty();
+      return true;
     }
-    markDirty();
+    return false;
   }
 
   public AddFuelResultType addFuel(ItemStack stack, boolean consumeStack) {
