@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "artent_potions:block/frost_pumpkin_stem_attached",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "artent_potions:block/frost_pumpkin_stem_attached",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "artent_potions:block/frost_pumpkin_stem_attached",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "artent_potions:block/frost_pumpkin_stem_attached"
+    }
+  }
+}

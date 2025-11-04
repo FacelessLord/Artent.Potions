@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/stem_growth7",
+  "textures": {
+    "stem": "artent_potions:block/frost_pumpkin_stem"
+  }
+}

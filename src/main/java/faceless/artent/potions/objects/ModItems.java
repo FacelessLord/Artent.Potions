@@ -2,11 +2,13 @@ package faceless.artent.potions.objects;
 
 import faceless.artent.core.item.group.ArtentItemGroupBuilder;
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.api.MushroomType;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.item.*;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.component.type.FoodComponent;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
@@ -41,6 +43,10 @@ public final class ModItems {
   public static Item StoneScale;
   public static Item IceCrystalShard;
   public static Item DebugBrewBook;
+  public static Item FrostPumpkinSeeds;
+  public static Item BrownMushroomSpores;
+  public static Item RedMushroomSpores;
+  public static Item ShroomSpores;
 
   public void register() {
     for (int i = 0; i < berries.length; i++) {
@@ -140,6 +146,28 @@ public final class ModItems {
     DebugBrewBook = register(
         "brew_book",
         DebugBrewBook::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+
+    FrostPumpkinSeeds = register(
+        ItemKeys.FROST_PUMPKIN_SEEDS.getValue().getPath(),
+        (s) -> new BlockItem(ModBlocks.FrostPumpkinStem, s.registryKey(ItemKeys.FROST_PUMPKIN_SEEDS)),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+
+    BrownMushroomSpores = register(
+        "brown_mushroom_spores",
+        s -> new MushroomSpores(MushroomType.Brown, s),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    RedMushroomSpores = register(
+        "red_mushroom_spores",
+        s -> new MushroomSpores(MushroomType.Red, s),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    ShroomSpores = register(
+        "shroom_spores",
+        s -> new MushroomSpores(MushroomType.Shroom, s),
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
 

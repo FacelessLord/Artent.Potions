@@ -2,6 +2,8 @@ package faceless.artent.potions.objects;
 
 import faceless.artent.core.item.group.ArtentItemGroupBuilder;
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.api.MushroomType;
+import faceless.artent.potions.api.MushroomBlockInfo;
 import faceless.artent.potions.block.*;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.registry.FeatureRegistry;
@@ -63,6 +65,10 @@ public final class ModBlocks {
 
   public static Block FrostPumpkin;
   public static Item FrostPumpkinItem;
+  public static Block FrostPumpkinStem;
+  public static Item FrostPumpkinStemItem;
+  public static Block FrostPumpkinStemAttached;
+  public static Item FrostPumpkinStemAttachedItem;
 
   public static Block IceCrystalBlock;
   public static Item IceCrystalBlock_Item;
@@ -74,6 +80,8 @@ public final class ModBlocks {
   public static Item IceCrystalBud_Large_Item;
   public static IceCrystalCluster IceCrystalBud_Cluster;
   public static Item IceCrystalBud_Cluster_Item;
+
+  public static MushroomBlockInfo[] MushroomInfo = new MushroomBlockInfo[3];
 
   public void register() {
     var BrewingCauldronPair = register(
@@ -129,7 +137,7 @@ public final class ModBlocks {
             .postProcess((a, b, c) -> true),
         ModItemGroups.Potions,
         faceless.artent.potions.item.ShroomItem::new
-                                  );
+                             );
     Shroom = ShroomPair.getLeft();
     ShroomItem = ShroomPair.getRight();
 
@@ -244,7 +252,7 @@ public final class ModBlocks {
     FermentingBarrelItem = FermentingBarrelPair.getRight();
 
     var FrostPumpkinPair = register(
-        "frost_pumpkin",
+        BlockKeys.FROST_PUMPKIN.getValue().getPath(),
         FrostPumpkin::new,
         Block.Settings
             .copy(Blocks.PUMPKIN)
@@ -253,6 +261,26 @@ public final class ModBlocks {
         ModItemGroups.Potions);
     FrostPumpkin = FrostPumpkinPair.getLeft();
     FrostPumpkinItem = FrostPumpkinPair.getRight();
+
+    FrostPumpkinStem = registerBlock(
+        BlockKeys.FROST_PUMPKIN_STEM.getValue().getPath(),
+        (settings) -> new StemBlock(
+            BlockKeys.FROST_PUMPKIN,
+            BlockKeys.FROST_PUMPKIN_STEM_ATTACHED,
+            ItemKeys.FROST_PUMPKIN_SEEDS,
+            settings),
+        Block.Settings
+            .copy(Blocks.PUMPKIN_STEM));
+
+    FrostPumpkinStemAttached = registerBlock(
+        BlockKeys.FROST_PUMPKIN_STEM_ATTACHED.getValue().getPath(),
+        (settings) -> new AttachedStemBlock(
+            BlockKeys.FROST_PUMPKIN_STEM,
+            BlockKeys.FROST_PUMPKIN,
+            ItemKeys.FROST_PUMPKIN_SEEDS,
+            settings),
+        Block.Settings
+            .copy(Blocks.ATTACHED_PUMPKIN_STEM));
 
     var IceCrystalBlockPair = register(
         "ice_crystal_block",
@@ -312,6 +340,66 @@ public final class ModBlocks {
     IceCrystalBud_Cluster = IceCrystalBud_ClusterPair.getLeft();
     IceCrystalBud_Cluster_Item = IceCrystalBud_ClusterPair.getRight();
 
+    var BrownMushroomMyceliumPair = register(
+        "brown_mushroom_mycelium",
+        (settings) -> new MushroomMycelium(MushroomType.Brown, settings),
+        Block.Settings
+            .copy(Blocks.MYCELIUM).ticksRandomly(),
+        ModItemGroups.Potions);
+    var growingBrownMushroom = registerBlock(
+        "brown_mushroom_stage",
+        (settings) -> new GrowingMushroom(
+            MushroomType.Brown,
+            Blocks.BROWN_MUSHROOM,
+            () -> ModItems.BrownMushroomSpores,
+            settings),
+        Block.Settings
+            .copy(Blocks.BROWN_MUSHROOM).ticksRandomly());
+    MushroomInfo[MushroomType.Brown.ordinal()] = new MushroomBlockInfo(
+        BrownMushroomMyceliumPair.getLeft(),
+        BrownMushroomMyceliumPair.getRight(),
+        growingBrownMushroom);
+
+    var RedMushroomMyceliumPair = register(
+        "red_mushroom_mycelium",
+        (settings) -> new MushroomMycelium(MushroomType.Red, settings),
+        Block.Settings
+            .copy(Blocks.MYCELIUM).ticksRandomly(),
+        ModItemGroups.Potions);
+    var growingRedMushroom = registerBlock(
+        "red_mushroom_stage",
+        (settings) -> new GrowingMushroom(
+            MushroomType.Red,
+            Blocks.RED_MUSHROOM,
+            () -> ModItems.RedMushroomSpores,
+            settings),
+        Block.Settings
+            .copy(Blocks.RED_MUSHROOM).ticksRandomly());
+    MushroomInfo[MushroomType.Red.ordinal()] = new MushroomBlockInfo(
+        RedMushroomMyceliumPair.getLeft(),
+        RedMushroomMyceliumPair.getRight(),
+        growingRedMushroom);
+
+    var ShroomMyceliumPair = register(
+        "shroom_mycelium",
+        (settings) -> new MushroomMycelium(MushroomType.Shroom, settings),
+        Block.Settings
+            .copy(Blocks.MYCELIUM).ticksRandomly(),
+        ModItemGroups.Potions);
+    var growingShroomMushroom = registerBlock(
+        "shroom_stage",
+        (settings) -> new GrowingMushroom(
+            MushroomType.Shroom,
+            ModBlocks.Shroom,
+            () -> ModItems.ShroomSpores,
+            settings),
+        Block.Settings
+            .copy(Blocks.RED_MUSHROOM).ticksRandomly());
+    MushroomInfo[MushroomType.Shroom.ordinal()] = new MushroomBlockInfo(
+        ShroomMyceliumPair.getLeft(),
+        ShroomMyceliumPair.getRight(),
+        growingShroomMushroom);
+
     FireBlock fireBlock = (FireBlock) Blocks.FIRE;
     fireBlock.registerFlammableBlock(CrimsonwoodLog, 5, 20);
     fireBlock.registerFlammableBlock(CrimsonwoodPlanks, 5, 20);
@@ -333,6 +421,16 @@ public final class ModBlocks {
     Registry.register(Registries.ITEM, itemKey, blockItem);
     if (groupBuilder != null) groupBuilder.addItem(blockItem);
     return new Pair<>(block, blockItem);
+  }
+
+  public static <TBlock extends Block> TBlock registerBlock(
+      String keyString,
+      Function<AbstractBlock.Settings, TBlock> factory,
+      AbstractBlock.Settings settings) {
+    var key = keyOf(keyString);
+    TBlock block = factory.apply(settings.registryKey(key));
+    Registry.register(Registries.BLOCK, key, block);
+    return block;
   }
 
   public static Pair<Block, Item> register(

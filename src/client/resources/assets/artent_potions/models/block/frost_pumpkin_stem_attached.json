@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/stem_fruit",
+  "textures": {
+    "stem": "artent_potions:block/frost_pumpkin_stem",
+    "upperstem": "artent_potions:block/frost_pumpkin_stem_attached"
+  }
+}

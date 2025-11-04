@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/dirt",
+    "side": "artent_potions:block/brown_mushroom/brown_mushroom_mycelium_side",
+    "top": "artent_potions:block/brown_mushroom/brown_mushroom_mycelium_top"
+  }
+}

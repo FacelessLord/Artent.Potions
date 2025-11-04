@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "artent_potions:block/brown_mushroom/brown_mushroom_stage_1"
+  }
+}

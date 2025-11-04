@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "artent_potions:block/shroom_mycelium"
+      },
+      {
+        "model": "artent_potions:block/shroom_mycelium",
+        "y": 90
+      },
+      {
+        "model": "artent_potions:block/shroom_mycelium",
+        "y": 180
+      },
+      {
+        "model": "artent_potions:block/shroom_mycelium",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "minecraft:block/grass_block_snow"
+    }
+  }
+}
