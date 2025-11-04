@@ -27,6 +27,7 @@ public class MushroomMycelium extends MyceliumBlock implements Fertilizable {
   @Override
   protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
     if (canGrow(world, random, pos, state)) grow(world, random, pos, state);
+    super.randomTick(state, world, pos, random);
   }
 
   @Override
