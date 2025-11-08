@@ -32,5 +32,40 @@
 				"down": {"uv": [0, 12, 16, 15], "texture": "#0"}
 			}
 		}
-	]
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 0.5, -5.5],
+			"scale": [0.75781, 0.75781, 0.75781]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 0.5, -5.5],
+			"scale": [0.75781, 0.75781, 0.75781]
+		},
+		"firstperson_righthand": {
+			"translation": [2.75, 0, -8.25],
+			"scale": [0.87695, 0.87695, 0.87695]
+		},
+		"firstperson_lefthand": {
+			"translation": [2.75, 0, -8.25],
+			"scale": [0.87695, 0.87695, 0.87695]
+		},
+		"ground": {
+			"translation": [0, 0, -6.5]
+		},
+		"gui": {
+			"rotation": [-147.75, -45, -180],
+			"translation": [4.25, -4.25, 0],
+			"scale": [0.94726, 0.94726, 0.94726]
+		},
+		"head": {
+			"translation": [0, -2.5, -12.25]
+		},
+		"fixed": {
+			"translation": [0, 0, -6]
+		},
+		"on_shelf": {
+			"translation": [0, 0, -9.5]
+		}
+	}
 }

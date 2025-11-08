@@ -63,6 +63,9 @@ public final class ModBlocks {
   public static Block CrimsonwoodSapling;
   public static Item CrimsonwoodSaplingItem;
 
+  public static Block DryingRack;
+  public static Item DryingRackItem;
+
   public static Block FrostPumpkin;
   public static Item FrostPumpkinItem;
   public static Block FrostPumpkinStem;
@@ -250,6 +253,19 @@ public final class ModBlocks {
         ModItemGroups.Potions);
     FermentingBarrel = FermentingBarrelPair.getLeft();
     FermentingBarrelItem = FermentingBarrelPair.getRight();
+
+    var DryingRackPair = register(
+        "drying_rack",
+        DryingRack::new,
+        Block.Settings
+            .copy(Blocks.OAK_PLANKS)
+            .mapColor(MapColor.BROWN)
+            .nonOpaque()
+            .strength(2.0f, 3.0f)
+            .sounds(BlockSoundGroup.WOOD),
+        ModItemGroups.Potions);
+    DryingRack = DryingRackPair.getLeft();
+    DryingRackItem = DryingRackPair.getRight();
 
     var FrostPumpkinPair = register(
         BlockKeys.FROST_PUMPKIN.getValue().getPath(),

@@ -1,0 +1,13 @@
+{
+  "byproduct": {
+    "count": 1,
+    "id": "artent_potions:shroom_spores"
+  },
+  "byproductChance": 0.05,
+  "result": {
+    "count": 1,
+    "id": "artent_potions:dried_red_mushroom"
+  },
+  "source": "minecraft:red_mushroom",
+  "time": 400
+}

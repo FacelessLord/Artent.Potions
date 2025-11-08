@@ -1,0 +1,13 @@
+{
+  "byproduct": {
+    "count": 1,
+    "id": "artent_potions:shroom_spores"
+  },
+  "byproductChance": 0.15,
+  "result": {
+    "count": 1,
+    "id": "artent_potions:dried_shroom"
+  },
+  "source": "artent_potions:shroom",
+  "time": 400
+}

@@ -21,6 +21,7 @@ public class BlockRenderLayerMapRegistry implements IRegistry {
         ModBlocks.berryBush[3],
         ModBlocks.CrimsonwoodLeaves,
         ModBlocks.CrimsonwoodSapling,
+        ModBlocks.DryingRack,
         ModBlocks.FrostPumpkin,
         ModBlocks.FrostPumpkinStem,
         ModBlocks.FrostPumpkinStemAttached,

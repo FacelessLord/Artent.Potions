@@ -131,6 +131,6 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
 
   @Override
   public String getName() {
-    return "ArtentPotionsRecipeProvider ";
+    return "ArtentPotionsRecipeProvider";
   }
 }

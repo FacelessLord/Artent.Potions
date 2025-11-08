@@ -47,6 +47,9 @@ public final class ModItems {
   public static Item BrownMushroomSpores;
   public static Item RedMushroomSpores;
   public static Item ShroomSpores;
+  public static Item DriedBrownMushroom;
+  public static Item DriedRedMushroom;
+  public static Item DriedShroom;
 
   public void register() {
     for (int i = 0; i < berries.length; i++) {
@@ -168,6 +171,22 @@ public final class ModItems {
     ShroomSpores = register(
         "shroom_spores",
         s -> new MushroomSpores(MushroomType.Shroom, s),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+
+    DriedBrownMushroom = register(
+        "dried_brown_mushroom",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    DriedRedMushroom = register(
+        "dried_red_mushroom",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.Potions);
+    DriedShroom = register(
+        "dried_shroom",
+        Item::new,
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
 

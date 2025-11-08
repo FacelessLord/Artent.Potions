@@ -89,6 +89,16 @@ public class VanillaBiomeParametersMixin {
       MultiNoiseUtil.ParameterRange weirdness,
       CallbackInfo ci) {
     System.out.println("Adding Artent.Potions biomes");
+    // TODO biomes
+//    NetherBiomes.addNetherBiome();
+//    BiomeModifications.create(null).add(ModificationPhase.ADDITIONS, )
+    // BootstrapContext<Biome>
+    // https://github.com/FabricMC/fabric/blob/1.21.11/fabric-biome-api-v1/src/testmod/java/net/fabricmc/fabric/test/biome/TestBiomes.java
+    // DATAGEN
+//    @Override
+//    public void buildRegistry(RegistrySetBuilder registryBuilder) {
+//      registryBuilder.add(Registries.BIOME, TestBiomes::bootstrap);
+//    }
 
     var parameterRange = this.temperatureParameters[1];
     var parameterRange2 = this.humidityParameters[2];

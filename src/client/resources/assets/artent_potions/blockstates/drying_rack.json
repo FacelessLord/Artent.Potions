@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "artent_potions:block/drying_rack",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "artent_potions:block/drying_rack"
+    },
+    "facing=south": {
+      "model": "artent_potions:block/drying_rack",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "artent_potions:block/drying_rack",
+      "y": 270
+    }
+  }
+}

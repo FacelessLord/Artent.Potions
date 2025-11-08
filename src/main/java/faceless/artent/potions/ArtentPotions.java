@@ -4,8 +4,13 @@ import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.objects.ModParticles;
+import faceless.artent.potions.objects.ModRecipes;
+import faceless.artent.potions.recipes.DryingRecipe;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistrySetupCallback;
+import net.minecraft.data.DynamicRegistriesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +40,8 @@ public class ArtentPotions implements ModInitializer {
 
   @Override
   public void onInitialize() {
+    DynamicRegistries.registerSynced(ModRecipes.DRYING_RECIPES_REGISTRY_KEY, DryingRecipe.Serializer.CODEC, DryingRecipe.Serializer.CODEC);
+
     Potions.register();
     FermentedPotions.register();
 
