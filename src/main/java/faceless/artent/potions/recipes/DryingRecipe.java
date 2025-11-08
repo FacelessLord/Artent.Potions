@@ -14,22 +14,7 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class DryingRecipe {
-  private final Ingredient source;
-  private final ItemStack result;
-  private final int time;
-  private final ItemStack byproduct;
-  private final float byproductChance;
-
-  public DryingRecipe(Ingredient source, ItemStack result, int time, ItemStack byproduct, float byproductChance) {
-    this.source = source;
-    this.result = result;
-    this.time = time;
-    this.byproduct = byproduct;
-    this.byproductChance = byproductChance;
-  }
-
-
+public record DryingRecipe(Ingredient source, ItemStack result, int time, ItemStack byproduct, float byproductChance) {
   public boolean matches(DryingRecipeInput input, World world) {
     return Ingredient.matches(Optional.of(this.source), input.source());
   }

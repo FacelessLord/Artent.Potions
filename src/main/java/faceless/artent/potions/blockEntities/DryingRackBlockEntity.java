@@ -1,157 +1,145 @@
 package faceless.artent.potions.blockEntities;
 
-import faceless.artent.core.math.Color;
-import faceless.artent.potions.BrewingAutomata;
-import faceless.artent.potions.block.BrewingCauldron;
-import faceless.artent.potions.brewingApi.AlchemicalPotion;
-import faceless.artent.potions.brewingApi.BrewingIngredient;
-import faceless.artent.potions.brewingApi.IBrewable;
+import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.network.ArtentServerHook;
-import faceless.artent.potions.network.CauldronSyncPayload;
-import faceless.artent.potions.objects.*;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
-import faceless.artent.potions.registry.BrewingRegistry;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.block.Block;
+import faceless.artent.potions.network.DryingRackSyncPayload;
+import faceless.artent.potions.objects.ModBlockEntities;
+import faceless.artent.potions.objects.ModRecipes;
+import faceless.artent.potions.recipes.DryingRecipe;
+import faceless.artent.potions.recipes.DryingRecipeInput;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 public class DryingRackBlockEntity extends BlockEntity {
-  private final int inventorySize = 4;
+  private static final int inventorySize = 4;
   public ItemStack[] items = new ItemStack[inventorySize];
   public int[] timesLeft = new int[inventorySize];
+  public ItemStack[] byproducts = new ItemStack[inventorySize];
 
   public DryingRackBlockEntity(BlockPos pos, BlockState state) {
     super(ModBlockEntities.DryingRack, pos, state);
+    Arrays.fill(items, ItemStack.EMPTY);
+    Arrays.fill(timesLeft, 0);
+    Arrays.fill(byproducts, ItemStack.EMPTY);
   }
 
   public void tick(World world, BlockPos pos, BlockState state) {
-    var registry =this.world.getRegistryManager().getOptional(ModRecipes.DRYING_RECIPES_REGISTRY_KEY);
-    if(registry.isEmpty())
-      System.out.println("No registry");
-    else {
-      var items = registry.get().getKeys();
-      System.out.println("Got "+items.size()+" items");
-    }
     for (int i = 0; i < inventorySize; i++) {
       var stack = items[i];
       if (stack == null) continue;
-      if (timesLeft[i] == -1)
-        continue;
+      if (timesLeft[i] == -1) continue;
       timesLeft[i] -= 1;
       if (timesLeft[i] == -1) {
-//        serverworld.getRecipeManager().getFirstMatch(RecipeType.SMITHING, smithingRecipeInput, serverWorld);
+        var recipe = getRecipeByInputStack(stack);
+        if (recipe == null) continue;
+        items[i] = recipe.result().copy();
+        if (byproducts[i] == null) {
+          if (Math.random() < recipe.byproductChance()) byproducts[i] = recipe.byproduct().copy();
+        } else {
+          ArtentPotions.LOGGER.warn("Drying rack has not empty byproduct before recipe is done");
+        }
+        markDirty();
       }
     }
   }
 
-  public void acceptPayload(CauldronSyncPayload payload) {
-//    this.fuelAmount = payload.fuelAmount();
-//    this.potionAmount = payload.portionsLeft();
-//    this.crystalsRequired = payload.crystalsRequired();
-//    this.color = payload.color();
-//    this.ingredients = payload.ingredients();
-//    this.potions = payload.potions();
+  public boolean hasRecipe(ItemStack input) {
+    return getRecipeByInputStack(input) != null;
+  }
+
+  public int getInventorySize() {
+    return inventorySize;
+  }
+
+  private DryingRecipe getRecipeByInputStack(ItemStack input) {
+    var registryOptional = this.world.getRegistryManager().getOptional(ModRecipes.DRYING_RECIPES_REGISTRY_KEY);
+    if (registryOptional.isEmpty()) return null;
+    var registry = registryOptional.get();
+    var recipeInput = new DryingRecipeInput(input);
+    return registry
+        .getEntrySet()
+        .stream()
+        .map(Map.Entry::getValue)
+        .filter(e -> e.matches(recipeInput, world))
+        .findFirst()
+        .orElse(null);
+  }
+
+  public void exchangeSlot(int slot, ItemStack stack, PlayerEntity player) {
+    if (items[slot].isEmpty() && !stack.isEmpty()) {
+      items[slot] = stack.splitUnlessCreative(1, player);
+      markDirty();
+    } else if (!items[slot].isEmpty()) {
+      dropSlot(slot).forEach(player::giveOrDropStack);
+    }
+    ArtentServerHook.packetSyncDryingRack(player, this);
+  }
+
+  public List<ItemStack> dropSlot(int slot) {
+    var result = new ArrayList<ItemStack>(0);
+    if (slot < 0 || slot >= inventorySize)
+      return result;
+    result.add(items[slot]);
+    result.add(byproducts[slot]);
+    items[slot] = ItemStack.EMPTY;
+    byproducts[slot] = ItemStack.EMPTY;
+    markDirty();
+    return result;
+  }
+
+  public void acceptPayload(DryingRackSyncPayload payload) {
+    items = payload.items().toArray(ItemStack[]::new);
+    timesLeft = payload.timesLeft().stream().mapToInt(i -> i).toArray();
+    byproducts = payload.byproducts().toArray(ItemStack[]::new);
     markDirty();
   }
 
   @Override
   public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
-    var fuelAmount = nbt.getInt("fuelAmount");
-    var portionsLeft = nbt.getInt("portionsLeft");
-    var crystalsRequired = nbt.getInt("crystalsRequired");
-    var colorHex = nbt.getInt("color");
-    var color = colorHex == 0 ? Color.Blue : Color.fromInt(colorHex);
 
-    var ingredientsCount = nbt.getInt("ingredientCount");
-    var ingredientsTag = nbt.getCompound("ingredients");
-    var potionCount = nbt.getInt("potionCount");
-    var potionsTag = nbt.getCompound("potions");
+    var items = new ArrayList<ItemStack>(4);
+    var times = new ArrayList<Integer>(4);
+    var byproducts = new ArrayList<ItemStack>(4);
 
-    var ingredients = new ArrayList<BrewingIngredient>(ingredientsCount);
-    for (int i = 0; i < ingredientsCount; i++) {
-      var ingredientTag = ingredientsTag.getCompound("" + i);
-      var id = ingredientTag.getString("id");
-      var item = Registries.ITEM.get(Identifier.of(id));
-      if (item == Items.AIR) {
-        System.out.println("Unknown item with identifier '" + id + "' in cauldron. Removing it.");
-        continue;
-      }
-      var meta = ingredientTag.getInt("meta");
-      var ingredient = new BrewingIngredient(item, meta);
-      ingredients.add(ingredient);
+    var rackTag = nbt.getCompound("drying_rack");
+    for (int i = 0; i < inventorySize; i++) {
+      items.add(ItemStack.fromNbtOrEmpty(registryLookup, rackTag.getCompound("item_" + i)));
+      times.add(rackTag.getInt("time_" + i));
+      byproducts.add(ItemStack.fromNbtOrEmpty(registryLookup, rackTag.getCompound("byproduct_" + i)));
     }
-
-    var potions = new ArrayList<AlchemicalPotion>(potionCount);
-    for (int i = 0; i < potionCount; i++) {
-      var id = potionsTag.getString(i + "");
-      var potion = AlchemicalPotionRegistry.getPotion(id);
-      if (potion == null) {
-        System.out.println("Unknown potion with identifier '" + id + "' in cauldron. Removing it.");
-        crystalsRequired = Math.max(0, crystalsRequired - 1);
-        continue;
-      }
-      potions.add(potion);
-    }
-    var payload = new CauldronSyncPayload(
-        null,
-        fuelAmount,
-        portionsLeft,
-        crystalsRequired,
-        color,
-        ingredients,
-        potions);
+    var payload = new DryingRackSyncPayload(null, items, times, byproducts);
     this.acceptPayload(payload);
   }
 
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.writeNbt(nbt, registryLookup);
-//    nbt.putInt("fuelAmount", fuelAmount);
-//    nbt.putInt("portionsLeft", potionAmount);
-//    nbt.putInt("crystalsRequired", crystalsRequired);
-//    nbt.putInt("color", color.toHex());
-//    nbt.putInt("ingredientCount", ingredients.size());
-//    nbt.putInt("potionCount", potions.size());
-//
-//    var ingredientsTag = new NbtCompound();
-//    for (int i = 0; i < ingredients.size(); i++) {
-//      var ingredient = ingredients.get(i);
-//      var ingredientTag = new NbtCompound();
-//      var id = Registries.ITEM.getId(ingredient.item());
-//      ingredientTag.putString("id", id.toString());
-//      ingredientTag.putInt("meta", ingredient.meta());
-//      ingredientsTag.put(i + "", ingredientTag);
-//    }
-//    nbt.put("ingredients", ingredientsTag);
-//
-//    var potionsTag = new NbtCompound();
-//    for (int i = 0; i < potions.size(); i++) {
-//      var potion = potions.get(i);
-//      potionsTag.putString(i + "", potion.id);
-//    }
-//    nbt.put("potions", potionsTag);
+
+    var rackTag = new NbtCompound();
+    for (int i = 0; i < inventorySize; i++) {
+      var item = items[i].toNbtAllowEmpty(registryLookup);
+      rackTag.put("item_" + i, item);
+      rackTag.putInt("time_" + i, timesLeft[i]);
+      var byproduct = byproducts[i].toNbtAllowEmpty(registryLookup);
+      rackTag.put("byproduct_" + i, byproduct);
+    }
+    nbt.put("drying_rack", rackTag);
   }
 
   @Override
