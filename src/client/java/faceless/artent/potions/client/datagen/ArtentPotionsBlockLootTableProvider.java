@@ -43,12 +43,18 @@ public class ArtentPotionsBlockLootTableProvider extends FabricBlockLootTablePro
     addDrop(ModBlocks.CrimsonwoodLog.block());
     addDrop(ModBlocks.CrimsonwoodSapling.block());
     addDrop(ModBlocks.CrimsonwoodPlanks.block());
+    addDrop(ModBlocks.FrostPumpkinCarved.block());
     addDrop(ModBlocks.FrostPumpkin.block());
     addDrop(ModBlocks.Shroom.block());
     addDrop(ModBlocks.Shadowveil.block());
     addDrop(ModBlocks.BlazingMarigold.block());
     addDrop(ModBlocks.SlimeBerry.block());
     addDrop(ModBlocks.FermentingBarrel.block());
+    addDrop(ModBlocks.DryingRack.block());
+
+    for (int i = 0; i < ModBlocks.MushroomInfo.length; i++) {
+      addDrop(ModBlocks.MushroomInfo[i].mycelium());
+    }
     for (int i = 0; i < ModBlocks.berryBush.length; i++) {
       addDrop(ModBlocks.berryBush[i].block());
     }

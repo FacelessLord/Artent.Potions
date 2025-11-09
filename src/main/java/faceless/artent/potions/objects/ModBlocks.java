@@ -44,6 +44,7 @@ public final class ModBlocks {
 
   public static RegisteredBlock<?> DryingRack;
 
+  public static RegisteredBlock<?> FrostPumpkinCarved;
   public static RegisteredBlock<?> FrostPumpkin;
   public static RegisteredBlock<?> FrostPumpkinStem;
   public static RegisteredBlock<?> FrostPumpkinStemAttached;
@@ -205,6 +206,12 @@ public final class ModBlocks {
             .nonOpaque()
             .strength(2.0f, 3.0f)
             .sounds(BlockSoundGroup.WOOD),
+        ModItemGroups.Potions);
+
+    FrostPumpkinCarved = register(
+        BlockKeys.FROST_PUMPKIN_CARVED.getValue().getPath(),
+        FrostPumpkinCarved::new,
+        Block.Settings.copy(Blocks.CARVED_PUMPKIN).mapColor(MapColor.CYAN).nonOpaque(),
         ModItemGroups.Potions);
 
     FrostPumpkin = register(

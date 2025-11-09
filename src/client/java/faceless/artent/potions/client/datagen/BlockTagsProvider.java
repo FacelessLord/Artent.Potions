@@ -49,6 +49,7 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.CrimsonwoodLog.block())
         .add(ModBlocks.CrimsonwoodPlanks.block())
         .add(ModBlocks.CrimsonwoodSapling.block())
+        .add(ModBlocks.FrostPumpkinCarved.block())
         .add(ModBlocks.FrostPumpkin.block())
         .add(ModBlocks.FermentingBarrel.block())
         .add(ModBlocks.berryBush[0].block())

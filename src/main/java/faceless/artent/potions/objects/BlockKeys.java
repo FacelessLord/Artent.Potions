@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 public class BlockKeys {
+  public static final RegistryKey<Block> FROST_PUMPKIN_CARVED = of("frost_pumpkin_carved");
   public static final RegistryKey<Block> FROST_PUMPKIN = of("frost_pumpkin");
   public static final RegistryKey<Block> FROST_PUMPKIN_STEM = of("frost_pumpkin_stem");
   public static final RegistryKey<Block> FROST_PUMPKIN_STEM_ATTACHED = of("frost_pumpkin_stem_attached");
