@@ -8,8 +8,8 @@ import net.minecraft.item.Items;
 
 public class BrewingRecipes {
 
-    public static final BrewingIngredient Shroom = new BrewingIngredient(ModBlocks.ShroomItem, -1);
-    public static final BrewingIngredient Shadowveil = new BrewingIngredient(ModBlocks.ShadowveilItem, -1);
+    public static final BrewingIngredient Shroom = new BrewingIngredient(ModBlocks.Shroom.item(), -1);
+    public static final BrewingIngredient Shadowveil = new BrewingIngredient(ModBlocks.Shadowveil.item(), -1);
     public static final BrewingIngredient CrimsonwoodBerry = new BrewingIngredient(ModItems.berries[4], -1);
     public static final BrewingIngredient CrimsonLeaf = new BrewingIngredient(ModItems.CrimsonLeaf, -1);
     public static final BrewingIngredient Blackberry = new BrewingIngredient(ModItems.berries[0], -1);
@@ -19,7 +19,7 @@ public class BrewingRecipes {
     public static final BrewingIngredient StoneScale = new BrewingIngredient(ModItems.StoneScale, -1);
     public static final BrewingIngredient Acorn = new BrewingIngredient(ModItems.Acorn, -1);
     public static final BrewingIngredient ManaFeather = new BrewingIngredient(ModItems.ManaFeather, -1);
-    public static final BrewingIngredient FrostPumpkin = new BrewingIngredient(ModBlocks.FrostPumpkinItem, -1);
+    public static final BrewingIngredient FrostPumpkin = new BrewingIngredient(ModBlocks.FrostPumpkin.item(), -1);
 
     public static final BrewingIngredient Bone = new BrewingIngredient(Items.BONE, -1);
     public static final BrewingIngredient GlowstoneDust = new BrewingIngredient(Items.GLOWSTONE_DUST, -1);

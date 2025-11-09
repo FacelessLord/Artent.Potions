@@ -41,7 +41,7 @@ public class DryingRecipeRegistry {
             0.05f));
     dryingRecipeRegistry.register(
         SHROOM, new DryingRecipe(
-            Ingredient.ofItem(ModBlocks.ShroomItem),
+            Ingredient.ofItem(ModBlocks.Shroom.item()),
             new ItemStack(ModItems.DriedShroom),
             400,
             new ItemStack(ModItems.ShroomSpores),

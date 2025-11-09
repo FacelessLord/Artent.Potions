@@ -19,44 +19,44 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
   @Override
   protected void configure(RegistryWrapper.WrapperLookup registries) {
     getOrCreateTagBuilder(BlockTags.LOGS)
-        .add(ModBlocks.CrimsonwoodLog);
+        .add(ModBlocks.CrimsonwoodLog.block());
     getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
-        .add(ModBlocks.CrimsonwoodLog);
+        .add(ModBlocks.CrimsonwoodLog.block());
 
     getOrCreateTagBuilder(BlockTags.LEAVES)
-        .add(ModBlocks.CrimsonwoodLeaves);
+        .add(ModBlocks.CrimsonwoodLeaves.block());
 
     getOrCreateTagBuilder(BlockTags.SAPLINGS)
-        .add(ModBlocks.CrimsonwoodSapling);
+        .add(ModBlocks.CrimsonwoodSapling.block());
 
     getOrCreateTagBuilder(BlockTags.PLANKS)
-        .add(ModBlocks.CrimsonwoodPlanks);
+        .add(ModBlocks.CrimsonwoodPlanks.block());
 
     getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
-        .add(ModBlocks.CrimsonwoodLog)
-        .add(ModBlocks.CrimsonwoodPlanks)
-        .add(ModBlocks.CrimsonwoodSapling)
-        .add(ModBlocks.CrimsonwoodLeaves);
+        .add(ModBlocks.CrimsonwoodLog.block())
+        .add(ModBlocks.CrimsonwoodPlanks.block())
+        .add(ModBlocks.CrimsonwoodSapling.block())
+        .add(ModBlocks.CrimsonwoodLeaves.block());
 
     getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-        .add(ModBlocks.BrewingCauldron)
-        .add(ModBlocks.BrewingCauldronCopper);
+        .add(ModBlocks.BrewingCauldron.block())
+        .add(ModBlocks.BrewingCauldronCopper.block());
     getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
-        .add(ModBlocks.BrewingCauldron)
-        .add(ModBlocks.BrewingCauldronCopper);
+        .add(ModBlocks.BrewingCauldron.block())
+        .add(ModBlocks.BrewingCauldronCopper.block());
 
     getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
-        .add(ModBlocks.CrimsonwoodLog)
-        .add(ModBlocks.CrimsonwoodPlanks)
-        .add(ModBlocks.CrimsonwoodSapling)
-        .add(ModBlocks.FrostPumpkin)
-        .add(ModBlocks.FermentingBarrel)
-        .add(ModBlocks.berryBush[0])
-        .add(ModBlocks.berryBush[1])
-        .add(ModBlocks.berryBush[2])
-        .add(ModBlocks.berryBush[3]);
+        .add(ModBlocks.CrimsonwoodLog.block())
+        .add(ModBlocks.CrimsonwoodPlanks.block())
+        .add(ModBlocks.CrimsonwoodSapling.block())
+        .add(ModBlocks.FrostPumpkin.block())
+        .add(ModBlocks.FermentingBarrel.block())
+        .add(ModBlocks.berryBush[0].block())
+        .add(ModBlocks.berryBush[1].block())
+        .add(ModBlocks.berryBush[2].block())
+        .add(ModBlocks.berryBush[3].block());
     getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
-        .add(ModBlocks.CrimsonwoodLeaves);
+        .add(ModBlocks.CrimsonwoodLeaves.block());
   }
 
   @Override

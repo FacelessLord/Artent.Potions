@@ -57,7 +57,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackBlockEn
 
       if (stack.getItem() == Items.BROWN_MUSHROOM
           || stack.getItem() == Items.RED_MUSHROOM
-          || stack.getItem() == ModBlocks.ShroomItem) {
+          || stack.getItem() == ModBlocks.Shroom.item()) {
         matrices.translate(0, 0.125, 0);
         matrices.scale(1.5f, 1.5f, 1.5f);
       }

@@ -2,8 +2,9 @@ package faceless.artent.potions.objects;
 
 import faceless.artent.core.item.group.ArtentItemGroupBuilder;
 import faceless.artent.potions.ArtentPotions;
-import faceless.artent.potions.api.MushroomType;
 import faceless.artent.potions.api.MushroomBlockInfo;
+import faceless.artent.potions.api.MushroomType;
+import faceless.artent.potions.api.RegisteredBlock;
 import faceless.artent.potions.block.*;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.registry.FeatureRegistry;
@@ -17,77 +18,46 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class ModBlocks {
-  public static Block BrewingCauldron;
-  public static Item BrewingCauldronItem;
+  public static RegisteredBlock<?> BrewingCauldron;
+  public static RegisteredBlock<?> BrewingCauldronCopper;
+  public static RegisteredBlock<?> CauldronFluid;
+  public static RegisteredBlock<?> FermentingBarrel;
 
-  public static Block BrewingCauldronCopper;
-  public static Item BrewingCauldronCopperItem;
+  public static RegisteredBlock<?> Shroom;
+  public static RegisteredBlock<?> Shadowveil;
+  public static RegisteredBlock<?> BlazingMarigold;
+  public static RegisteredBlock<?> SlimeBerry;
 
-  public static Block CauldronFluid;
-  public static Item CauldronFluidItem;
+  public static RegisteredBlock<?>[] berryBush;
 
-  public static Block Shroom;
-  public static Item ShroomItem;
+  public static RegisteredBlock<?> CrimsonwoodLog;
 
-  public static Block Shadowveil;
-  public static Item ShadowveilItem;
+  public static RegisteredBlock<?> CrimsonwoodLeaves;
+  public static RegisteredBlock<?> CrimsonwoodPlanks;
+  public static RegisteredBlock<?> CrimsonwoodSapling;
 
-  public static Block BlazingMarigold;
-  public static Item BlazingMarigoldItem;
+  public static RegisteredBlock<?> DryingRack;
 
-  public static Block SlimeBerry;
-  public static Item SlimeBerryItem;
+  public static RegisteredBlock<?> FrostPumpkin;
+  public static RegisteredBlock<?> FrostPumpkinStem;
+  public static RegisteredBlock<?> FrostPumpkinStemAttached;
 
-  public static Block[] berryBush;
-  public static Item[] berryBushItem;
-
-  public static Block CrimsonwoodLog;
-  public static Item CrimsonwoodLogItem;
-
-  public static Block CrimsonwoodLeaves;
-  public static Item CrimsonwoodLeavesItem;
-
-  public static Block CrimsonwoodPlanks;
-  public static Item CrimsonwoodPlanksItem;
-
-  public static Block FermentingBarrel;
-  public static Item FermentingBarrelItem;
-
-  public static Block CrimsonwoodSapling;
-  public static Item CrimsonwoodSaplingItem;
-
-  public static Block DryingRack;
-  public static Item DryingRackItem;
-
-  public static Block FrostPumpkin;
-  public static Item FrostPumpkinItem;
-  public static Block FrostPumpkinStem;
-  public static Item FrostPumpkinStemItem;
-  public static Block FrostPumpkinStemAttached;
-  public static Item FrostPumpkinStemAttachedItem;
-
-  public static Block IceCrystalBlock;
-  public static Item IceCrystalBlock_Item;
-  public static IceCrystalCluster IceCrystalBud_Small;
-  public static Item IceCrystalBud_Small_Item;
-  public static IceCrystalCluster IceCrystalBud_Medium;
-  public static Item IceCrystalBud_Medium_Item;
-  public static IceCrystalCluster IceCrystalBud_Large;
-  public static Item IceCrystalBud_Large_Item;
-  public static IceCrystalCluster IceCrystalBud_Cluster;
-  public static Item IceCrystalBud_Cluster_Item;
+  public static RegisteredBlock<?> IceCrystalBlock;
+  public static RegisteredBlock<IceCrystalCluster> IceCrystalBud_Small;
+  public static RegisteredBlock<IceCrystalCluster> IceCrystalBud_Medium;
+  public static RegisteredBlock<IceCrystalCluster> IceCrystalBud_Large;
+  public static RegisteredBlock<IceCrystalCluster> IceCrystalBud_Cluster;
 
   public static MushroomBlockInfo[] MushroomInfo = new MushroomBlockInfo[3];
 
   public void register() {
-    var BrewingCauldronPair = register(
+    BrewingCauldron = register(
         "cauldron",
         BrewingCauldron::new,
         Block.Settings
@@ -99,10 +69,8 @@ public final class ModBlocks {
             .luminance(state -> state.get(faceless.artent.potions.block.BrewingCauldron.IS_BURNING) ? 15 : 0)
             .strength(2f),
         ModItemGroups.Potions);
-    BrewingCauldron = BrewingCauldronPair.getLeft();
-    BrewingCauldronItem = BrewingCauldronPair.getRight();
 
-    var BrewingCauldronCopperPair = register(
+    BrewingCauldronCopper = register(
         "cauldron_copper",
         BrewingCauldronCopper::new,
         Block.Settings
@@ -114,18 +82,14 @@ public final class ModBlocks {
             .luminance(state -> state.get(faceless.artent.potions.block.BrewingCauldron.IS_BURNING) ? 15 : 0)
             .strength(2f),
         ModItemGroups.Potions);
-    BrewingCauldronCopper = BrewingCauldronCopperPair.getLeft();
-    BrewingCauldronCopperItem = BrewingCauldronCopperPair.getRight();
 
-    var CauldronFluidPair = register(
+    CauldronFluid = register(
         "cauldron_fluid",
         Block::new,
         Block.Settings.copy(Blocks.WATER).mapColor(MapColor.GRAY).nonOpaque().dropsNothing(),
         null);
-    CauldronFluid = CauldronFluidPair.getLeft();
-    CauldronFluidItem = CauldronFluidPair.getRight();
 
-    var ShroomPair = register(
+    Shroom = register(
         "shroom",
         faceless.artent.potions.block.Shroom::new,
         Block.Settings
@@ -139,20 +103,15 @@ public final class ModBlocks {
             .luminance(state -> 1)
             .postProcess((a, b, c) -> true),
         ModItemGroups.Potions,
-        faceless.artent.potions.item.ShroomItem::new
-                             );
-    Shroom = ShroomPair.getLeft();
-    ShroomItem = ShroomPair.getRight();
+        faceless.artent.potions.item.ShroomItem::new);
 
-    var ShadowveilPair = register(
+    Shadowveil = register(
         "shadowveil",
         (settings) -> new FlowerBlock(StatusEffects.BAD_OMEN, 5, settings),
         Block.Settings.copy(Blocks.ALLIUM).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
-    Shadowveil = ShadowveilPair.getLeft();
-    ShadowveilItem = ShadowveilPair.getRight();
 
-    var BlazingMarigoldPair = register(
+    BlazingMarigold = register(
         "blazing_marigold",
         (settings) -> new FlowerBlock(StatusEffects.FIRE_RESISTANCE, 5, settings),
         Block.Settings
@@ -163,31 +122,24 @@ public final class ModBlocks {
             .breakInstantly()
             .sounds(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
-    BlazingMarigold = BlazingMarigoldPair.getLeft();
-    BlazingMarigoldItem = BlazingMarigoldPair.getRight();
 
-    var SlimeBerryPair = register(
+    SlimeBerry = register(
         "slime_berry",
         (settings) -> new FlowerBlock(StatusEffects.NAUSEA, 5, settings),
         Block.Settings.copy(Blocks.ALLIUM).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.SLIME),
         ModItemGroups.Potions);
-    SlimeBerry = SlimeBerryPair.getLeft();
-    SlimeBerryItem = SlimeBerryPair.getRight();
 
-    berryBush = new Block[4];
-    berryBushItem = new Item[4];
+    berryBush = new RegisteredBlock[4];
     for (int type = 0; type < berryBush.length; type++) {
       int finalType = type;
-      var berryBushPair = register(
+      berryBush[type] = register(
           Ingredients.GetBerryName(type) + "_bush",
           (settings) -> new BerryBush(finalType, settings),
           Block.Settings.copy(Blocks.ACACIA_LEAVES).mapColor(MapColor.GREEN).nonOpaque().sounds(BlockSoundGroup.GRASS),
           ModItemGroups.Potions);
-      berryBush[type] = berryBushPair.getLeft();
-      berryBushItem[type] = berryBushPair.getRight();
     }
 
-    var CrimsonwoodLogPair = register(
+    CrimsonwoodLog = register(
         "crimsonwood_log",
         PillarBlock::new,
         Block.Settings
@@ -197,18 +149,14 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.WOOD)
             .burnable(),
         ModItemGroups.Potions);
-    CrimsonwoodLog = CrimsonwoodLogPair.getLeft();
-    CrimsonwoodLogItem = CrimsonwoodLogPair.getRight();
 
-    var CrimsonwoodLeavesPair = register(
+    CrimsonwoodLeaves = register(
         "crimsonwood_leaves",
         CrimsonwoodLeaves::new,
         Blocks.createLeavesSettings(BlockSoundGroup.GRASS),
         ModItemGroups.Potions);
-    CrimsonwoodLeaves = CrimsonwoodLeavesPair.getLeft();
-    CrimsonwoodLeavesItem = CrimsonwoodLeavesPair.getRight();
 
-    var CrimsonwoodPlanksPair = register(
+    CrimsonwoodPlanks = register(
         "crimsonwood_planks",
         Block::new,
         Block.Settings
@@ -218,8 +166,6 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.WOOD)
             .burnable(),
         ModItemGroups.Potions);
-    CrimsonwoodPlanks = CrimsonwoodPlanksPair.getLeft();
-    CrimsonwoodPlanksItem = CrimsonwoodPlanksPair.getRight();
 
     var crimsonSaplingGenerator = new SaplingGenerator(
         ArtentPotions.MODID + "_crimsonwood",
@@ -227,7 +173,7 @@ public final class ModBlocks {
         Optional.of(FeatureRegistry.CRIMSON_TREE_CONFIGURED_KEY),
         Optional.empty());
 
-    var CrimsonwoodSaplingPair = register(
+    CrimsonwoodSapling = register(
         "crimsonwood_sapling",
         (settings) -> new CrimsonwoodSapling(crimsonSaplingGenerator, settings),
         Block.Settings
@@ -238,10 +184,8 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.GRASS)
             .burnable(),
         ModItemGroups.Potions);
-    CrimsonwoodSapling = CrimsonwoodSaplingPair.getLeft();
-    CrimsonwoodSaplingItem = CrimsonwoodSaplingPair.getRight();
 
-    var FermentingBarrelPair = register(
+    FermentingBarrel = register(
         "fermenting_barrel",
         FermentingBarrel::new,
         Block.Settings
@@ -251,10 +195,8 @@ public final class ModBlocks {
             .strength(2.0f, 3.0f)
             .sounds(BlockSoundGroup.WOOD),
         ModItemGroups.Potions);
-    FermentingBarrel = FermentingBarrelPair.getLeft();
-    FermentingBarrelItem = FermentingBarrelPair.getRight();
 
-    var DryingRackPair = register(
+    DryingRack = register(
         "drying_rack",
         DryingRack::new,
         Block.Settings
@@ -264,19 +206,12 @@ public final class ModBlocks {
             .strength(2.0f, 3.0f)
             .sounds(BlockSoundGroup.WOOD),
         ModItemGroups.Potions);
-    DryingRack = DryingRackPair.getLeft();
-    DryingRackItem = DryingRackPair.getRight();
 
-    var FrostPumpkinPair = register(
+    FrostPumpkin = register(
         BlockKeys.FROST_PUMPKIN.getValue().getPath(),
         FrostPumpkin::new,
-        Block.Settings
-            .copy(Blocks.PUMPKIN)
-            .mapColor(MapColor.CYAN)
-            .nonOpaque(),
+        Block.Settings.copy(Blocks.PUMPKIN).mapColor(MapColor.CYAN).nonOpaque(),
         ModItemGroups.Potions);
-    FrostPumpkin = FrostPumpkinPair.getLeft();
-    FrostPumpkinItem = FrostPumpkinPair.getRight();
 
     FrostPumpkinStem = registerBlock(
         BlockKeys.FROST_PUMPKIN_STEM.getValue().getPath(),
@@ -285,8 +220,7 @@ public final class ModBlocks {
             BlockKeys.FROST_PUMPKIN_STEM_ATTACHED,
             ItemKeys.FROST_PUMPKIN_SEEDS,
             settings),
-        Block.Settings
-            .copy(Blocks.PUMPKIN_STEM));
+        Block.Settings.copy(Blocks.PUMPKIN_STEM));
 
     FrostPumpkinStemAttached = registerBlock(
         BlockKeys.FROST_PUMPKIN_STEM_ATTACHED.getValue().getPath(),
@@ -295,72 +229,42 @@ public final class ModBlocks {
             BlockKeys.FROST_PUMPKIN,
             ItemKeys.FROST_PUMPKIN_SEEDS,
             settings),
-        Block.Settings
-            .copy(Blocks.ATTACHED_PUMPKIN_STEM));
+        Block.Settings.copy(Blocks.ATTACHED_PUMPKIN_STEM));
 
-    var IceCrystalBlockPair = register(
+    IceCrystalBlock = register(
         "ice_crystal_block",
         Block::new,
-        Block.Settings
-            .copy(Blocks.AMETHYST_BLOCK)
-            .mapColor(MapColor.CYAN)
-            .nonOpaque(),
+        Block.Settings.copy(Blocks.AMETHYST_BLOCK).mapColor(MapColor.CYAN).nonOpaque(),
         ModItemGroups.Potions);
-    IceCrystalBlock = IceCrystalBlockPair.getLeft();
-    IceCrystalBlock_Item = IceCrystalBlockPair.getRight();
 
-    var IceCrystalBud_SmallPair = register(
+    IceCrystalBud_Small = register(
         "ice_crystal_bud_small",
         (settings) -> new IceCrystalCluster(3.0f, 4.0f, settings),
-        Block.Settings
-            .copy(Blocks.SMALL_AMETHYST_BUD)
-            .mapColor(MapColor.CYAN)
-            .nonOpaque(),
+        Block.Settings.copy(Blocks.SMALL_AMETHYST_BUD).mapColor(MapColor.CYAN).nonOpaque(),
         ModItemGroups.Potions);
-    IceCrystalBud_Small = IceCrystalBud_SmallPair.getLeft();
-    IceCrystalBud_Small_Item = IceCrystalBud_SmallPair.getRight();
 
-    var IceCrystalBud_MediumPair = register(
+    IceCrystalBud_Medium = register(
         "ice_crystal_bud_medium",
         (settings) -> new IceCrystalCluster(4.0f, 3.0f, settings),
-        Block.Settings
-            .copy(Blocks.MEDIUM_AMETHYST_BUD)
-            .mapColor(MapColor.CYAN)
-            .ticksRandomly()
-            .nonOpaque(),
+        Block.Settings.copy(Blocks.MEDIUM_AMETHYST_BUD).mapColor(MapColor.CYAN).ticksRandomly().nonOpaque(),
         ModItemGroups.Potions);
-    IceCrystalBud_Medium = IceCrystalBud_MediumPair.getLeft();
-    IceCrystalBud_Medium_Item = IceCrystalBud_MediumPair.getRight();
 
-    var IceCrystalBud_LargePair = register(
+    IceCrystalBud_Large = register(
         "ice_crystal_bud_large",
         (settings) -> new IceCrystalCluster(5.0f, 3.0f, settings),
-        Block.Settings
-            .copy(Blocks.LARGE_AMETHYST_BUD)
-            .mapColor(MapColor.CYAN)
-            .ticksRandomly()
-            .nonOpaque(),
+        Block.Settings.copy(Blocks.LARGE_AMETHYST_BUD).mapColor(MapColor.CYAN).ticksRandomly().nonOpaque(),
         ModItemGroups.Potions);
-    IceCrystalBud_Large = IceCrystalBud_LargePair.getLeft();
-    IceCrystalBud_Large_Item = IceCrystalBud_LargePair.getRight();
 
-    var IceCrystalBud_ClusterPair = register(
+    IceCrystalBud_Cluster = register(
         "ice_crystal_cluster",
         (settings) -> new IceCrystalCluster(7.0f, 3.0f, settings),
-        Block.Settings
-            .copy(Blocks.AMETHYST_CLUSTER)
-            .mapColor(MapColor.CYAN)
-            .ticksRandomly()
-            .nonOpaque(),
+        Block.Settings.copy(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.CYAN).ticksRandomly().nonOpaque(),
         ModItemGroups.Potions);
-    IceCrystalBud_Cluster = IceCrystalBud_ClusterPair.getLeft();
-    IceCrystalBud_Cluster_Item = IceCrystalBud_ClusterPair.getRight();
 
-    var BrownMushroomMyceliumPair = register(
+    var BrownMushroomMycelium = register(
         "brown_mushroom_mycelium",
         (settings) -> new MushroomMycelium(MushroomType.Brown, settings),
-        Block.Settings
-            .copy(Blocks.MYCELIUM).ticksRandomly(),
+        Block.Settings.copy(Blocks.MYCELIUM).ticksRandomly(),
         ModItemGroups.Potions);
     var growingBrownMushroom = registerBlock(
         "brown_mushroom_stage",
@@ -369,18 +273,15 @@ public final class ModBlocks {
             Blocks.BROWN_MUSHROOM,
             () -> ModItems.BrownMushroomSpores,
             settings),
-        Block.Settings
-            .copy(Blocks.BROWN_MUSHROOM).ticksRandomly());
+        Block.Settings.copy(Blocks.BROWN_MUSHROOM).ticksRandomly());
     MushroomInfo[MushroomType.Brown.ordinal()] = new MushroomBlockInfo(
-        BrownMushroomMyceliumPair.getLeft(),
-        BrownMushroomMyceliumPair.getRight(),
-        growingBrownMushroom);
+        BrownMushroomMycelium.block(),
+        growingBrownMushroom.block());
 
-    var RedMushroomMyceliumPair = register(
+    var RedMushroomMycelium = register(
         "red_mushroom_mycelium",
         (settings) -> new MushroomMycelium(MushroomType.Red, settings),
-        Block.Settings
-            .copy(Blocks.MYCELIUM).ticksRandomly(),
+        Block.Settings.copy(Blocks.MYCELIUM).ticksRandomly(),
         ModItemGroups.Potions);
     var growingRedMushroom = registerBlock(
         "red_mushroom_stage",
@@ -389,41 +290,36 @@ public final class ModBlocks {
             Blocks.RED_MUSHROOM,
             () -> ModItems.RedMushroomSpores,
             settings),
-        Block.Settings
-            .copy(Blocks.RED_MUSHROOM).ticksRandomly());
+        Block.Settings.copy(Blocks.RED_MUSHROOM).ticksRandomly());
     MushroomInfo[MushroomType.Red.ordinal()] = new MushroomBlockInfo(
-        RedMushroomMyceliumPair.getLeft(),
-        RedMushroomMyceliumPair.getRight(),
-        growingRedMushroom);
+        RedMushroomMycelium.block(),
+        growingRedMushroom.block());
 
-    var ShroomMyceliumPair = register(
+    var ShroomMycelium = register(
         "shroom_mycelium",
         (settings) -> new MushroomMycelium(MushroomType.Shroom, settings),
-        Block.Settings
-            .copy(Blocks.MYCELIUM).ticksRandomly(),
+        Block.Settings.copy(Blocks.MYCELIUM).ticksRandomly(),
         ModItemGroups.Potions);
     var growingShroomMushroom = registerBlock(
         "shroom_stage",
         (settings) -> new GrowingMushroom(
             MushroomType.Shroom,
-            ModBlocks.Shroom,
+            ModBlocks.Shroom.block(),
             () -> ModItems.ShroomSpores,
             settings),
-        Block.Settings
-            .copy(Blocks.RED_MUSHROOM).ticksRandomly());
+        Block.Settings.copy(Blocks.RED_MUSHROOM).ticksRandomly());
     MushroomInfo[MushroomType.Shroom.ordinal()] = new MushroomBlockInfo(
-        ShroomMyceliumPair.getLeft(),
-        ShroomMyceliumPair.getRight(),
-        growingShroomMushroom);
+        ShroomMycelium.block(),
+        growingShroomMushroom.block());
 
     FireBlock fireBlock = (FireBlock) Blocks.FIRE;
-    fireBlock.registerFlammableBlock(CrimsonwoodLog, 5, 20);
-    fireBlock.registerFlammableBlock(CrimsonwoodPlanks, 5, 20);
-    fireBlock.registerFlammableBlock(CrimsonwoodLeaves, 30, 60);
-    fireBlock.registerFlammableBlock(CrimsonwoodSapling, 30, 60);
+    fireBlock.registerFlammableBlock(CrimsonwoodLog.block(), 5, 20);
+    fireBlock.registerFlammableBlock(CrimsonwoodPlanks.block(), 5, 20);
+    fireBlock.registerFlammableBlock(CrimsonwoodLeaves.block(), 30, 60);
+    fireBlock.registerFlammableBlock(CrimsonwoodSapling.block(), 30, 60);
   }
 
-  public static <TBlock extends Block> Pair<TBlock, Item> register(
+  public static <TBlock extends Block> RegisteredBlock<TBlock> register(
       String keyString,
       Function<AbstractBlock.Settings, TBlock> factory,
       AbstractBlock.Settings settings,
@@ -436,20 +332,20 @@ public final class ModBlocks {
     var blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
     Registry.register(Registries.ITEM, itemKey, blockItem);
     if (groupBuilder != null) groupBuilder.addItem(blockItem);
-    return new Pair<>(block, blockItem);
+    return new RegisteredBlock<>(block, blockItem);
   }
 
-  public static <TBlock extends Block> TBlock registerBlock(
+  public static <TBlock extends Block> RegisteredBlock<TBlock> registerBlock(
       String keyString,
       Function<AbstractBlock.Settings, TBlock> factory,
       AbstractBlock.Settings settings) {
     var key = keyOf(keyString);
     TBlock block = factory.apply(settings.registryKey(key));
     Registry.register(Registries.BLOCK, key, block);
-    return block;
+    return new RegisteredBlock<>(block, null);
   }
 
-  public static Pair<Block, Item> register(
+  public static RegisteredBlock<Block> register(
       String keyString,
       Function<AbstractBlock.Settings, Block> factory,
       AbstractBlock.Settings settings,
@@ -463,7 +359,7 @@ public final class ModBlocks {
     var blockItem = customBlockItem.apply(block, new Item.Settings().registryKey(itemKey));
     Registry.register(Registries.ITEM, itemKey, blockItem);
     if (groupBuilder != null) groupBuilder.addItem(blockItem);
-    return new Pair<>(block, blockItem);
+    return new RegisteredBlock<>(block, blockItem);
   }
 
   private static RegistryKey<Block> keyOf(String id) {

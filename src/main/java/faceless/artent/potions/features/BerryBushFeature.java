@@ -27,7 +27,7 @@ public class BerryBushFeature extends Feature<BerryBushFeatureConfig> {
 
     var berryType = random.nextInt(config.berryTypeCount());
 
-    BlockState blockState = ModBlocks.berryBush[berryType].getDefaultState();
+    BlockState blockState = ModBlocks.berryBush[berryType].block().getDefaultState();
     var height = randomHeight(random, config.maxHeight());
 
     // find the surface of the world

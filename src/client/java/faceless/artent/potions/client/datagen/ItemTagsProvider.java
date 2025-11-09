@@ -21,18 +21,18 @@ public class ItemTagsProvider extends FabricTagProvider<Item> {
   @Override
   protected void configure(RegistryWrapper.WrapperLookup registries) {
     getOrCreateTagBuilder(ItemTags.LOGS)
-        .add(ModBlocks.CrimsonwoodLogItem);
+        .add(ModBlocks.CrimsonwoodLog.item());
     getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN)
-        .add(ModBlocks.CrimsonwoodLogItem);
+        .add(ModBlocks.CrimsonwoodLog.item());
 
     getOrCreateTagBuilder(ItemTags.LEAVES)
-        .add(ModBlocks.CrimsonwoodLeavesItem);
+        .add(ModBlocks.CrimsonwoodLeaves.item());
 
     getOrCreateTagBuilder(ItemTags.SAPLINGS)
-        .add(ModBlocks.CrimsonwoodSaplingItem);
+        .add(ModBlocks.CrimsonwoodSapling.item());
 
     getOrCreateTagBuilder(ItemTags.PLANKS)
-        .add(ModBlocks.CrimsonwoodPlanksItem);
+        .add(ModBlocks.CrimsonwoodPlanks.item());
   }
 
   @Override

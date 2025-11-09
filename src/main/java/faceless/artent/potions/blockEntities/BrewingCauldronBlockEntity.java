@@ -77,7 +77,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
               || BrewingRecipes.IsIngredient(ie.getStack()));
     if (items.isEmpty()) return;
 
-    var brewingCooldown = state.getBlock() == ModBlocks.BrewingCauldronCopper ? CopperBrewingCooldown : BrewingCooldown;
+    var brewingCooldown = state.getBlock() == ModBlocks.BrewingCauldronCopper.block() ? CopperBrewingCooldown : BrewingCooldown;
     var first = items.getFirst();
     var brewable = (IBrewable) first;
     if ((brewable.getBrewingTime() > brewingCooldown)) {

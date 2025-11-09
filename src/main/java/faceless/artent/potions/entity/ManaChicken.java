@@ -27,12 +27,12 @@ public class ManaChicken extends ChickenEntity {
         .filter(goal -> goal != null && goal.getGoal() instanceof TemptGoal)
         .forEach(goal -> this.goalSelector.remove(goal.getGoal()));
 
-    this.goalSelector.add(3, new TemptGoal(this, 1.0, stack -> stack.isOf(ModBlocks.ShroomItem), false));
+    this.goalSelector.add(3, new TemptGoal(this, 1.0, stack -> stack.isOf(ModBlocks.Shroom.item()), false));
   }
 
   @Override
   public boolean isBreedingItem(ItemStack stack) {
-    return stack.getItem() == ModBlocks.ShroomItem;
+    return stack.getItem() == ModBlocks.Shroom.item();
   }
 
   @Nullable

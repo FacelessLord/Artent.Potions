@@ -42,9 +42,9 @@ public class ModFeatures {
   }
 
   private static final TreeFeatureConfig CRIMSON_TREE_CONFIG = new TreeFeatureConfig.Builder(
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLog),
+      BlockStateProvider.of(ModBlocks.CrimsonwoodLog.block()),
       new StraightTrunkPlacer(5, 2, 0),
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLeaves),
+      BlockStateProvider.of(ModBlocks.CrimsonwoodLeaves.block()),
       new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
       new TwoLayersFeatureSize(1, 0, 1)
   ).build();
@@ -53,12 +53,12 @@ public class ModFeatures {
       CRIMSON_TREE_CONFIG);
   public static final PlacedFeature CRIMSONWOOD_TREE_PLACED = new PlacedFeature(
       RegistryEntry.of(CRIMSON_TREE),
-      treeModifiers(ModBlocks.CrimsonwoodSapling));
+      treeModifiers(ModBlocks.CrimsonwoodSapling.block()));
 
   private static final TreeFeatureConfig CRIMSON_MEGA_TREE_CONFIG = new TreeFeatureConfig.Builder(
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLog),
+      BlockStateProvider.of(ModBlocks.CrimsonwoodLog.block()),
       new LargeOakTrunkPlacer(3, 11, 0),
-      BlockStateProvider.of(ModBlocks.CrimsonwoodLeaves),
+      BlockStateProvider.of(ModBlocks.CrimsonwoodLeaves.block()),
       new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(4), 4),
       new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
   )
@@ -69,7 +69,7 @@ public class ModFeatures {
       CRIMSON_MEGA_TREE_CONFIG);
   public static final PlacedFeature CRIMSONWOOD_MEGA_TREE_PLACED = new PlacedFeature(
       RegistryEntry.of(CRIMSON_MEGA_TREE),
-      treeModifiers(ModBlocks.CrimsonwoodSapling));
+      treeModifiers(ModBlocks.CrimsonwoodSapling.block()));
 
   public static ConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>> CRIMSON_TREES;
   public static PlacedFeature CRIMSON_TREES_PLACED;
@@ -90,7 +90,7 @@ public class ModFeatures {
             3,
             0.1F,
             1),
-        ModBlocks.berryBush[0]));
+        ModBlocks.berryBush[0].block()));
     modifiers.add(SquarePlacementModifier.of());
     PlantPlacementModifiers = modifiers;
   }
@@ -101,7 +101,7 @@ public class ModFeatures {
   );
 
   public static final VegetationBlockFeatureConfig SHADOWVEIL_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
-      ModBlocks.Shadowveil.getDefaultState(), BlockTags.DIRT);
+      ModBlocks.Shadowveil.block().getDefaultState(), BlockTags.DIRT);
 
   public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> SHADOWVEIL = new ConfiguredFeature<>(
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
@@ -113,7 +113,7 @@ public class ModFeatures {
   );
 
   public static final VegetationBlockFeatureConfig BLAZING_MARIGOLD_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
-      ModBlocks.BlazingMarigold.getDefaultState(), BlockTags.DIRT);
+      ModBlocks.BlazingMarigold.block().getDefaultState(), BlockTags.DIRT);
 
   public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> BLAZING_MARIGOLD = new ConfiguredFeature<>(
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
@@ -125,7 +125,7 @@ public class ModFeatures {
   );
 
   public static final VegetationBlockFeatureConfig SLIME_BERRY_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
-      ModBlocks.SlimeBerry.getDefaultState(), BlockTags.DIRT);
+      ModBlocks.SlimeBerry.block().getDefaultState(), BlockTags.DIRT);
 
   public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> SLIME_BERRY = new ConfiguredFeature<>(
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
@@ -137,7 +137,7 @@ public class ModFeatures {
   );
 
   public static final VegetationBlockFeatureConfig SHROOM_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
-      ModBlocks.Shroom.getDefaultState(), BlockTags.DIRT);
+      ModBlocks.Shroom.block().getDefaultState(), BlockTags.DIRT);
 
   public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> SHROOM = new ConfiguredFeature<>(
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,
@@ -150,7 +150,7 @@ public class ModFeatures {
 
 
   public static final VegetationBlockFeatureConfig FROST_PUMPKIN_FEATURE_CONFIG = new VegetationBlockFeatureConfig(
-      ModBlocks.FrostPumpkin.getDefaultState(), BlockTags.DIRT);
+      ModBlocks.FrostPumpkin.block().getDefaultState(), BlockTags.DIRT);
 
   public static final ConfiguredFeature<VegetationBlockFeatureConfig, Feature<VegetationBlockFeatureConfig>> FROST_PUMPKIN = new ConfiguredFeature<>(
       FeatureRegistry.VEGETATION_BLOCK_FEATURE,

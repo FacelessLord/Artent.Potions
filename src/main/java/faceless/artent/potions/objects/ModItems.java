@@ -154,7 +154,7 @@ public final class ModItems {
 
     FrostPumpkinSeeds = register(
         ItemKeys.FROST_PUMPKIN_SEEDS.getValue().getPath(),
-        (s) -> new BlockItem(ModBlocks.FrostPumpkinStem, s.registryKey(ItemKeys.FROST_PUMPKIN_SEEDS)),
+        (s) -> new BlockItem(ModBlocks.FrostPumpkinStem.block(), s.registryKey(ItemKeys.FROST_PUMPKIN_SEEDS)),
         new Item.Settings().maxCount(64),
         ModItemGroups.Potions);
 
@@ -198,8 +198,8 @@ public final class ModItems {
     AlchemicalPotionUtil.appendPotionStacks(ModItems.MediumBottleExplosive, 3, ModItemGroups.Potions);
     AlchemicalPotionUtil.appendPotionStacks(ModItems.BigBottleExplosive, 9, ModItemGroups.Potions);
 
-    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodLeaves.asItem(), 0.5F);
-    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodSapling.asItem(), 0.5F);
+    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodLeaves.block().asItem(), 0.5F);
+    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CrimsonwoodSapling.block().asItem(), 0.5F);
   }
 
   public static Item register(

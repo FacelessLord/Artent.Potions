@@ -31,7 +31,7 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
       public void generate() {
         RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
 
-        createShaped(RecipeCategory.BREWING, ModBlocks.BrewingCauldronItem)
+        createShaped(RecipeCategory.BREWING, ModBlocks.BrewingCauldron.item())
             .pattern("i i")
             .pattern("iii")
             .pattern("n n")
@@ -40,7 +40,7 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .group("artent:cauldron")
             .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModBlocks.BrewingCauldronCopperItem)
+        createShaped(RecipeCategory.BREWING, ModBlocks.BrewingCauldronCopper.item())
             .pattern("c c")
             .pattern("ccc")
             .pattern("c c")
@@ -48,7 +48,7 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .group("artent:cauldron")
             .criterion(hasItem(Items.COPPER_INGOT), conditionsFromItem(Items.COPPER_INGOT))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModBlocks.FermentingBarrelItem)
+        createShaped(RecipeCategory.BREWING, ModBlocks.FermentingBarrel.item())
             .pattern("pp")
             .pattern("pp")
             .pattern("ss")
@@ -68,7 +68,9 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('g', Items.GLASS)
             .input('c', Items.CLAY_BALL)
             .group("artent:concentrate_phial")
-            .criterion(hasItem(ModBlocks.BrewingCauldron), conditionsFromItem(ModBlocks.BrewingCauldron))
+            .criterion(
+                hasItem(ModBlocks.BrewingCauldron.block()),
+                conditionsFromItem(ModBlocks.BrewingCauldron.block()))
             .offerTo(recipeExporter);
         createShaped(RecipeCategory.BREWING, ModItems.MediumBottle, 1)
             .pattern(" c ")
@@ -77,7 +79,9 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('g', Items.GLASS)
             .input('c', Items.CLAY_BALL)
             .group("artent:concentrate_phial")
-            .criterion(hasItem(ModBlocks.BrewingCauldron), conditionsFromItem(ModBlocks.BrewingCauldron))
+            .criterion(
+                hasItem(ModBlocks.BrewingCauldron.block()),
+                conditionsFromItem(ModBlocks.BrewingCauldron.block()))
             .offerTo(recipeExporter);
         createShaped(RecipeCategory.BREWING, ModItems.BigBottle, 1)
             .pattern("ggg")
@@ -86,7 +90,9 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('g', Items.GLASS)
             .input('c', Items.CLAY_BALL)
             .group("artent:concentrate_phial")
-            .criterion(hasItem(ModBlocks.BrewingCauldron), conditionsFromItem(ModBlocks.BrewingCauldron))
+            .criterion(
+                hasItem(ModBlocks.BrewingCauldron.block()),
+                conditionsFromItem(ModBlocks.BrewingCauldron.block()))
             .offerTo(recipeExporter);
         createShaped(RecipeCategory.BREWING, ModItems.SmallBottleExplosive, 3)
             .pattern("c")
@@ -96,7 +102,9 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('p', Items.GUNPOWDER)
             .input('g', Items.GLASS)
             .group("artent:concentrate_phial_explosive")
-            .criterion(hasItem(ModBlocks.BrewingCauldron), conditionsFromItem(ModBlocks.BrewingCauldron))
+            .criterion(
+                hasItem(ModBlocks.BrewingCauldron.block()),
+                conditionsFromItem(ModBlocks.BrewingCauldron.block()))
             .offerTo(recipeExporter);
         createShaped(RecipeCategory.BREWING, ModItems.MediumBottleExplosive, 1)
             .pattern(" c ")
@@ -106,7 +114,9 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('p', Items.GUNPOWDER)
             .input('g', Items.GLASS)
             .group("artent:concentrate_phial_explosive")
-            .criterion(hasItem(ModBlocks.BrewingCauldron), conditionsFromItem(ModBlocks.BrewingCauldron))
+            .criterion(
+                hasItem(ModBlocks.BrewingCauldron.block()),
+                conditionsFromItem(ModBlocks.BrewingCauldron.block()))
             .offerTo(recipeExporter);
         createShaped(RecipeCategory.BREWING, ModItems.BigBottleExplosive, 1)
             .pattern("gpg")
@@ -116,14 +126,16 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('p', Items.GUNPOWDER)
             .input('g', Items.GLASS)
             .group("artent:concentrate_phial_explosive")
-            .criterion(hasItem(ModBlocks.BrewingCauldron), conditionsFromItem(ModBlocks.BrewingCauldron))
+            .criterion(
+                hasItem(ModBlocks.BrewingCauldron.block()),
+                conditionsFromItem(ModBlocks.BrewingCauldron.block()))
             .offerTo(recipeExporter);
 
         // CRIMSON TREE
 
-        createShapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.CrimsonwoodPlanksItem, 4)
-            .input(ModBlocks.CrimsonwoodLogItem)
-            .criterion(hasItem(ModBlocks.CrimsonwoodLogItem), conditionsFromItem(ModBlocks.CrimsonwoodLogItem))
+        createShapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.CrimsonwoodPlanks.item(), 4)
+            .input(ModBlocks.CrimsonwoodLog.item())
+            .criterion(hasItem(ModBlocks.CrimsonwoodLog.item()), conditionsFromItem(ModBlocks.CrimsonwoodLog.item()))
             .offerTo(recipeExporter);
       }
     };

@@ -29,7 +29,8 @@ public class ArtentPotionsBlockLootTableProvider extends FabricBlockLootTablePro
   protected RegistryWrapper.WrapperLookup registries;
 
   public ArtentPotionsBlockLootTableProvider(
-      FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+      FabricDataOutput output,
+      CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
     super(output, registryLookup);
     this.registriesFuture = registryLookup;
   }
@@ -37,60 +38,72 @@ public class ArtentPotionsBlockLootTableProvider extends FabricBlockLootTablePro
   public void generate() {
     RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
     RegistryWrapper.Impl<Item> impl2 = this.registries.getOrThrow(RegistryKeys.ITEM);
-    addDrop(ModBlocks.BrewingCauldron);
-    addDrop(ModBlocks.BrewingCauldronCopper);
-    addDrop(ModBlocks.CrimsonwoodLog);
-    addDrop(ModBlocks.CrimsonwoodSapling);
-    addDrop(ModBlocks.CrimsonwoodPlanks);
-    addDrop(ModBlocks.FrostPumpkin);
-    addDrop(ModBlocks.Shroom);
-    addDrop(ModBlocks.Shadowveil);
-    addDrop(ModBlocks.BlazingMarigold);
-    addDrop(ModBlocks.SlimeBerry);
-    addDrop(ModBlocks.FermentingBarrel);
+    addDrop(ModBlocks.BrewingCauldron.block());
+    addDrop(ModBlocks.BrewingCauldronCopper.block());
+    addDrop(ModBlocks.CrimsonwoodLog.block());
+    addDrop(ModBlocks.CrimsonwoodSapling.block());
+    addDrop(ModBlocks.CrimsonwoodPlanks.block());
+    addDrop(ModBlocks.FrostPumpkin.block());
+    addDrop(ModBlocks.Shroom.block());
+    addDrop(ModBlocks.Shadowveil.block());
+    addDrop(ModBlocks.BlazingMarigold.block());
+    addDrop(ModBlocks.SlimeBerry.block());
+    addDrop(ModBlocks.FermentingBarrel.block());
     for (int i = 0; i < ModBlocks.berryBush.length; i++) {
-      addDrop(ModBlocks.berryBush[i]);
+      addDrop(ModBlocks.berryBush[i].block());
     }
 
     addDrop(
-        ModBlocks.CrimsonwoodLeaves, this
+        ModBlocks.CrimsonwoodLeaves.block(), this
             .leavesDrops(
-                ModBlocks.CrimsonwoodLeaves,
-                ModBlocks.CrimsonwoodSapling,
-                0.05F, 0.0625F, 0.083333336F, 0.1F)
+                ModBlocks.CrimsonwoodLeaves.block(),
+                ModBlocks.CrimsonwoodSapling.block(),
+                0.05F,
+                0.0625F,
+                0.083333336F,
+                0.1F)
             .pool(LootPool
                       .builder()
                       .rolls(ConstantLootNumberProvider.create(1.0F))
                       .conditionally(this.createWithoutShearsOrSilkTouchCondition())
                       .with(((LeafEntry.Builder<?>) this.addSurvivesExplosionCondition(
-                          ModBlocks.CrimsonwoodLeaves, ItemEntry.builder(
-                              ModItems.CrimsonLeaf))).conditionally(TableBonusLootCondition.builder(
-                          impl.getOrThrow(Enchantments.FORTUNE),
-                          0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F)))
+                          ModBlocks.CrimsonwoodLeaves.block(),
+                          ItemEntry.builder(ModItems.CrimsonLeaf))).conditionally(
+                          TableBonusLootCondition.builder(
+                              impl.getOrThrow(Enchantments.FORTUNE),
+                              0.005F,
+                              0.0055555557F,
+                              0.00625F,
+                              0.008333334F,
+                              0.025F)))
                       .with(((LeafEntry.Builder<?>) this.addSurvivesExplosionCondition(
-                          ModBlocks.CrimsonwoodLeaves, ItemEntry.builder(
-                              ModItems.berries[4]))).conditionally(TableBonusLootCondition.builder(
-                          impl.getOrThrow(Enchantments.FORTUNE),
-                          0.0025F, 0.00255555557F, 0.003625F, 0.004333334F, 0.0125F)))));
+                          ModBlocks.CrimsonwoodLeaves.block(),
+                          ItemEntry.builder(ModItems.berries[4]))).conditionally(
+                          TableBonusLootCondition.builder(
+                              impl.getOrThrow(Enchantments.FORTUNE),
+                              0.0025F,
+                              0.00255555557F,
+                              0.003625F,
+                              0.004333334F,
+                              0.0125F)))));
     this.addDrop(
-        ModBlocks.IceCrystalBud_Cluster, (Block block) -> this.dropsWithSilkTouch(
-            block, (ItemEntry.builder(
-                ModItems.IceCrystalShard).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(4.0f))))
-                .apply(
-                    ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
-                .conditionally(
-                    MatchToolLootCondition.builder(ItemPredicate.Builder
-                                                       .create()
-                                                       .tag(impl2, ItemTags.CLUSTER_MAX_HARVESTABLES)))
-                .alternatively(
-                    this.applyExplosionDecay(
-                        block,
-                        ItemEntry
-                            .builder(ModItems.IceCrystalShard)
-                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f)))))));
-    this.addDropWithSilkTouch(ModBlocks.IceCrystalBud_Small);
-    this.addDropWithSilkTouch(ModBlocks.IceCrystalBud_Medium);
-    this.addDropWithSilkTouch(ModBlocks.IceCrystalBud_Large);
+        ModBlocks.IceCrystalBud_Cluster.block(), (Block block) -> this.dropsWithSilkTouch(
+            block,
+            (ItemEntry
+                .builder(ModItems.IceCrystalShard)
+                .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(4.0f))))
+                .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
+                .conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder
+                                                                  .create()
+                                                                  .tag(impl2, ItemTags.CLUSTER_MAX_HARVESTABLES)))
+                .alternatively(this.applyExplosionDecay(
+                    block,
+                    ItemEntry
+                        .builder(ModItems.IceCrystalShard)
+                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f)))))));
+    this.addDropWithSilkTouch(ModBlocks.IceCrystalBud_Small.block());
+    this.addDropWithSilkTouch(ModBlocks.IceCrystalBud_Medium.block());
+    this.addDropWithSilkTouch(ModBlocks.IceCrystalBud_Large.block());
   }
 
   @Override

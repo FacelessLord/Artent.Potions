@@ -36,9 +36,7 @@ public class IceCrystalCluster extends Block implements Waterloggable {
   public IceCrystalCluster(float height, float xzOffset, AbstractBlock.Settings settings) {
     super(settings);
 
-    this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false).with(
-        FACING,
-        Direction.UP));
+    this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false).with(FACING, Direction.UP));
     this.upShape = Block.createCuboidShape(xzOffset, 0.0, xzOffset, 16.0f - xzOffset, height, 16.0f - xzOffset);
     this.downShape = Block.createCuboidShape(
         xzOffset,
@@ -123,7 +121,8 @@ public class IceCrystalCluster extends Block implements Waterloggable {
     BlockPos blockPos = ctx.getBlockPos();
     return this
         .getDefaultState()
-        .with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER).with(FACING, ctx.getSide());
+        .with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER)
+        .with(FACING, ctx.getSide());
   }
 
   @Override
@@ -150,34 +149,31 @@ public class IceCrystalCluster extends Block implements Waterloggable {
   }
 
   private static Block getNextBlock(Block block) {
-    if (block == ModBlocks.IceCrystalBud_Small) {
-      return ModBlocks.IceCrystalBud_Medium;
+    if (block == ModBlocks.IceCrystalBud_Small.block()) {
+      return ModBlocks.IceCrystalBud_Medium.block();
     }
-    if (block == ModBlocks.IceCrystalBud_Medium) {
-      return ModBlocks.IceCrystalBud_Large;
+    if (block == ModBlocks.IceCrystalBud_Medium.block()) {
+      return ModBlocks.IceCrystalBud_Large.block();
     }
-    return ModBlocks.IceCrystalBud_Cluster;
+    return ModBlocks.IceCrystalBud_Cluster.block();
   }
 
   private static Block getPrevBlock(Block block) {
-    if (block == ModBlocks.IceCrystalBud_Cluster) {
-      return ModBlocks.IceCrystalBud_Large;
+    if (block == ModBlocks.IceCrystalBud_Cluster.block()) {
+      return ModBlocks.IceCrystalBud_Large.block();
     }
-    if (block == ModBlocks.IceCrystalBud_Large) {
-      return ModBlocks.IceCrystalBud_Medium;
+    if (block == ModBlocks.IceCrystalBud_Large.block()) {
+      return ModBlocks.IceCrystalBud_Medium.block();
     }
-    if (block == ModBlocks.IceCrystalBud_Medium) {
-      return ModBlocks.IceCrystalBud_Small;
+    if (block == ModBlocks.IceCrystalBud_Medium.block()) {
+      return ModBlocks.IceCrystalBud_Small.block();
     }
     return Blocks.AIR;
   }
 
   public static BlockState createNextStage(BlockState state) {
     var nextBlock = getNextBlock(state.getBlock());
-    return nextBlock
-        .getDefaultState()
-        .with(WATERLOGGED, state.get(WATERLOGGED))
-        .with(FACING, state.get(FACING));
+    return nextBlock.getDefaultState().with(WATERLOGGED, state.get(WATERLOGGED)).with(FACING, state.get(FACING));
   }
 
   public static BlockState createPrevStage(BlockState state) {
@@ -187,9 +183,6 @@ public class IceCrystalCluster extends Block implements Waterloggable {
           ? Blocks.WATER.getDefaultState()
           : Blocks.WATER.getDefaultState().with(FluidBlock.LEVEL, 5);
     }
-    return prevBlock
-        .getDefaultState()
-        .with(WATERLOGGED, state.get(WATERLOGGED))
-        .with(FACING, state.get(FACING));
+    return prevBlock.getDefaultState().with(WATERLOGGED, state.get(WATERLOGGED)).with(FACING, state.get(FACING));
   }
 }
