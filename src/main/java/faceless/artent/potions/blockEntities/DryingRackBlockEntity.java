@@ -109,6 +109,15 @@ public class DryingRackBlockEntity extends BlockEntity {
     markDirty();
   }
 
+  public DryingRackSyncPayload createSyncPayload() {
+    return new DryingRackSyncPayload(
+        this.getPos(),
+        Arrays.stream(this.items).toList(),
+        Arrays.stream(this.timesLeft).boxed().toList(),
+        Arrays.stream(this.byproducts).toList()
+    );
+  }
+
   @Override
   public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);

@@ -17,30 +17,14 @@ public class ArtentServerHook {
   }
 
   public static void packetSyncCauldron(PlayerEntity player, BrewingCauldronBlockEntity entity) {
-    if (player.getWorld().isClient)
-      return;
+    if (player.getWorld().isClient) return;
 
-    var payload = new CauldronSyncPayload(
-        entity.getPos(),
-        entity.fuelAmount,
-        entity.potionAmount,
-        entity.crystalsRequired,
-        entity.color,
-        entity.ingredients,
-        entity.potions);
-    ServerPlayNetworking.send((ServerPlayerEntity) player, payload);
+    ServerPlayNetworking.send((ServerPlayerEntity) player, entity.createSyncPayload());
   }
 
   public static void packetSyncDryingRack(PlayerEntity player, DryingRackBlockEntity entity) {
-    if (player.getWorld().isClient)
-      return;
+    if (player.getWorld().isClient) return;
 
-    var payload = new DryingRackSyncPayload(
-        entity.getPos(),
-        Arrays.stream(entity.items).toList(),
-        Arrays.stream(entity.timesLeft).boxed().toList(),
-        Arrays.stream(entity.byproducts).toList()
-    );
-    ServerPlayNetworking.send((ServerPlayerEntity) player, payload);
+    ServerPlayNetworking.send((ServerPlayerEntity) player, entity.createSyncPayload());
   }
 }

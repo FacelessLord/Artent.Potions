@@ -72,7 +72,8 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var items = world.getEntitiesByClass(
         ItemEntity.class,
         waterBox,
-        ie -> (canExtractPotion() && ie.getStack().getItem() == ModItems.IceCrystalShard)
+        ie -> (canExtractPotion()
+               && ie.getStack().getItem() == ModItems.IceCrystalShard)
               || BrewingRecipes.IsIngredient(ie.getStack()));
     if (items.isEmpty()) return;
 
@@ -224,6 +225,17 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     this.ingredients = payload.ingredients();
     this.potions = payload.potions();
     markDirty();
+  }
+
+  public CauldronSyncPayload createSyncPayload() {
+    return new CauldronSyncPayload(
+        this.getPos(),
+        this.fuelAmount,
+        this.potionAmount,
+        this.crystalsRequired,
+        this.color,
+        this.ingredients,
+        this.potions);
   }
 
   @Override
