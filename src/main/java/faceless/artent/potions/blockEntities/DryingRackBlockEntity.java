@@ -42,13 +42,14 @@ public class DryingRackBlockEntity extends BlockEntity {
     for (int i = 0; i < inventorySize; i++) {
       var stack = items[i];
       if (stack == null) continue;
+      if (stack.isEmpty()) continue;
       if (timesLeft[i] == -1) continue;
       timesLeft[i] -= 1;
       if (timesLeft[i] == -1) {
         var recipe = getRecipeByInputStack(stack);
         if (recipe == null) continue;
         items[i] = recipe.result().copy();
-        if (byproducts[i] == null) {
+        if (byproducts[i].isEmpty()) {
           if (Math.random() < recipe.byproductChance()) byproducts[i] = recipe.byproduct().copy();
         } else {
           ArtentPotions.LOGGER.warn("Drying rack has not empty byproduct before recipe is done");
@@ -66,7 +67,7 @@ public class DryingRackBlockEntity extends BlockEntity {
     return inventorySize;
   }
 
-  private DryingRecipe getRecipeByInputStack(ItemStack input) {
+  public DryingRecipe getRecipeByInputStack(ItemStack input) {
     var registryOptional = this.world.getRegistryManager().getOptional(ModRecipes.DRYING_RECIPES_REGISTRY_KEY);
     if (registryOptional.isEmpty()) return null;
     var registry = registryOptional.get();
@@ -83,6 +84,10 @@ public class DryingRackBlockEntity extends BlockEntity {
   public void exchangeSlot(int slot, ItemStack stack, PlayerEntity player) {
     if (items[slot].isEmpty() && !stack.isEmpty()) {
       items[slot] = stack.splitUnlessCreative(1, player);
+      var recipe = getRecipeByInputStack(stack);
+      if (recipe != null) {
+        timesLeft[slot] = recipe.time();
+      }
       markDirty();
     } else if (!items[slot].isEmpty()) {
       dropSlot(slot).forEach(player::giveOrDropStack);

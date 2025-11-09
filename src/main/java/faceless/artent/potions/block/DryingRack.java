@@ -45,19 +45,20 @@ public class DryingRack extends BlockWithEntity implements INamed {
       PlayerEntity player,
       Hand hand,
       BlockHitResult hit) {
-    if(world.isClient)
+    if (world.isClient)
       return ActionResult.SUCCESS;
 
     var blockEntityOptional = world.getBlockEntity(pos, ModBlockEntities.DryingRack);
     if (blockEntityOptional.isEmpty())
       return ActionResult.FAIL;
     var blockEntity = blockEntityOptional.get();
+
     var facing = state.get(FACING);
     var facingVector = facing.getDoubleVector();
     var localLeftDir = facingVector.crossProduct(new Vec3d(0, 1, 0));
 
     var hitPos = hit.getPos();
-    // remove y coordinate, then center
+    // remove y coordinate, then center the vector
     var horizonalHit = hitPos.subtract(pos.getX(), pos.getY(), pos.getZ()).multiply(1, 0, 1).add(-0.5f, 0, -0.5f);
     var y = (hitPos.y - pos.getY());
 
@@ -66,15 +67,10 @@ public class DryingRack extends BlockWithEntity implements INamed {
     var yIndex = y > 0.5 ? 0 : 2;
     var index = horizontalIndex + yIndex;
 
+    if (stack != null && !stack.isEmpty() && !blockEntity.hasRecipe(stack) && blockEntity.items[index].isEmpty())
+      return ActionResult.FAIL;
     blockEntity.exchangeSlot(index, stack, player);
-
-    player.sendMessage(
-        Text.literal("%d %f %f %f".formatted(
-            index,
-            (hitPos.x - pos.getX()) * (1 - Math.abs(facing.getDoubleVector().x)),
-            (hitPos.y - pos.getY()) * (1 - Math.abs(facing.getDoubleVector().y)),
-            (hitPos.z - pos.getZ()) * (1 - Math.abs(facing.getDoubleVector().z)))), false);
-    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    return ActionResult.SUCCESS;
   }
 
   @Override
