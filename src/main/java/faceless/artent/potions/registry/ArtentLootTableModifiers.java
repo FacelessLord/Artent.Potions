@@ -69,7 +69,7 @@ public class ArtentLootTableModifiers {
                     0.041666668F,
                     0.05F))
                 .with(ItemEntry
-                          .builder(ModItems.Acorn)
+                          .builder(ModItems.ACORN)
                           .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
                           .apply(ExplosionDecayLootFunction.builder())));
     }
@@ -86,7 +86,7 @@ public class ArtentLootTableModifiers {
                     0.041666668F,
                     0.05F))
                 .with(ItemEntry
-                          .builder(ModItems.StoneScale)
+                          .builder(ModItems.STONE_SCALE)
                           .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
                           .apply(ExplosionDecayLootFunction.builder())));
       }

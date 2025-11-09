@@ -11,7 +11,7 @@ public class ItemGroupRegistry implements IRegistry {
 
     @Override
     public void register() {
-        Registry.register(Registries.ITEM_GROUP, Identifier.of(ArtentPotions.MODID, "potions"), ModItemGroups.Potions.build());
+        Registry.register(Registries.ITEM_GROUP, Identifier.of(ArtentPotions.MODID, "potions"), ModItemGroups.POTIONS.build());
     }
 
 }

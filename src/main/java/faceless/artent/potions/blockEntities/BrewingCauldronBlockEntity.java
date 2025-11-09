@@ -73,11 +73,11 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         ItemEntity.class,
         waterBox,
         ie -> (canExtractPotion()
-               && ie.getStack().getItem() == ModItems.IceCrystalShard)
+               && ie.getStack().getItem() == ModItems.ICE_CRYSTAL_SHARD)
               || BrewingRecipes.IsIngredient(ie.getStack()));
     if (items.isEmpty()) return;
 
-    var brewingCooldown = state.getBlock() == ModBlocks.BrewingCauldronCopper.block() ? CopperBrewingCooldown : BrewingCooldown;
+    var brewingCooldown = state.getBlock() == ModBlocks.BREWING_CAULDRON_COPPER.block() ? CopperBrewingCooldown : BrewingCooldown;
     var first = items.getFirst();
     var brewable = (IBrewable) first;
     if ((brewable.getBrewingTime() > brewingCooldown)) {
@@ -138,7 +138,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     final var brewable = (IBrewable) item;
     final var stack = item.getStack();
     var ingredient = BrewingRecipes.AsIngredient(stack);
-    var isCrystal = stack.getItem() == ModItems.IceCrystalShard;
+    var isCrystal = stack.getItem() == ModItems.ICE_CRYSTAL_SHARD;
 
     var potionLeveledUp = handleLeveledPotions(ingredient);
 

@@ -23,16 +23,16 @@ public class ColorProvidersRegistry implements IRegistry {
             return cauldron.color.toHex();
           }
           return 0;
-        }, ModBlocks.CauldronFluid.block());
+        }, ModBlocks.CAULDRON_FLUID.block());
 
     var grassColorTinter0 = getGrassColorTintForIndex(0);
     var grassColorTinter1 = getGrassColorTintForIndex(1);
 
     ColorProviderRegistry.BLOCK.register(
         grassColorTinter0,
-        ModBlocks.Shadowveil.block(),
-        ModBlocks.SlimeBerry.block(),
-        ModBlocks.BlazingMarigold.block());
+        ModBlocks.SHADOWVEIL.block(),
+        ModBlocks.SLIME_BERRY.block(),
+        ModBlocks.BLAZING_MARIGOLD.block());
 
     ColorProviderRegistry.BLOCK.register(
         (BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) -> {
@@ -48,8 +48,8 @@ public class ColorProvidersRegistry implements IRegistry {
             // age == 2
             var block = state.getBlock();
             var type = -1;
-            for (int i = 0; i < ModBlocks.berryBush.length; i++) {
-              if (block == ModBlocks.berryBush[i].block()) {
+            for (int i = 0; i < ModBlocks.BERRY_BUSH.length; i++) {
+              if (block == ModBlocks.BERRY_BUSH[i].block()) {
                 type = i;
                 break;
               }
@@ -66,10 +66,10 @@ public class ColorProvidersRegistry implements IRegistry {
           }
           return Color.White.asInt();
         },
-        ModBlocks.berryBush[0].block(),
-        ModBlocks.berryBush[1].block(),
-        ModBlocks.berryBush[2].block(),
-        ModBlocks.berryBush[3].block());
+        ModBlocks.BERRY_BUSH[0].block(),
+        ModBlocks.BERRY_BUSH[1].block(),
+        ModBlocks.BERRY_BUSH[2].block(),
+        ModBlocks.BERRY_BUSH[3].block());
   }
 
   public static BlockColorProvider getGrassColorTintForIndex(int index) {

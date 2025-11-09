@@ -8,18 +8,18 @@ import net.minecraft.item.Items;
 
 public class BrewingRecipes {
 
-    public static final BrewingIngredient Shroom = new BrewingIngredient(ModBlocks.Shroom.item(), -1);
-    public static final BrewingIngredient Shadowveil = new BrewingIngredient(ModBlocks.Shadowveil.item(), -1);
-    public static final BrewingIngredient CrimsonwoodBerry = new BrewingIngredient(ModItems.berries[4], -1);
-    public static final BrewingIngredient CrimsonLeaf = new BrewingIngredient(ModItems.CrimsonLeaf, -1);
-    public static final BrewingIngredient Blackberry = new BrewingIngredient(ModItems.berries[0], -1);
-    public static final BrewingIngredient Blueberry = new BrewingIngredient(ModItems.berries[1], -1);
-    public static final BrewingIngredient Cloudberry = new BrewingIngredient(ModItems.berries[2], -1);
-    public static final BrewingIngredient Raspberry = new BrewingIngredient(ModItems.berries[3], -1);
-    public static final BrewingIngredient StoneScale = new BrewingIngredient(ModItems.StoneScale, -1);
-    public static final BrewingIngredient Acorn = new BrewingIngredient(ModItems.Acorn, -1);
-    public static final BrewingIngredient ManaFeather = new BrewingIngredient(ModItems.ManaFeather, -1);
-    public static final BrewingIngredient FrostPumpkin = new BrewingIngredient(ModBlocks.FrostPumpkin.item(), -1);
+    public static final BrewingIngredient Shroom = new BrewingIngredient(ModBlocks.SHROOM.item(), -1);
+    public static final BrewingIngredient Shadowveil = new BrewingIngredient(ModBlocks.SHADOWVEIL.item(), -1);
+    public static final BrewingIngredient CrimsonwoodBerry = new BrewingIngredient(ModItems.BERRIES[4], -1);
+    public static final BrewingIngredient CrimsonLeaf = new BrewingIngredient(ModItems.CRIMSON_LEAF, -1);
+    public static final BrewingIngredient Blackberry = new BrewingIngredient(ModItems.BERRIES[0], -1);
+    public static final BrewingIngredient Blueberry = new BrewingIngredient(ModItems.BERRIES[1], -1);
+    public static final BrewingIngredient Cloudberry = new BrewingIngredient(ModItems.BERRIES[2], -1);
+    public static final BrewingIngredient Raspberry = new BrewingIngredient(ModItems.BERRIES[3], -1);
+    public static final BrewingIngredient StoneScale = new BrewingIngredient(ModItems.STONE_SCALE, -1);
+    public static final BrewingIngredient Acorn = new BrewingIngredient(ModItems.ACORN, -1);
+    public static final BrewingIngredient ManaFeather = new BrewingIngredient(ModItems.MANA_FEATHER, -1);
+    public static final BrewingIngredient FrostPumpkin = new BrewingIngredient(ModBlocks.FROST_PUMPKIN.item(), -1);
 
     public static final BrewingIngredient Bone = new BrewingIngredient(Items.BONE, -1);
     public static final BrewingIngredient GlowstoneDust = new BrewingIngredient(Items.GLOWSTONE_DUST, -1);

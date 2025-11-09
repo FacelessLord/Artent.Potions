@@ -149,24 +149,24 @@ public class IceCrystalCluster extends Block implements Waterloggable {
   }
 
   private static Block getNextBlock(Block block) {
-    if (block == ModBlocks.IceCrystalBud_Small.block()) {
-      return ModBlocks.IceCrystalBud_Medium.block();
+    if (block == ModBlocks.ICE_CRYSTAL_BUD_SMALL.block()) {
+      return ModBlocks.ICE_CRYSTAL_BUD_MEDIUM.block();
     }
-    if (block == ModBlocks.IceCrystalBud_Medium.block()) {
-      return ModBlocks.IceCrystalBud_Large.block();
+    if (block == ModBlocks.ICE_CRYSTAL_BUD_MEDIUM.block()) {
+      return ModBlocks.ICE_CRYSTAL_BUD_LARGE.block();
     }
-    return ModBlocks.IceCrystalBud_Cluster.block();
+    return ModBlocks.ICE_CRYSTAL_CLUSTER.block();
   }
 
   private static Block getPrevBlock(Block block) {
-    if (block == ModBlocks.IceCrystalBud_Cluster.block()) {
-      return ModBlocks.IceCrystalBud_Large.block();
+    if (block == ModBlocks.ICE_CRYSTAL_CLUSTER.block()) {
+      return ModBlocks.ICE_CRYSTAL_BUD_LARGE.block();
     }
-    if (block == ModBlocks.IceCrystalBud_Large.block()) {
-      return ModBlocks.IceCrystalBud_Medium.block();
+    if (block == ModBlocks.ICE_CRYSTAL_BUD_LARGE.block()) {
+      return ModBlocks.ICE_CRYSTAL_BUD_MEDIUM.block();
     }
-    if (block == ModBlocks.IceCrystalBud_Medium.block()) {
-      return ModBlocks.IceCrystalBud_Small.block();
+    if (block == ModBlocks.ICE_CRYSTAL_BUD_MEDIUM.block()) {
+      return ModBlocks.ICE_CRYSTAL_BUD_SMALL.block();
     }
     return Blocks.AIR;
   }

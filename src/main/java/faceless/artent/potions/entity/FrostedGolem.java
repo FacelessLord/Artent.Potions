@@ -179,8 +179,8 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     }
     var blockState = serverWorld.getBlockState(growPos);
 
-    var canPlaceCluster = ModBlocks.IceCrystalBud_Cluster.block().canPlaceAt(
-        ModBlocks.IceCrystalBud_Small.block().getDefaultState(),
+    var canPlaceCluster = ModBlocks.ICE_CRYSTAL_CLUSTER.block().canPlaceAt(
+        ModBlocks.ICE_CRYSTAL_BUD_SMALL.block().getDefaultState(),
         serverWorld,
         growPos);
 
@@ -192,7 +192,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     } else if (!isSnowOnTop) {
       serverWorld.setBlockState(growPos.up(), Blocks.SNOW.getDefaultState());
     } else if (canPlaceCluster) {
-      serverWorld.setBlockState(growPos, ModBlocks.IceCrystalBud_Small.block().getDefaultState());
+      serverWorld.setBlockState(growPos, ModBlocks.ICE_CRYSTAL_BUD_SMALL.block().getDefaultState());
     }
   }
 

@@ -41,7 +41,7 @@ public class ThrowablePotionPhialEntity extends ThrownItemEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return ModItems.SmallBottleExplosive;
+    return ModItems.SMALL_BOTTLE_EXPLOSIVE;
   }
 
   @Override

@@ -2,7 +2,6 @@ package faceless.artent.potions.item;
 
 import faceless.artent.potions.api.MushroomType;
 import faceless.artent.potions.objects.ModBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsage;
@@ -23,7 +22,7 @@ public class MushroomSpores extends Item {
     var block = context.getWorld().getBlockState(pos).getBlock();
     var player = context.getPlayer();
     if (block == Blocks.DIRT && player != null && context.getWorld().isAir(pos.up())) {
-      context.getWorld().setBlockState(pos, ModBlocks.MushroomInfo[this.type.ordinal()].mycelium().getDefaultState());
+      context.getWorld().setBlockState(pos, ModBlocks.MUSHROOM_INFO[this.type.ordinal()].mycelium().getDefaultState());
       return ItemUsage.consumeHeldItem(context.getWorld(), player, context.getHand());
     }
 

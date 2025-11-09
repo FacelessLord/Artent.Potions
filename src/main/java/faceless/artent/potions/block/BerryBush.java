@@ -101,7 +101,7 @@ public class BerryBush extends Block implements INamed, Fertilizable {
   }
 
   private @NotNull ItemStack createBerriesStack(Random random) {
-    return new ItemStack(ModItems.berries[type], random.nextInt(3) + 1);
+    return new ItemStack(ModItems.BERRIES[type], random.nextInt(3) + 1);
   }
 
   protected static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 15, 14);

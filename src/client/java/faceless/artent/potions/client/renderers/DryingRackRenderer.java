@@ -2,9 +2,7 @@ package faceless.artent.potions.client.renderers;
 
 import faceless.artent.potions.block.DryingRack;
 import faceless.artent.potions.blockEntities.DryingRackBlockEntity;
-import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.objects.ModBlocks;
-import faceless.artent.potions.objects.ModItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -57,7 +55,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackBlockEn
 
       if (stack.getItem() == Items.BROWN_MUSHROOM
           || stack.getItem() == Items.RED_MUSHROOM
-          || stack.getItem() == ModBlocks.Shroom.item()) {
+          || stack.getItem() == ModBlocks.SHROOM.item()) {
         matrices.translate(0, 0.125, 0);
         matrices.scale(1.5f, 1.5f, 1.5f);
       }

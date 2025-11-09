@@ -3,7 +3,6 @@ package faceless.artent.potions.block;
 import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,14 +46,14 @@ public class FrostPumpkin extends PumpkinBlock {
     world.playSound(null, pos, SoundEvents.BLOCK_PUMPKIN_CARVE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     world.setBlockState(
         pos,
-        ModBlocks.FrostPumpkinCarved.block().getDefaultState().with(CarvedPumpkinBlock.FACING, direction2),
+        ModBlocks.FROST_PUMPKIN_CARVED.block().getDefaultState().with(CarvedPumpkinBlock.FACING, direction2),
         Block.NOTIFY_ALL_AND_REDRAW);
     ItemEntity itemEntity = new ItemEntity(
         world,
         (double) pos.getX() + 0.5 + (double) direction2.getOffsetX() * 0.65,
         (double) pos.getY() + 0.1,
         (double) pos.getZ() + 0.5 + (double) direction2.getOffsetZ() * 0.65,
-        new ItemStack(ModItems.FrostPumpkinSeeds, 4));
+        new ItemStack(ModItems.FROST_PUMPKIN_SEEDS, 4));
     itemEntity.setVelocity(
         0.05 * (double) direction2.getOffsetX() + world.random.nextDouble() * 0.02,
         0.05,

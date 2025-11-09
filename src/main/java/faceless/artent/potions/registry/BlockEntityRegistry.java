@@ -21,13 +21,13 @@ public class BlockEntityRegistry implements IRegistry {
     ModBlockEntities.BrewingCauldron = register(
         BrewingCauldronBlockEntity::new,
         "cauldron_entity",
-        ModBlocks.BrewingCauldron.block(),
-        ModBlocks.BrewingCauldronCopper.block());
+        ModBlocks.BREWING_CAULDRON.block(),
+        ModBlocks.BREWING_CAULDRON_COPPER.block());
     ModBlockEntities.FermentingBarrel = register(
         FermentingBarrelBlockEntity::new,
         "fermenting_barrel",
-        ModBlocks.FermentingBarrel.block());
-    ModBlockEntities.DryingRack = register(DryingRackBlockEntity::new, "drying_rack", ModBlocks.DryingRack.block());
+        ModBlocks.FEMENTING_BARREL.block());
+    ModBlockEntities.DryingRack = register(DryingRackBlockEntity::new, "drying_rack", ModBlocks.DRYING_RACK.block());
   }
 
   public <T extends BlockEntity> BlockEntityType<T> register(

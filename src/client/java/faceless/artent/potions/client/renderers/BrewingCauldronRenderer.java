@@ -32,7 +32,7 @@ public class BrewingCauldronRenderer implements BlockEntityRenderer<BrewingCauld
     if (world == null) return;
 
     BlockRenderManager blockRenderManager = MinecraftClient.getInstance().getBlockRenderManager();
-    var state = ModBlocks.CauldronFluid.block().getDefaultState();
+    var state = ModBlocks.CAULDRON_FLUID.block().getDefaultState();
 
     matrices.push();
     RenderSystem.enableBlend();

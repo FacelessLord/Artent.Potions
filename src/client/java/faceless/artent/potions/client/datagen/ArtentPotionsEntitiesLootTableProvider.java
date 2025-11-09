@@ -36,7 +36,7 @@ public class ArtentPotionsEntitiesLootTableProvider extends ArtentPotionsBaseLoo
                       .builder()
                       .rolls(ConstantLootNumberProvider.create(1.0F))
                       .with(ItemEntry
-                                .builder(ModItems.ManaFeather)
+                                .builder(ModItems.MANA_FEATHER)
                                 .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(
                                     0.0F,
                                     2.0F)))

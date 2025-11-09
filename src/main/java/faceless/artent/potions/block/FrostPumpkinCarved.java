@@ -66,7 +66,7 @@ public class FrostPumpkinCarved extends CarvedPumpkinBlock {
       this.frostedGolemPattern = BlockPatternBuilder
           .start()
           .aisle("^", "#", "#", "#", "#")
-          .where('^', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(ModBlocks.FrostPumpkinCarved.block())))
+          .where('^', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(ModBlocks.FROST_PUMPKIN_CARVED.block())))
           .where('#', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(Blocks.OBSIDIAN)))
           .build();
     }

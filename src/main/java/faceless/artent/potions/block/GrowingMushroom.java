@@ -109,7 +109,7 @@ public class GrowingMushroom extends PlantBlock implements Fertilizable {
       for (int j = -1; j <= 1; ++j) {
         float g = 0.0f;
         BlockState blockState = world.getBlockState(blockPos.add(i, 0, j));
-        if (blockState.isOf(ModBlocks.MushroomInfo[type.ordinal()].mycelium())) {
+        if (blockState.isOf(ModBlocks.MUSHROOM_INFO[type.ordinal()].mycelium())) {
           g = 1.0f;
         }
         f += g;
@@ -151,7 +151,7 @@ public class GrowingMushroom extends PlantBlock implements Fertilizable {
 
   @Override
   protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-    return floor.isOf(ModBlocks.MushroomInfo[type.ordinal()].mycelium());
+    return floor.isOf(ModBlocks.MUSHROOM_INFO[type.ordinal()].mycelium());
   }
 
   @Override

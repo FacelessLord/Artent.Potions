@@ -5,7 +5,6 @@ import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.objects.ModRecipes;
 import faceless.artent.potions.recipes.DryingRecipe;
-import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -28,23 +27,23 @@ public class DryingRecipeRegistry {
     dryingRecipeRegistry.register(
         BROWN_MUSHROOM, new DryingRecipe(
             Ingredient.ofItem(Items.BROWN_MUSHROOM),
-            new ItemStack(ModItems.DriedBrownMushroom),
+            new ItemStack(ModItems.DRIED_BROWN_MUSHROOM),
             400,
-            new ItemStack(ModItems.ShroomSpores),
+            new ItemStack(ModItems.SHROOM_SPORES),
             0.05f));
     dryingRecipeRegistry.register(
         RED_MUSHROOM, new DryingRecipe(
             Ingredient.ofItem(Items.RED_MUSHROOM),
-            new ItemStack(ModItems.DriedRedMushroom),
+            new ItemStack(ModItems.DRIED_RED_MUSHROOM),
             400,
-            new ItemStack(ModItems.ShroomSpores),
+            new ItemStack(ModItems.SHROOM_SPORES),
             0.05f));
     dryingRecipeRegistry.register(
         SHROOM, new DryingRecipe(
-            Ingredient.ofItem(ModBlocks.Shroom.item()),
-            new ItemStack(ModItems.DriedShroom),
+            Ingredient.ofItem(ModBlocks.SHROOM.item()),
+            new ItemStack(ModItems.DRIED_SHROOM),
             400,
-            new ItemStack(ModItems.ShroomSpores),
+            new ItemStack(ModItems.SHROOM_SPORES),
             0.15f));
   }
 }

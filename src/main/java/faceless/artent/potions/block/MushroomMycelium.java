@@ -37,7 +37,7 @@ public class MushroomMycelium extends MyceliumBlock implements Fertilizable {
 
   @Override
   public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-    var mushroom = ModBlocks.MushroomInfo[this.type.ordinal()].growingMushroom();
+    var mushroom = ModBlocks.MUSHROOM_INFO[this.type.ordinal()].growingMushroom();
     return world.isAir(pos.up()) && mushroom.canPlaceAt(state, world, pos.up());
   }
 
@@ -45,7 +45,7 @@ public class MushroomMycelium extends MyceliumBlock implements Fertilizable {
   public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
     world.setBlockState(
         pos.up(),
-        ModBlocks.MushroomInfo[this.type.ordinal()].growingMushroom().getDefaultState(),
+        ModBlocks.MUSHROOM_INFO[this.type.ordinal()].growingMushroom().getDefaultState(),
         MyceliumBlock.NOTIFY_ALL);
   }
 }

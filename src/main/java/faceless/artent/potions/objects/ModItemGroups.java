@@ -5,9 +5,9 @@ import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import net.minecraft.item.ItemStack;
 
 public class ModItemGroups {
-  public static final ArtentItemGroupBuilder Potions = new ArtentItemGroupBuilder(
+  public static final ArtentItemGroupBuilder POTIONS = new ArtentItemGroupBuilder(
       () -> {
-        var stack = new ItemStack(ModItems.SmallBottle);
+        var stack = new ItemStack(ModItems.SMALL_BOTTLE);
         AlchemicalPotionUtil.setPotion(stack, AlchemicalPotions.FLIGHT);
         return stack;
       },
