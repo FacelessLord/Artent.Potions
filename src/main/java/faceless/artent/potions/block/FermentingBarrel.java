@@ -41,8 +41,8 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
   public static final EnumProperty<BarrelType> BARREL_TYPE = EnumProperty.of(
       "barrel_type",
       BarrelType.class,
-      BarrelType.Top,
-      BarrelType.Bottom);
+      BarrelType.Single,
+      BarrelType.Group);
 
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {
@@ -52,7 +52,7 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
   public FermentingBarrel(Settings settings) {
     super(settings);
     this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH));
-    this.setDefaultState(getStateManager().getDefaultState().with(BARREL_TYPE, BarrelType.Top));
+    this.setDefaultState(getStateManager().getDefaultState().with(BARREL_TYPE, BarrelType.Single));
   }
 
   @Override
@@ -168,7 +168,9 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
   private static void updateBarrelType(BlockState state, World world, BlockPos pos) {
     var top = world.getBlockState(pos.up());
     var hasTopBarrel = top.getBlock() instanceof FermentingBarrel;
-    var type = hasTopBarrel ? BarrelType.Bottom : BarrelType.Top;
+    var bottom = world.getBlockState(pos.down());
+    var hasBottomBarrel = bottom.getBlock() instanceof FermentingBarrel;
+    var type = hasTopBarrel || hasBottomBarrel ? BarrelType.Group : BarrelType.Single;
     world.setBlockState(pos, state.with(BARREL_TYPE, type));
   }
 
@@ -182,11 +184,11 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
     var type = state.get(BARREL_TYPE);
     var facing = state.get(FACING);
     if (facing.getAxis() == Direction.Axis.X) {
-      if (type == BarrelType.Bottom) {
+      if (type == BarrelType.Group) {
         return SHAPE_X_BOTTOM;
       } else return SHAPE_X;
     } else {
-      if (type == BarrelType.Bottom) {
+      if (type == BarrelType.Group) {
         return SHAPE_Z_BOTTOM;
       } else return SHAPE_Z;
     }
@@ -211,7 +213,7 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
   }
 
   public enum BarrelType implements StringIdentifiable {
-    Top, Bottom;
+    Single, Group;
 
     @Override
     public String asString() {

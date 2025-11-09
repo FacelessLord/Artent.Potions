@@ -1,33 +1,33 @@
 {
   "variants": {
-    "facing=east,barrel_type=top": {
+    "facing=east,barrel_type=single": {
       "model": "artent_potions:block/fermenting_barrel",
       "y": 90
     },
-    "facing=north,barrel_type=top": {
+    "facing=north,barrel_type=single": {
       "model": "artent_potions:block/fermenting_barrel"
     },
-    "facing=south,barrel_type=top": {
+    "facing=south,barrel_type=single": {
       "model": "artent_potions:block/fermenting_barrel",
       "y": 180
     },
-    "facing=west,barrel_type=top": {
+    "facing=west,barrel_type=single": {
       "model": "artent_potions:block/fermenting_barrel",
       "y": 270
     },
-    "facing=east,barrel_type=bottom": {
-      "model": "artent_potions:block/fermenting_barrel_bottom",
+    "facing=east,barrel_type=group": {
+      "model": "artent_potions:block/fermenting_barrel_group",
       "y": 90
     },
-    "facing=north,barrel_type=bottom": {
-      "model": "artent_potions:block/fermenting_barrel_bottom"
+    "facing=north,barrel_type=group": {
+      "model": "artent_potions:block/fermenting_barrel_group"
     },
-    "facing=south,barrel_type=bottom": {
-      "model": "artent_potions:block/fermenting_barrel_bottom",
+    "facing=south,barrel_type=group": {
+      "model": "artent_potions:block/fermenting_barrel_group",
       "y": 180
     },
-    "facing=west,barrel_type=bottom": {
-      "model": "artent_potions:block/fermenting_barrel_bottom",
+    "facing=west,barrel_type=group": {
+      "model": "artent_potions:block/fermenting_barrel_group",
       "y": 270
     }
   }
