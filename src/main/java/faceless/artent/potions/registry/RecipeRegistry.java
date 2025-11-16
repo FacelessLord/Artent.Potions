@@ -1,8 +1,6 @@
 package faceless.artent.potions.registry;
 
 import faceless.artent.core.registries.IRegistry;
-import faceless.artent.potions.objects.ModRecipes;
-import net.minecraft.registry.Registry;
 
 public class RecipeRegistry implements IRegistry {
   @Override

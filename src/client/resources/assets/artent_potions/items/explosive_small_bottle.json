@@ -1,7 +1,7 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "artent_potions:item/small_bottle",
+        "model": "artent_potions:item/explosive_small_bottle",
         "tints": [
             {
                 "type": "artent_potions:potion_color",

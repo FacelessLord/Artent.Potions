@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cauldron": {
+    "has_shadowveil": {
       "conditions": {
         "items": [
           {
-            "items": "artent_potions:cauldron"
+            "items": "artent_potions:shadowveil"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "artent_potions:explosive_big_bottle"
+        "recipe": "artent_potions:shadowveil_seeds"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cauldron"
+      "has_shadowveil"
     ]
   ],
   "rewards": {
     "recipes": [
-      "artent_potions:explosive_big_bottle"
+      "artent_potions:shadowveil_seeds"
     ]
   }
 }

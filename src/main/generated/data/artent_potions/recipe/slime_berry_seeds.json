@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "artent:slime_berry_seeds",
+  "ingredients": [
+    "artent_potions:slime_berry"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:slime_berry_seeds"
+  }
+}

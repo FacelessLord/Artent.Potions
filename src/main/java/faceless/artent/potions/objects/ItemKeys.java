@@ -8,6 +8,9 @@ import net.minecraft.util.Identifier;
 
 public class ItemKeys {
   public static final RegistryKey<Item> FROST_PUMPKIN_SEEDS = of("frost_pumpkin_seeds");
+  public static final RegistryKey<Item> BLAZING_MARIGOLD_SEEDS = of("blazing_marigold_seeds");
+  public static final RegistryKey<Item> SHADOWVEIL_SEEDS = of("shadowveil_seeds");
+  public static final RegistryKey<Item> SLIME_BERRY_SEEDS = of("slime_berry_seeds");
 
   private static RegistryKey<Item> of(String id) {
     return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(ArtentPotions.MODID, id));

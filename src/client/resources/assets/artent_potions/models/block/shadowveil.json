@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/cross",
 	"textures": {
-		"1": "artent_potions:block/shadowveil_overlay",
-		"cross": "artent_potions:block/shadowveil",
-		"particle": "artent_potions:block/shadowveil_overlay",
+		"1": "artent_potions:block/shadowveil/shadowveil_overlay",
+		"cross": "artent_potions:block/shadowveil/shadowveil",
+		"particle": "artent_potions:block/shadowveil/shadowveil_overlay",
 		"missing": "artent_potions:block/empty"
 	},
 	"elements": [

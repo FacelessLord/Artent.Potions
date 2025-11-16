@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "artent:shroom_spores",
+  "ingredients": [
+    "artent_potions:dried_shroom"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:shroom_spores"
+  }
+}

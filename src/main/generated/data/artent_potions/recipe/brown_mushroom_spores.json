@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "artent:brown_mushroom_spores",
+  "ingredients": [
+    "artent_potions:dried_brown_mushroom"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:brown_mushroom_spores"
+  }
+}

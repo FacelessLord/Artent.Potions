@@ -4,7 +4,7 @@ import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.network.DryingRackSyncPayload;
 import faceless.artent.potions.objects.ModBlockEntities;
-import faceless.artent.potions.objects.ModRecipes;
+import faceless.artent.potions.objects.ModRegistries;
 import faceless.artent.potions.recipes.DryingRecipe;
 import faceless.artent.potions.recipes.DryingRecipeInput;
 import net.minecraft.block.BlockState;
@@ -68,7 +68,7 @@ public class DryingRackBlockEntity extends BlockEntity {
   }
 
   public DryingRecipe getRecipeByInputStack(ItemStack input) {
-    var registryOptional = this.world.getRegistryManager().getOptional(ModRecipes.DRYING_RECIPES_REGISTRY_KEY);
+    var registryOptional = this.world.getRegistryManager().getOptional(ModRegistries.DRYING_RECIPES_REGISTRY_KEY);
     if (registryOptional.isEmpty()) return null;
     var registry = registryOptional.get();
     var recipeInput = new DryingRecipeInput(input);

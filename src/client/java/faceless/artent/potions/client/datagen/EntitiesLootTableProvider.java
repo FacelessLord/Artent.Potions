@@ -19,9 +19,9 @@ import net.minecraft.registry.RegistryWrapper;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class ArtentPotionsEntitiesLootTableProvider extends ArtentPotionsBaseLootTableProvider {
+public class EntitiesLootTableProvider extends BaseLootTableProvider {
 
-  public ArtentPotionsEntitiesLootTableProvider(
+  public EntitiesLootTableProvider(
       FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
     super(output, registryLookup, LootContextTypes.ENTITY);
   }

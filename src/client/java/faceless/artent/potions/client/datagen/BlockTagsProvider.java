@@ -52,6 +52,7 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.FROST_PUMPKIN_CARVED.block())
         .add(ModBlocks.FROST_PUMPKIN.block())
         .add(ModBlocks.FEMENTING_BARREL.block())
+        .add(ModBlocks.DRYING_RACK.block())
         .add(ModBlocks.BERRY_BUSH[0].block())
         .add(ModBlocks.BERRY_BUSH[1].block())
         .add(ModBlocks.BERRY_BUSH[2].block())

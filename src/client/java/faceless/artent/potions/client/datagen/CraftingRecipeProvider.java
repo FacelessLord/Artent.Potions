@@ -15,8 +15,8 @@ import net.minecraft.registry.tag.ItemTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
-  public ArtentPotionsRecipeProvider(
+public class CraftingRecipeProvider extends FabricRecipeProvider {
+  public CraftingRecipeProvider(
       FabricDataOutput output,
       CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
     super(output, registriesFuture);
@@ -55,12 +55,6 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
             .input('p', ItemTags.PLANKS)
             .input('s', Items.STICK)
             .criterion(hasItem(ModItems.SMALL_BOTTLE), conditionsFromItem(ModItems.SMALL_BOTTLE))
-            .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModItems.GOLDEN_BUCKET)
-            .pattern("g g")
-            .pattern(" g ")
-            .input('g', Items.GOLD_INGOT)
-            .criterion(hasItem(Items.GOLD_INGOT), conditionsFromItem(Items.GOLD_INGOT))
             .offerTo(recipeExporter);
         createShaped(RecipeCategory.BREWING, ModItems.SMALL_BOTTLE, 3)
             .pattern("c")
@@ -106,31 +100,66 @@ public class ArtentPotionsRecipeProvider extends FabricRecipeProvider {
                 hasItem(ModBlocks.BREWING_CAULDRON.block()),
                 conditionsFromItem(ModBlocks.BREWING_CAULDRON.block()))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModItems.MEDIUM_BOTTLE_EXPLOSIVE, 1)
-            .pattern(" c ")
-            .pattern("gpg")
-            .pattern(" g ")
-            .input('c', Items.CLAY_BALL)
-            .input('p', Items.GUNPOWDER)
-            .input('g', Items.GLASS)
-            .group("artent:concentrate_phial_explosive")
+        createShapeless(RecipeCategory.BREWING, ModItems.BROWN_MUSHROOM_SPORES, 1)
+            .input(ModItems.DRIED_BROWN_MUSHROOM)
+            .group("artent:brown_mushroom_spores")
             .criterion(
-                hasItem(ModBlocks.BREWING_CAULDRON.block()),
-                conditionsFromItem(ModBlocks.BREWING_CAULDRON.block()))
+                hasItem(ModItems.DRIED_BROWN_MUSHROOM),
+                conditionsFromItem(ModItems.DRIED_BROWN_MUSHROOM))
             .offerTo(recipeExporter);
-        createShaped(RecipeCategory.BREWING, ModItems.BIG_BOTTLE_EXPLOSIVE, 1)
-            .pattern("gpg")
-            .pattern("gcg")
-            .pattern("ggg")
-            .input('c', Items.CLAY_BALL)
-            .input('p', Items.GUNPOWDER)
-            .input('g', Items.GLASS)
-            .group("artent:concentrate_phial_explosive")
+        createShapeless(RecipeCategory.BREWING, ModItems.RED_MUSHROOM_SPORES, 1)
+            .input(ModItems.DRIED_RED_MUSHROOM)
+            .group("artent:red_mushroom_spores")
             .criterion(
-                hasItem(ModBlocks.BREWING_CAULDRON.block()),
-                conditionsFromItem(ModBlocks.BREWING_CAULDRON.block()))
+                hasItem(ModItems.DRIED_RED_MUSHROOM),
+                conditionsFromItem(ModItems.DRIED_RED_MUSHROOM))
+            .offerTo(recipeExporter);
+        createShapeless(RecipeCategory.BREWING, ModItems.SHROOM_SPORES, 1)
+            .input(ModItems.DRIED_SHROOM)
+            .group("artent:shroom_spores")
+            .criterion(
+                hasItem(ModItems.DRIED_SHROOM),
+                conditionsFromItem(ModItems.DRIED_SHROOM))
+            .offerTo(recipeExporter);
+        createShapeless(RecipeCategory.BREWING, ModItems.FROST_PUMPKIN_SEEDS, 4)
+            .input(ModBlocks.FROST_PUMPKIN.item())
+            .group("artent:frost_pumpkin_seeds")
+            .criterion(
+                hasItem(ModBlocks.FROST_PUMPKIN.item()),
+                conditionsFromItem(ModBlocks.FROST_PUMPKIN.item()))
+            .offerTo(recipeExporter);
+        createShapeless(RecipeCategory.BREWING, ModItems.BLAZING_MARIGOLD_SEEDS, 1)
+            .input(ModBlocks.BLAZING_MARIGOLD.item())
+            .group("artent:blazing_marigold_seeds")
+            .criterion(
+                hasItem(ModBlocks.BLAZING_MARIGOLD.item()),
+                conditionsFromItem(ModBlocks.BLAZING_MARIGOLD.item()))
+            .offerTo(recipeExporter);
+        createShapeless(RecipeCategory.BREWING, ModItems.SHADOWVEIL_SEEDS, 1)
+            .input(ModBlocks.SHADOWVEIL.item())
+            .group("artent:shadowveil_seeds")
+            .criterion(
+                hasItem(ModBlocks.SHADOWVEIL.item()),
+                conditionsFromItem(ModBlocks.SHADOWVEIL.item()))
+            .offerTo(recipeExporter);
+        createShapeless(RecipeCategory.BREWING, ModItems.SLIME_BERRY_SEEDS, 1)
+            .input(ModBlocks.SLIME_BERRY.item())
+            .group("artent:slime_berry_seeds")
+            .criterion(
+                hasItem(ModBlocks.SLIME_BERRY.item()),
+                conditionsFromItem(ModBlocks.SLIME_BERRY.item()))
             .offerTo(recipeExporter);
 
+        createShaped(RecipeCategory.BREWING, ModBlocks.DRYING_RACK.item(), 1)
+            .pattern("ppp")
+            .pattern("   ")
+            .pattern("ppp")
+            .input('p', Items.OAK_PLANKS)
+            .group("artent:drying_rack")
+            .criterion(
+                hasItem(Items.OAK_PLANKS),
+                conditionsFromItem(Items.OAK_PLANKS))
+            .offerTo(recipeExporter);
         // CRIMSON TREE
 
         createShapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.CRIMSONWOOD_PLANKS.item(), 4)

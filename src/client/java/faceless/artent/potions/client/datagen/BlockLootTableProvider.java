@@ -24,11 +24,11 @@ import net.minecraft.registry.tag.ItemTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ArtentPotionsBlockLootTableProvider extends FabricBlockLootTableProvider {
+public class BlockLootTableProvider extends FabricBlockLootTableProvider {
   private final CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture;
   protected RegistryWrapper.WrapperLookup registries;
 
-  public ArtentPotionsBlockLootTableProvider(
+  public BlockLootTableProvider(
       FabricDataOutput output,
       CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
     super(output, registryLookup);
@@ -45,10 +45,24 @@ public class ArtentPotionsBlockLootTableProvider extends FabricBlockLootTablePro
     addDrop(ModBlocks.CRIMSONWOOD_PLANKS.block());
     addDrop(ModBlocks.FROST_PUMPKIN_CARVED.block());
     addDrop(ModBlocks.FROST_PUMPKIN.block());
+    addDrop(ModBlocks.FROST_PUMPKIN.block());
+    addDrop(
+        ModBlocks.FROST_PUMPKIN_STEM.block(),
+        (Block block) -> this.cropStemDrops(block, ModItems.FROST_PUMPKIN_SEEDS));
+    addDrop(
+        ModBlocks.FROST_PUMPKIN_STEM_ATTACHED.block(),
+        (Block block) -> this.attachedCropStemDrops(block, ModItems.FROST_PUMPKIN_SEEDS));
     addDrop(ModBlocks.SHROOM.block());
     addDrop(ModBlocks.SHADOWVEIL.block());
     addDrop(ModBlocks.BLAZING_MARIGOLD.block());
     addDrop(ModBlocks.SLIME_BERRY.block());
+    addDrop(ModBlocks.SHADOWVEIL_CROPS.block(), (Block block) -> this.cropStemDrops(block, ModItems.SHADOWVEIL_SEEDS));
+    addDrop(
+        ModBlocks.BLAZING_MARIGOLD_CROPS.block(),
+        (Block block) -> this.cropStemDrops(block, ModItems.BLAZING_MARIGOLD_SEEDS));
+    addDrop(
+        ModBlocks.SLIME_BERRY_CROPS.block(),
+        (Block block) -> this.cropStemDrops(block, ModItems.SLIME_BERRY_SEEDS));
     addDrop(ModBlocks.FEMENTING_BARREL.block());
     addDrop(ModBlocks.DRYING_RACK.block());
 

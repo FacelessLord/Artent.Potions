@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "artent:frost_pumpkin_seeds",
+  "ingredients": [
+    "artent_potions:frost_pumpkin"
+  ],
+  "result": {
+    "count": 4,
+    "id": "artent_potions:frost_pumpkin_seeds"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cauldron": {
+    "has_blazing_marigold": {
       "conditions": {
         "items": [
           {
-            "items": "artent_potions:cauldron"
+            "items": "artent_potions:blazing_marigold"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "artent_potions:explosive_medium_bottle"
+        "recipe": "artent_potions:blazing_marigold_seeds"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cauldron"
+      "has_blazing_marigold"
     ]
   ],
   "rewards": {
     "recipes": [
-      "artent_potions:explosive_medium_bottle"
+      "artent_potions:blazing_marigold_seeds"
     ]
   }
 }

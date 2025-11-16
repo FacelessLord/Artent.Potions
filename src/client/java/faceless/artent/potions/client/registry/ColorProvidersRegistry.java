@@ -28,11 +28,11 @@ public class ColorProvidersRegistry implements IRegistry {
     var grassColorTinter0 = getGrassColorTintForIndex(0);
     var grassColorTinter1 = getGrassColorTintForIndex(1);
 
-    ColorProviderRegistry.BLOCK.register(
-        grassColorTinter0,
-        ModBlocks.SHADOWVEIL.block(),
-        ModBlocks.SLIME_BERRY.block(),
-        ModBlocks.BLAZING_MARIGOLD.block());
+//    ColorProviderRegistry.BLOCK.register(
+//        grassColorTinter0,
+//        ModBlocks.SHADOWVEIL.block(),
+//        ModBlocks.SLIME_BERRY.block(),
+//        ModBlocks.BLAZING_MARIGOLD.block());
 
     ColorProviderRegistry.BLOCK.register(
         (BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) -> {

@@ -2,8 +2,8 @@
 	"parent": "minecraft:block/cross",
 	"textures": {
 		"1": "artent_potions:block/empty",
-		"cross": "artent_potions:block/slime_berry",
-		"particle": "artent_potions:block/slime_berry",
+		"cross": "artent_potions:block/slime_berry/slime_berry",
+		"particle": "artent_potions:block/slime_berry/slime_berry",
 		"missing": "artent_potions:block/empty"
 	},
 	"elements": [

@@ -120,12 +120,12 @@ public class AlchemicalPotionUtil {
       PotionDataUtil.setConcentrateAmount(stack, size);
       stacks.add(stack);
     }
-    { // multipotion
-      var stack = new ItemStack(base);
-      PotionDataUtil.setPotionKeys(stack, AlchemicalPotionRegistry.getRegisteredPotions());
-      PotionDataUtil.setConcentrateAmount(stack, size);
-      stacks.add(stack);
-    }
+//    { // multipotion
+//      var stack = new ItemStack(base);
+//      PotionDataUtil.setPotionKeys(stack, AlchemicalPotionRegistry.getRegisteredPotions());
+//      PotionDataUtil.setConcentrateAmount(stack, size);
+//      stacks.add(stack);
+//    }
     group.Items.addAll(stacks);
   }
 

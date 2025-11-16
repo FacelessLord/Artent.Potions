@@ -74,7 +74,6 @@ public class GrowingMushroom extends PlantBlock implements Fertilizable {
     return true;
   }
 
-
   public int getAge(BlockState state) {
     return state.get(AGE);
   }
@@ -118,25 +117,17 @@ public class GrowingMushroom extends PlantBlock implements Fertilizable {
     return f;
   }
 
-  private void updateAge(ServerWorld world, BlockPos pos, int i) {
+  private void updateAge(World world, BlockPos pos, int i) {
     if (i >= this.getMaxAge()) {
-      world.setBlockState(pos, this.mushroom.getDefaultState(), Block.NOTIFY_LISTENERS);
-    } else {
-      world.setBlockState(pos, this.withAge(i + 1), Block.NOTIFY_LISTENERS);
-    }
-  }
-
-  public void applyGrowth(World world, BlockPos pos, BlockState state) {
-    int j;
-    int i = this.getAge(state) + this.getGrowthAmount(world);
-    if (i > (j = this.getMaxAge())) {
-      i = j;
-    }
-    if (i == this.getMaxAge()) {
       world.setBlockState(pos, this.mushroom.getDefaultState(), Block.NOTIFY_LISTENERS);
     } else {
       world.setBlockState(pos, this.withAge(i), Block.NOTIFY_LISTENERS);
     }
+  }
+
+  public void applyGrowth(World world, BlockPos pos, BlockState state) {
+    int i = this.getAge(state) + this.getGrowthAmount(world);
+    updateAge(world, pos, i);
   }
 
   @Override

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "artent:shadowveil_seeds",
+  "ingredients": [
+    "artent_potions:shadowveil"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:shadowveil_seeds"
+  }
+}

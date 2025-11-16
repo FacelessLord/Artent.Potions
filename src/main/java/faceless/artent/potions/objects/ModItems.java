@@ -27,10 +27,7 @@ public final class ModItems {
   public static final FoodComponent Berry = new FoodComponent(2, 0.1f, false);
 
   public static Item CRIMSON_LEAF;
-  public static Item GOLDEN_BUCKET;
   public static Item SMALL_BOTTLE_EXPLOSIVE;
-  public static Item MEDIUM_BOTTLE_EXPLOSIVE;
-  public static Item BIG_BOTTLE_EXPLOSIVE;
   public static Item SMALL_BOTTLE;
   public static Item MEDIUM_BOTTLE;
   public static Item BIG_BOTTLE;
@@ -44,6 +41,9 @@ public final class ModItems {
   public static Item ICE_CRYSTAL_SHARD;
   public static Item DEBUG_BREWING_BOOK;
   public static Item FROST_PUMPKIN_SEEDS;
+  public static Item BLAZING_MARIGOLD_SEEDS;
+  public static Item SHADOWVEIL_SEEDS;
+  public static Item SLIME_BERRY_SEEDS;
   public static Item BROWN_MUSHROOM_SPORES;
   public static Item RED_MUSHROOM_SPORES;
   public static Item SHROOM_SPORES;
@@ -57,15 +57,9 @@ public final class ModItems {
           Ingredients.GetBerryName(i),
           Item::new,
           new Item.Settings().maxCount(64).food(Berry),
-          ModItemGroups.POTIONS);
+          ModItemGroups.BASE);
     }
-
-    CRIMSON_LEAF = register("crimson_leaf", Item::new, new Item.Settings().maxCount(64), ModItemGroups.POTIONS);
-    GOLDEN_BUCKET = register(
-        "golden_bucket",
-        GoldenBucket::new,
-        new Item.Settings().maxCount(1),
-        ModItemGroups.POTIONS);
+    CRIMSON_LEAF = register("crimson_leaf", Item::new, new Item.Settings().maxCount(64), ModItemGroups.BASE);
 
     SMALL_BOTTLE = register(
         "small_bottle",
@@ -100,103 +94,100 @@ public final class ModItems {
             .component(CONCENTRATE_AMOUNT, 1)
             .maxCount(64),
         null);
-    MEDIUM_BOTTLE_EXPLOSIVE = register(
-        "explosive_medium_bottle",
-        (settings) -> new ExplosivePotionBottleItem(settings, "medium", 3),
-        new Item.Settings()
-            .component(POTION_KEY, List.of())
-            .component(CONCENTRATE_AMOUNT, 3)
-            .maxCount(1),
-        null);
-    BIG_BOTTLE_EXPLOSIVE = register(
-        "explosive_big_bottle",
-        (settings) -> new ExplosivePotionBottleItem(settings, "big", 9),
-        new Item.Settings()
-            .component(POTION_KEY, List.of())
-            .component(CONCENTRATE_AMOUNT, 9)
-            .maxCount(1),
-        null);
 
     MANA_CHICKEN_SPAWN_EGG = register(
         "mana_chicken_spawn_egg",
         (Item.Settings settings) -> new SpawnEggItem(ModEntities.MANA_CHICKEN, settings),
-        new Item.Settings(), ModItemGroups.POTIONS);
+        new Item.Settings(), ModItemGroups.BASE);
     FROSTED_GOLEM_SPAWN_EGG = register(
         "frosted_golem_spawn_egg",
         (Item.Settings settings) -> new SpawnEggItem(ModEntities.FROSTED_GOLEM, settings),
-        new Item.Settings(), ModItemGroups.POTIONS);
+        new Item.Settings(), ModItemGroups.BASE);
 
     MANA_FEATHER = register(
         "mana_feather",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     ACORN = register(
         "acorn",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     STONE_SCALE = register(
         "stone_scale",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     ICE_CRYSTAL_SHARD = register(
         "ice_crystal_shard",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     DEBUG_BREWING_BOOK = register(
         "brew_book",
         DebugBrewBook::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
 
     FROST_PUMPKIN_SEEDS = register(
         ItemKeys.FROST_PUMPKIN_SEEDS.getValue().getPath(),
         (s) -> new BlockItem(ModBlocks.FROST_PUMPKIN_STEM.block(), s.registryKey(ItemKeys.FROST_PUMPKIN_SEEDS)),
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
+    BLAZING_MARIGOLD_SEEDS = register(
+        ItemKeys.BLAZING_MARIGOLD_SEEDS.getValue().getPath(),
+        (s) -> new BlockItem(ModBlocks.BLAZING_MARIGOLD_CROPS.block(), s.registryKey(ItemKeys.BLAZING_MARIGOLD_SEEDS)),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.BASE);
+    SHADOWVEIL_SEEDS = register(
+        ItemKeys.SHADOWVEIL_SEEDS.getValue().getPath(),
+        (s) -> new BlockItem(ModBlocks.SHADOWVEIL_CROPS.block(), s.registryKey(ItemKeys.SHADOWVEIL_SEEDS)),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.BASE);
+    SLIME_BERRY_SEEDS = register(
+        ItemKeys.SLIME_BERRY_SEEDS.getValue().getPath(),
+        (s) -> new BlockItem(ModBlocks.SLIME_BERRY_CROPS.block(), s.registryKey(ItemKeys.SLIME_BERRY_SEEDS)),
+        new Item.Settings().maxCount(64),
+        ModItemGroups.BASE);
 
     BROWN_MUSHROOM_SPORES = register(
         "brown_mushroom_spores",
         s -> new MushroomSpores(MushroomType.Brown, s),
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     RED_MUSHROOM_SPORES = register(
         "red_mushroom_spores",
         s -> new MushroomSpores(MushroomType.Red, s),
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     SHROOM_SPORES = register(
         "shroom_spores",
         s -> new MushroomSpores(MushroomType.Shroom, s),
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
 
     DRIED_BROWN_MUSHROOM = register(
         "dried_brown_mushroom",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     DRIED_RED_MUSHROOM = register(
         "dried_red_mushroom",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
     DRIED_SHROOM = register(
         "dried_shroom",
         Item::new,
         new Item.Settings().maxCount(64),
-        ModItemGroups.POTIONS);
+        ModItemGroups.BASE);
 
     AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE, 1, ModItemGroups.POTIONS);
     AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE, 3, ModItemGroups.POTIONS);
     AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE, 9, ModItemGroups.POTIONS);
 
     AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE_EXPLOSIVE, 1, ModItemGroups.POTIONS);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE_EXPLOSIVE, 3, ModItemGroups.POTIONS);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE_EXPLOSIVE, 9, ModItemGroups.POTIONS);
 
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CRIMSONWOOD_LEAVES.block().asItem(), 0.5F);
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CRIMSONWOOD_SAPLING.block().asItem(), 0.5F);

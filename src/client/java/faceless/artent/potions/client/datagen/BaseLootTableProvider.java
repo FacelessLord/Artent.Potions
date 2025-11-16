@@ -1,6 +1,5 @@
 package faceless.artent.potions.client.datagen;
 
-import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.data.DataWriter;
@@ -24,15 +23,14 @@ import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.context.ContextType;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public abstract class ArtentPotionsBaseLootTableProvider extends SimpleFabricLootTableProvider {
+public abstract class BaseLootTableProvider extends SimpleFabricLootTableProvider {
   private final CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture;
   protected RegistryWrapper.WrapperLookup registries;
 
-  public ArtentPotionsBaseLootTableProvider(
+  public BaseLootTableProvider(
       FabricDataOutput output,
       CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup,
       ContextType contextType) {

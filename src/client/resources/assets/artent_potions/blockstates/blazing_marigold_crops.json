@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "artent_potions:block/blazing_marigold_0"
+    },
+    "age=1": {
+      "model": "artent_potions:block/blazing_marigold_1"
+    },
+    "age=2": {
+      "model": "artent_potions:block/blazing_marigold_2"
+    },
+    "age=3": {
+      "model": "artent_potions:block/blazing_marigold_3"
+    }
+  }
+}

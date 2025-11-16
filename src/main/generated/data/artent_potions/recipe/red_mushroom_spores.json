@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "artent:red_mushroom_spores",
+  "ingredients": [
+    "artent_potions:dried_red_mushroom"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:red_mushroom_spores"
+  }
+}

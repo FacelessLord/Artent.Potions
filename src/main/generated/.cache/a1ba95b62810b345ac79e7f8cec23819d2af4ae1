@@ -2,7 +2,7 @@
 0366b0a330252aece42f4d8f8d8546ea5874fe53 data/minecraft/tags/block/leaves.json
 67f3716e00088e0d2b3602e5914dccf6e4d15cc0 data/minecraft/tags/block/logs.json
 67f3716e00088e0d2b3602e5914dccf6e4d15cc0 data/minecraft/tags/block/logs_that_burn.json
-ef88ebf9a355af7ffda64acdf0a40a714a0516b9 data/minecraft/tags/block/mineable/axe.json
+d383faadca6d5c773e29cd3c3338f98c92a3dd5a data/minecraft/tags/block/mineable/axe.json
 0366b0a330252aece42f4d8f8d8546ea5874fe53 data/minecraft/tags/block/mineable/hoe.json
 2cae2657867d3cd7c555fadff1ce277f8bdcaea0 data/minecraft/tags/block/mineable/pickaxe.json
 2cae2657867d3cd7c555fadff1ce277f8bdcaea0 data/minecraft/tags/block/needs_stone_tool.json

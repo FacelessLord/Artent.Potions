@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "artent:drying_rack",
+  "key": {
+    "p": "minecraft:oak_planks"
+  },
+  "pattern": [
+    "ppp",
+    "   ",
+    "ppp"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artent_potions:drying_rack"
+  }
+}
