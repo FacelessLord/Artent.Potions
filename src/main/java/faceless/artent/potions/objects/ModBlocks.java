@@ -5,6 +5,7 @@ import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.api.MushroomBlockInfo;
 import faceless.artent.potions.api.MushroomType;
 import faceless.artent.potions.api.RegisteredBlock;
+import faceless.artent.potions.api.WoodType;
 import faceless.artent.potions.block.*;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.registry.FeatureRegistry;
@@ -54,6 +55,7 @@ public final class ModBlocks {
   public static RegisteredBlock<IceCrystalCluster> ICE_CRYSTAL_BUD_MEDIUM;
   public static RegisteredBlock<IceCrystalCluster> ICE_CRYSTAL_BUD_LARGE;
   public static RegisteredBlock<IceCrystalCluster> ICE_CRYSTAL_CLUSTER;
+  public static RegisteredBlock<?>[] SHELVES;
 
   public static MushroomBlockInfo[] MUSHROOM_INFO = new MushroomBlockInfo[3];
 
@@ -318,6 +320,15 @@ public final class ModBlocks {
     MUSHROOM_INFO[MushroomType.Shroom.ordinal()] = new MushroomBlockInfo(
         ShroomMycelium.block(),
         growingShroomMushroom.block());
+
+    SHELVES = new RegisteredBlock[WoodType.WoodTypes.length];
+    for (int i = 0; i < WoodType.WoodTypes.length; i++) {
+      SHELVES[i] = register(
+          "shelf/" + WoodType.WoodTypes[i].getLeft(),
+          Shelf::new,
+          Block.Settings.copy(Blocks.OAK_PLANKS).nonOpaque(),
+          ModItemGroups.POTIONS);
+    }
 
     FireBlock fireBlock = (FireBlock) Blocks.FIRE;
     fireBlock.registerFlammableBlock(CRIMSONWOOD_LOG.block(), 5, 20);

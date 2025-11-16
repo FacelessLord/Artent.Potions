@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "artent_potions:block/shelf/stripped_spruce_shelf_full",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "artent_potions:block/shelf/stripped_spruce_shelf_full"
+    },
+    "facing=south": {
+      "model": "artent_potions:block/shelf/stripped_spruce_shelf_full",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "artent_potions:block/shelf/stripped_spruce_shelf_full",
+      "y": 270
+    }
+  }
+}

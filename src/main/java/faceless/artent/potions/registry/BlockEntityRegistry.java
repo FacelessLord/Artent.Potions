@@ -2,9 +2,11 @@ package faceless.artent.potions.registry;
 
 import faceless.artent.core.registries.IRegistry;
 import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.api.RegisteredBlock;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
 import faceless.artent.potions.blockEntities.DryingRackBlockEntity;
 import faceless.artent.potions.blockEntities.FermentingBarrelBlockEntity;
+import faceless.artent.potions.blockEntities.ShelfBlockEntity;
 import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.objects.ModBlocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -14,6 +16,8 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+
+import java.util.Arrays;
 
 public class BlockEntityRegistry implements IRegistry {
   @Override
@@ -28,6 +32,9 @@ public class BlockEntityRegistry implements IRegistry {
         "fermenting_barrel",
         ModBlocks.FEMENTING_BARREL.block());
     ModBlockEntities.DryingRack = register(DryingRackBlockEntity::new, "drying_rack", ModBlocks.DRYING_RACK.block());
+    ModBlockEntities.Shelf = register(
+        ShelfBlockEntity::new, "shelf", Arrays.stream(ModBlocks.SHELVES).map(
+            RegisteredBlock::block).toArray(Block[]::new));
   }
 
   public <T extends BlockEntity> BlockEntityType<T> register(
