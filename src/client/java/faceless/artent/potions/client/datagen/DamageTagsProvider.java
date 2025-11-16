@@ -1,15 +1,12 @@
 package faceless.artent.potions.client.datagen;
 
 import faceless.artent.potions.ArtentPotions;
-import faceless.artent.potions.objects.ModBlocks;
-import faceless.artent.potions.registry.DamageSourceRegistry;
+import faceless.artent.potions.bootstrap.DamageSourceRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.DamageTypeTags;
 
 import java.util.concurrent.CompletableFuture;

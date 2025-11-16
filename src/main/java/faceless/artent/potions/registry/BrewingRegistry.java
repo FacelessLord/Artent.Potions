@@ -4,7 +4,7 @@ import faceless.artent.core.math.Color;
 import faceless.artent.core.registries.IRegistry;
 import faceless.artent.potions.BrewingAutomata;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
-import faceless.artent.potions.objects.BrewingRecipes;
+import faceless.artent.potions.objects.BrewingIngredients;
 
 import java.util.Hashtable;
 
@@ -20,185 +20,184 @@ public class BrewingRegistry implements IRegistry {
   }
 
   private void registerIngredients() {
-    Ingredients.put(BrewingRecipes.Shroom, Color.Cobalt);
-    Ingredients.put(BrewingRecipes.Shadowveil, Color.Purple.add(Color.Red));
-    Ingredients.put(BrewingRecipes.CrimsonwoodBerry, Color.Red);
-    Ingredients.put(BrewingRecipes.CrimsonLeaf, Color.Gray);
-    Ingredients.put(BrewingRecipes.Blackberry, Color.Purple);
-    Ingredients.put(BrewingRecipes.Blueberry, Color.Blue);
-    Ingredients.put(BrewingRecipes.Cloudberry, Color.Gold);
-    Ingredients.put(BrewingRecipes.Raspberry, Color.Red);
-    Ingredients.put(BrewingRecipes.StoneScale, Color.Cobalt);
-    Ingredients.put(BrewingRecipes.Acorn, Color.Brown.add(Color.White));
-    Ingredients.put(BrewingRecipes.ManaFeather, Color.Purple);
-    Ingredients.put(BrewingRecipes.FrostPumpkin, Color.LightBlue);
+    Ingredients.put(BrewingIngredients.Shroom, Color.Cobalt);
+    Ingredients.put(BrewingIngredients.Shadowveil, Color.Purple.add(Color.Red));
+    Ingredients.put(BrewingIngredients.CrimsonwoodBerry, Color.Red);
+    Ingredients.put(BrewingIngredients.CrimsonLeaf, Color.Gray);
+    Ingredients.put(BrewingIngredients.Blackberry, Color.Purple);
+    Ingredients.put(BrewingIngredients.Blueberry, Color.Blue);
+    Ingredients.put(BrewingIngredients.Cloudberry, Color.Gold);
+    Ingredients.put(BrewingIngredients.Raspberry, Color.Red);
+    Ingredients.put(BrewingIngredients.StoneScale, Color.Cobalt);
+    Ingredients.put(BrewingIngredients.Acorn, Color.Brown.add(Color.White));
+    Ingredients.put(BrewingIngredients.ManaFeather, Color.Purple);
+    Ingredients.put(BrewingIngredients.FrostPumpkin, Color.LightBlue);
 
-    Ingredients.put(BrewingRecipes.Bone, Color.White);
-    Ingredients.put(BrewingRecipes.GlowstoneDust, Color.Orange);
-    Ingredients.put(BrewingRecipes.RedstoneDust, Color.Red);
-    Ingredients.put(BrewingRecipes.Apple, Color.Red);
-    Ingredients.put(BrewingRecipes.BrownMushroom, Color.Brown);
-    Ingredients.put(BrewingRecipes.RedMushroom, Color.Red);
-    Ingredients.put(BrewingRecipes.ChorusPlant, Color.Purple);
-    Ingredients.put(BrewingRecipes.BlazePowder, Color.Orange);
-    Ingredients.put(BrewingRecipes.EnderPearl, Color.Cyan);
-    Ingredients.put(BrewingRecipes.GlisteningMelon, Color.Gold.add(Color.Red));
-    Ingredients.put(BrewingRecipes.Kelp, Color.Cyan);
-    Ingredients.put(BrewingRecipes.Slime, Color.Green);
-    Ingredients.put(BrewingRecipes.RabbitsFoot, Color.Brown);
-    Ingredients.put(BrewingRecipes.PufferFish, Color.Yellow);
-    Ingredients.put(BrewingRecipes.DragonBreath, Color.Pink.add(Color.Purple));
-    Ingredients.put(BrewingRecipes.NetherWart, Color.Red.add(Color.Purple));
-    Ingredients.put(BrewingRecipes.SpiderEye, Color.Green);
-    Ingredients.put(BrewingRecipes.FermentedSpiderEye, Color.Blue.add(Color.Green));
-    Ingredients.put(BrewingRecipes.MagmaCream, Color.Red.add(Color.Gold));
-    Ingredients.put(BrewingRecipes.PhantomMembrane, Color.Purple);
-    Ingredients.put(BrewingRecipes.IronChestplate, Color.Gray);
-    Ingredients.put(BrewingRecipes.GoldenCarrot, Color.Green);
-    Ingredients.put(BrewingRecipes.RottenFlesh, Color.Brown);
-    Ingredients.put(BrewingRecipes.Stick, Color.Green);
-    Ingredients.put(BrewingRecipes.LapisLazuli, Color.Cobalt);
-    Ingredients.put(BrewingRecipes.Diamond, Color.LightBlue);
-    Ingredients.put(BrewingRecipes.RabbitFoot, Color.Green);
+    Ingredients.put(BrewingIngredients.Bone, Color.White);
+    Ingredients.put(BrewingIngredients.GlowstoneDust, Color.Orange);
+    Ingredients.put(BrewingIngredients.RedstoneDust, Color.Red);
+    Ingredients.put(BrewingIngredients.Apple, Color.Red);
+    Ingredients.put(BrewingIngredients.BrownMushroom, Color.Brown);
+    Ingredients.put(BrewingIngredients.RedMushroom, Color.Red);
+    Ingredients.put(BrewingIngredients.ChorusPlant, Color.Purple);
+    Ingredients.put(BrewingIngredients.BlazePowder, Color.Orange);
+    Ingredients.put(BrewingIngredients.EnderPearl, Color.Cyan);
+    Ingredients.put(BrewingIngredients.GlisteningMelon, Color.Gold.add(Color.Red));
+    Ingredients.put(BrewingIngredients.Kelp, Color.Cyan);
+    Ingredients.put(BrewingIngredients.Slime, Color.Green);
+    Ingredients.put(BrewingIngredients.PufferFish, Color.Yellow);
+    Ingredients.put(BrewingIngredients.DragonBreath, Color.Pink.add(Color.Purple));
+    Ingredients.put(BrewingIngredients.NetherWart, Color.Red.add(Color.Purple));
+    Ingredients.put(BrewingIngredients.SpiderEye, Color.Green);
+    Ingredients.put(BrewingIngredients.FermentedSpiderEye, Color.Blue.add(Color.Green));
+    Ingredients.put(BrewingIngredients.MagmaCream, Color.Red.add(Color.Gold));
+    Ingredients.put(BrewingIngredients.PhantomMembrane, Color.Purple);
+    Ingredients.put(BrewingIngredients.IronChestplate, Color.Gray);
+    Ingredients.put(BrewingIngredients.GoldenCarrot, Color.Green);
+    Ingredients.put(BrewingIngredients.RottenFlesh, Color.Brown);
+    Ingredients.put(BrewingIngredients.Stick, Color.Green);
+    Ingredients.put(BrewingIngredients.LapisLazuli, Color.Cobalt);
+    Ingredients.put(BrewingIngredients.Diamond, Color.LightBlue);
+    Ingredients.put(BrewingIngredients.RabbitFoot, Color.Green);
   }
 
   private void registerRecipes() {
-    BrewingRecipes.RecipeAutomata = new BrewingAutomata();
+    BrewingIngredients.RecipeAutomata = new BrewingAutomata();
 
     // BLUEBERRY
-    BrewingRecipes.RecipeAutomata.addRecipe(
+    BrewingIngredients.RecipeAutomata.addRecipe(
         WATER_BREATHING,
-        BrewingRecipes.Blueberry,
-        BrewingRecipes.RedMushroom,
-        BrewingRecipes.Kelp);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blueberry,
+        BrewingIngredients.RedMushroom,
+        BrewingIngredients.Kelp);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         LIQUID_FLAME,
-        BrewingRecipes.Blueberry,
-        BrewingRecipes.Slime,
-        BrewingRecipes.BlazePowder,
-        BrewingRecipes.BlazePowder);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blueberry,
+        BrewingIngredients.Slime,
+        BrewingIngredients.BlazePowder,
+        BrewingIngredients.BlazePowder);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         FREEZING,
-        BrewingRecipes.Blueberry,
-        BrewingRecipes.GlisteningMelon,
-        BrewingRecipes.NetherWart,
-        BrewingRecipes.Shroom,
-        BrewingRecipes.FrostPumpkin);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blueberry,
+        BrewingIngredients.GlisteningMelon,
+        BrewingIngredients.NetherWart,
+        BrewingIngredients.Shroom,
+        BrewingIngredients.FrostPumpkin);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         HOLY_WATER,
-        BrewingRecipes.Blueberry,
-        BrewingRecipes.GlisteningMelon,
-        BrewingRecipes.GoldenCarrot,
-        BrewingRecipes.GlowstoneDust);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blueberry,
+        BrewingIngredients.GlisteningMelon,
+        BrewingIngredients.GoldenCarrot,
+        BrewingIngredients.GlowstoneDust);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         POISON,
-        BrewingRecipes.Blueberry,
-        BrewingRecipes.RottenFlesh,
-        BrewingRecipes.SpiderEye);
+        BrewingIngredients.Blueberry,
+        BrewingIngredients.RottenFlesh,
+        BrewingIngredients.SpiderEye);
 
     // CLOUDBERRY
-    BrewingRecipes.RecipeAutomata.addRecipe(
+    BrewingIngredients.RecipeAutomata.addRecipe(
         SATURATION,
-        BrewingRecipes.Cloudberry,
-        BrewingRecipes.Bone,
-        BrewingRecipes.Apple);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Cloudberry,
+        BrewingIngredients.Bone,
+        BrewingIngredients.Apple);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         FAST_SWIMMING,
-        BrewingRecipes.Cloudberry,
-        BrewingRecipes.BrownMushroom,
-        BrewingRecipes.StoneScale);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Cloudberry,
+        BrewingIngredients.BrownMushroom,
+        BrewingIngredients.StoneScale);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         LUMBERJACK,
-        BrewingRecipes.Cloudberry,
-        BrewingRecipes.Stick,
-        BrewingRecipes.Acorn);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Cloudberry,
+        BrewingIngredients.Stick,
+        BrewingIngredients.Acorn);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         HASTE,
-        BrewingRecipes.Cloudberry,
-        BrewingRecipes.LapisLazuli,
-        BrewingRecipes.RedstoneDust,
-        BrewingRecipes.PufferFish);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Cloudberry,
+        BrewingIngredients.LapisLazuli,
+        BrewingIngredients.RedstoneDust,
+        BrewingIngredients.PufferFish);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         STRENGTH,
-        BrewingRecipes.Cloudberry,
-        BrewingRecipes.GlisteningMelon,
-        BrewingRecipes.BlazePowder);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Cloudberry,
+        BrewingIngredients.GlisteningMelon,
+        BrewingIngredients.BlazePowder);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         JUMP_BOOST,
-        BrewingRecipes.Cloudberry,
-        BrewingRecipes.Shroom,
-        BrewingRecipes.Slime);
+        BrewingIngredients.Cloudberry,
+        BrewingIngredients.Shroom,
+        BrewingIngredients.Slime);
 
     // BLACKBERRY
-    BrewingRecipes.RecipeAutomata.addRecipe(
+    BrewingIngredients.RecipeAutomata.addRecipe(
         NIGHT_VISION,
-        BrewingRecipes.Blackberry,
-        BrewingRecipes.SpiderEye,
-        BrewingRecipes.GoldenCarrot);
+        BrewingIngredients.Blackberry,
+        BrewingIngredients.SpiderEye,
+        BrewingIngredients.GoldenCarrot);
 //    BrewingRecipes.RecipeAutomata.addRecipe(
 //        MANA,
 //        BrewingRecipes.Blackberry,
 //        BrewingRecipes.CrimsonLeaf,
 //        BrewingRecipes.Shroom);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+    BrewingIngredients.RecipeAutomata.addRecipe(
         FORTUNE,
-        BrewingRecipes.Blackberry,
-        BrewingRecipes.CrimsonLeaf,
-        BrewingRecipes.NetherWart,
-        BrewingRecipes.Diamond,
-        BrewingRecipes.RabbitFoot);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blackberry,
+        BrewingIngredients.CrimsonLeaf,
+        BrewingIngredients.NetherWart,
+        BrewingIngredients.Diamond,
+        BrewingIngredients.RabbitFoot);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         FLIGHT,
-        BrewingRecipes.Blackberry,
-        BrewingRecipes.NetherWart,
-        BrewingRecipes.Shroom,
-        BrewingRecipes.ManaFeather);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blackberry,
+        BrewingIngredients.NetherWart,
+        BrewingIngredients.Shroom,
+        BrewingIngredients.ManaFeather);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         LEVITATION,
-        BrewingRecipes.Blackberry,
-        BrewingRecipes.NetherWart,
-        BrewingRecipes.EnderPearl,
-        BrewingRecipes.PhantomMembrane);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Blackberry,
+        BrewingIngredients.NetherWart,
+        BrewingIngredients.EnderPearl,
+        BrewingIngredients.PhantomMembrane);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         FEATHER_FALLING,
-        BrewingRecipes.Blackberry,
-        BrewingRecipes.NetherWart,
-        BrewingRecipes.CrimsonLeaf);
+        BrewingIngredients.Blackberry,
+        BrewingIngredients.NetherWart,
+        BrewingIngredients.CrimsonLeaf);
 
     // RASPBERRY
-    BrewingRecipes.RecipeAutomata.addRecipe(
+    BrewingIngredients.RecipeAutomata.addRecipe(
         HEALING,
-        BrewingRecipes.Raspberry,
-        BrewingRecipes.RedMushroom,
-        BrewingRecipes.GlisteningMelon);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Raspberry,
+        BrewingIngredients.RedMushroom,
+        BrewingIngredients.GlisteningMelon);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         ANTIDOTE,
-        BrewingRecipes.Raspberry,
-        BrewingRecipes.RedMushroom,
-        BrewingRecipes.FermentedSpiderEye);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Raspberry,
+        BrewingIngredients.RedMushroom,
+        BrewingIngredients.FermentedSpiderEye);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         VAMPIRISM,
-        BrewingRecipes.Raspberry,
-        BrewingRecipes.Shroom,
-        BrewingRecipes.CrimsonLeaf,
-        BrewingRecipes.Shadowveil);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Raspberry,
+        BrewingIngredients.Shroom,
+        BrewingIngredients.CrimsonLeaf,
+        BrewingIngredients.Shadowveil);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         BERSERK,
-        BrewingRecipes.Raspberry,
-        BrewingRecipes.Shroom,
-        BrewingRecipes.NetherWart,
-        BrewingRecipes.GlisteningMelon,
-        BrewingRecipes.CrimsonwoodBerry);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Raspberry,
+        BrewingIngredients.Shroom,
+        BrewingIngredients.NetherWart,
+        BrewingIngredients.GlisteningMelon,
+        BrewingIngredients.CrimsonwoodBerry);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         STONE_SKIN,
-        BrewingRecipes.Raspberry,
-        BrewingRecipes.Shroom,
-        BrewingRecipes.Bone,
-        BrewingRecipes.IronChestplate);
-    BrewingRecipes.RecipeAutomata.addRecipe(
+        BrewingIngredients.Raspberry,
+        BrewingIngredients.Shroom,
+        BrewingIngredients.Bone,
+        BrewingIngredients.IronChestplate);
+    BrewingIngredients.RecipeAutomata.addRecipe(
         FIRE_RESISTANCE,
-        BrewingRecipes.Raspberry,
-        BrewingRecipes.BrownMushroom,
-        BrewingRecipes.MagmaCream);
+        BrewingIngredients.Raspberry,
+        BrewingIngredients.BrownMushroom,
+        BrewingIngredients.MagmaCream);
   }
 }

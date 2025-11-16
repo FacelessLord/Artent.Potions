@@ -1,7 +1,7 @@
 package faceless.artent.potions.client.datagen;
 
 import faceless.artent.potions.ArtentPotions;
-import faceless.artent.potions.registry.DamageSourceRegistry;
+import faceless.artent.potions.bootstrap.DamageSourceRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.entity.damage.DamageType;

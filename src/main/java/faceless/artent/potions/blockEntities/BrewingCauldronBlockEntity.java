@@ -74,7 +74,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         waterBox,
         ie -> (canExtractPotion()
                && ie.getStack().getItem() == ModItems.ICE_CRYSTAL_SHARD)
-              || BrewingRecipes.IsIngredient(ie.getStack()));
+              || BrewingIngredients.IsIngredient(ie.getStack()));
     if (items.isEmpty()) return;
 
     var brewingCooldown = state.getBlock() == ModBlocks.BREWING_CAULDRON_COPPER.block() ? CopperBrewingCooldown : BrewingCooldown;
@@ -137,7 +137,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
     final var brewable = (IBrewable) item;
     final var stack = item.getStack();
-    var ingredient = BrewingRecipes.AsIngredient(stack);
+    var ingredient = BrewingIngredients.AsIngredient(stack);
     var isCrystal = stack.getItem() == ModItems.ICE_CRYSTAL_SHARD;
 
     var potionLeveledUp = handleLeveledPotions(ingredient);
@@ -167,10 +167,10 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     if (!ingredients.isEmpty() || potions.isEmpty()) return false;
 
     var lastPotion = potions.getLast();
-    var automataState = BrewingRecipes.RecipeAutomata.LastIngredients.get(lastPotion.id);
+    var automataState = BrewingIngredients.RecipeAutomata.LastIngredients.get(lastPotion.id);
     if (automataState == null) return false;
 
-    var edges = BrewingRecipes.RecipeAutomata.Edges.get(automataState);
+    var edges = BrewingIngredients.RecipeAutomata.Edges.get(automataState);
     if (edges == null) return false;
 
     var possibleEdges = edges.stream().filter(e -> e.Character().equals(ingredient)).toList();
@@ -203,7 +203,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   }
 
   public BrewingAutomata.State getBrewingState() {
-    return BrewingRecipes.RecipeAutomata.getStateFromIngredients(ingredients);
+    return BrewingIngredients.RecipeAutomata.getStateFromIngredients(ingredients);
   }
 
   private void updateBrewingState() {

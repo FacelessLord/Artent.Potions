@@ -1,4 +1,4 @@
-package faceless.artent.potions.registry;
+package faceless.artent.potions.bootstrap;
 
 import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.objects.ModBlocks;

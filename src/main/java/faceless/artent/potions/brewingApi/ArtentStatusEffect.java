@@ -2,7 +2,7 @@ package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.objects.ModPotionEffects;
-import faceless.artent.potions.registry.DamageSourceRegistry;
+import faceless.artent.potions.bootstrap.DamageSourceRegistry;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

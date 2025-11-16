@@ -1,4 +1,4 @@
-package faceless.artent.potions.registry;
+package faceless.artent.potions.bootstrap;
 
 import faceless.artent.potions.ArtentPotions;
 import net.minecraft.entity.damage.DamageType;

@@ -231,7 +231,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
         ", ",
         cauldron.ingredients
             .stream()
-            .map((i) -> i.item().getName().toString())
+            .map((i) -> i.item.getName().toString())
             .toList()));
     var potions = new ArrayList<>(cauldron.potions);
     debugInfo.add("Potions: " + String.join(", ", potions.stream().map((i) -> i.id).toList()));
