@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:cloudberry",
+    "artent_potions:stick",
+    "artent_potions:acorn"
+  ],
+  "result": "artent_potions:lumberjack"
+}

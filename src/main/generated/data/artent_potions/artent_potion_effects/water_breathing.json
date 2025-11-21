@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 177,
+    "green": 110,
+    "red": 48
+  },
+  "effects": [
+    {
+      "duration": 1800,
+      "id": "minecraft:water_breathing",
+      "show_icon": true
+    }
+  ]
+}

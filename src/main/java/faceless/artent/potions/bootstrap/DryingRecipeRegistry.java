@@ -12,6 +12,8 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
+import static faceless.artent.potions.ArtentPotions.LOGGER;
+
 public class DryingRecipeRegistry {
   public static final RegistryKey<DryingRecipe> BROWN_MUSHROOM = RegistryKey.of(
       ModRegistries.DRYING_RECIPES_REGISTRY_KEY,
@@ -24,6 +26,7 @@ public class DryingRecipeRegistry {
       Identifier.of(ArtentPotions.MODID, "shroom"));
 
   public static void bootstrap(Registerable<DryingRecipe> dryingRecipeRegistry) {
+    LOGGER.info("DryingRecipeRegistry bootstrap");
     dryingRecipeRegistry.register(
         BROWN_MUSHROOM, new DryingRecipe(
             Ingredient.ofItem(Items.BROWN_MUSHROOM),

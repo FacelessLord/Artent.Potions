@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:raspberry",
+    "artent_potions:red_mushroom",
+    "artent_potions:glistening_melon"
+  ],
+  "result": "artent_potions:healing"
+}

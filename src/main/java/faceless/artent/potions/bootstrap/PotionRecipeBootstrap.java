@@ -1,22 +1,28 @@
 package faceless.artent.potions.bootstrap;
 
 import com.google.common.collect.ImmutableList;
+import faceless.artent.core.math.Color;
 import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.objects.ModRegistries;
-import faceless.artent.potions.recipes.PotionEnhancementRecipe;
 import faceless.artent.potions.recipes.PotionRecipe;
+import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
-import static faceless.artent.potions.objects.AlchemicalPotions.*;
+import java.util.List;
+
+import static faceless.artent.potions.ArtentPotions.LOGGER;
+import static faceless.artent.potions.bootstrap.PotionEffectsBootstrap.*;
+
 
 public class PotionRecipeBootstrap {
-  public static void bootstrap(PotionRegisterContext ctx) {
+  public static void bootstrap(Registerable<PotionRecipe> recipeRegistry) {
+    LOGGER.info("PotionRecipe bootstrap");
     // BLUEBERRY
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "water_breathing",
         WATER_BREATHING,
         BrewingIngredientsBootstrap.Blueberry,
@@ -24,7 +30,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.Kelp);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "liquid_flame",
         LIQUID_FLAME,
         BrewingIngredientsBootstrap.Blueberry,
@@ -33,7 +39,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.BlazePowder);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "freezing",
         FREEZING,
         BrewingIngredientsBootstrap.Blueberry,
@@ -43,7 +49,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.FrostPumpkin);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "holy_water",
         HOLY_WATER,
         BrewingIngredientsBootstrap.Blueberry,
@@ -52,7 +58,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.GlowstoneDust);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "poison",
         POISON,
         BrewingIngredientsBootstrap.Blueberry,
@@ -62,7 +68,7 @@ public class PotionRecipeBootstrap {
     // CLOUDBERRY
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "saturation",
         SATURATION,
         BrewingIngredientsBootstrap.Cloudberry,
@@ -70,7 +76,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.Apple);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "fast_swimming",
         FAST_SWIMMING,
         BrewingIngredientsBootstrap.Cloudberry,
@@ -78,7 +84,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.StoneScale);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "lumberjack",
         LUMBERJACK,
         BrewingIngredientsBootstrap.Cloudberry,
@@ -86,7 +92,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.Acorn);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "haste",
         HASTE,
         BrewingIngredientsBootstrap.Cloudberry,
@@ -95,7 +101,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.PufferFish);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "strength",
         STRENGTH,
         BrewingIngredientsBootstrap.Cloudberry,
@@ -103,7 +109,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.BlazePowder);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "jump_boost",
         JUMP_BOOST,
         BrewingIngredientsBootstrap.Cloudberry,
@@ -113,7 +119,7 @@ public class PotionRecipeBootstrap {
     // BLACKBERRY
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "night_vision",
         NIGHT_VISION,
         BrewingIngredientsBootstrap.Blackberry,
@@ -127,7 +133,7 @@ public class PotionRecipeBootstrap {
 //        BrewingRecipes.Shroom);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "fortune",
         FORTUNE,
         BrewingIngredientsBootstrap.Blackberry,
@@ -137,7 +143,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.RabbitFoot);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "flight",
         FLIGHT,
         BrewingIngredientsBootstrap.Blackberry,
@@ -146,7 +152,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.ManaFeather);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "levitation",
         LEVITATION,
         BrewingIngredientsBootstrap.Blackberry,
@@ -155,7 +161,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.PhantomMembrane);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "feather_falling",
         FEATHER_FALLING,
         BrewingIngredientsBootstrap.Blackberry,
@@ -165,7 +171,7 @@ public class PotionRecipeBootstrap {
     // RASPBERRY
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "healing",
         HEALING,
         BrewingIngredientsBootstrap.Raspberry,
@@ -173,7 +179,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.GlisteningMelon);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "antidote",
         ANTIDOTE,
         BrewingIngredientsBootstrap.Raspberry,
@@ -181,7 +187,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.FermentedSpiderEye);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "vampirism",
         VAMPIRISM,
         BrewingIngredientsBootstrap.Raspberry,
@@ -190,7 +196,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.Shadowveil);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "berserk",
         BERSERK,
         BrewingIngredientsBootstrap.Raspberry,
@@ -200,7 +206,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.CrimsonwoodBerry);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "stone_skin",
         STONE_SKIN,
         BrewingIngredientsBootstrap.Raspberry,
@@ -209,7 +215,7 @@ public class PotionRecipeBootstrap {
         BrewingIngredientsBootstrap.IronChestplate);
 
     registerRecipe(
-        ctx,
+        recipeRegistry,
         "fire_resistance",
         FIRE_RESISTANCE,
         BrewingIngredientsBootstrap.Raspberry,
@@ -218,7 +224,7 @@ public class PotionRecipeBootstrap {
   }
 
   public static void registerRecipe(
-      PotionRegisterContext ctx,
+      Registerable<PotionRecipe> recipeRegistry,
       String key,
       AlchemicalPotion potion,
       BrewingIngredient... ingredients) {
@@ -227,34 +233,23 @@ public class PotionRecipeBootstrap {
     var registryKey = RegistryKey.of(
         ModRegistries.POTION_RECIPES_REGISTRY_KEY,
         Identifier.of(ArtentPotions.MODID, key));
-    ctx.recipeRegistry().register(registryKey, recipe);
+    potion.color = getColorFromIngredients(ImmutableList.copyOf(ingredients));
+    recipeRegistry.register(registryKey, recipe);
   }
 
   public static void registerRecipe(
-      PotionRegisterContext ctx,
+      Registerable<PotionRecipe> recipeRegistry,
       String key,
-      AlchemicalPotion[] potions,
+      AlchemicalPotion[] potion,
       BrewingIngredient... ingredients) {
-    var recipe = new PotionRecipe(ImmutableList.copyOf(ingredients), potions[0]);
+    registerRecipe(recipeRegistry, key, potion[0], ingredients);
+  }
 
-    var registryKey = RegistryKey.of(
-        ModRegistries.POTION_RECIPES_REGISTRY_KEY,
-        Identifier.of(ArtentPotions.MODID, key + "_" + 0));
-    ctx.recipeRegistry().register(registryKey, recipe);
-
-    var previousPotion = potions[0];
-
-    for (int i = 1; i < potions.length; i++) {
-      var enhancementRecipe = new PotionEnhancementRecipe(
-          previousPotion,
-                                                          ingredients[ingredients.length - 1],
-                                                          potions[i]);
-      previousPotion = potions[i];
-      var registryKey2 = RegistryKey.of(
-          ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY,
-          Identifier.of(ArtentPotions.MODID, key + "_" + i));
-
-      ctx.enhancementRecipeRegistry().register(registryKey2, enhancementRecipe);
+  public static Color getColorFromIngredients(List<BrewingIngredient> ingredients) {
+    var color = Color.Blue;
+    for (var ingredient : ingredients) {
+      color = color.add(ingredient.color);
     }
+    return color;
   }
 }

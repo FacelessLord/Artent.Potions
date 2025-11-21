@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:blackberry",
+    "artent_potions:nether_wart",
+    "artent_potions:shroom",
+    "artent_potions:mana_feather"
+  ],
+  "result": "artent_potions:flight"
+}

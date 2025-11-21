@@ -8,6 +8,7 @@ import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.objects.ModRegistries;
 import faceless.artent.potions.recipes.DryingRecipe;
+import faceless.artent.potions.recipes.PotionEnhancementRecipe;
 import faceless.artent.potions.recipes.PotionRecipe;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -29,9 +30,6 @@ public class ArtentPotions implements ModInitializer {
   public static final ModItems Items = new ModItems();
   public static final ModBlocks Blocks = new ModBlocks();
   public static final EntityRegistry Entities = new EntityRegistry();
-  public static final AlchemicalPotionRegistry Potions = new AlchemicalPotionRegistry();
-  public static final FermentationRegistry FermentedPotions = new FermentationRegistry();
-  public static final BrewingRegistry Brewing = new BrewingRegistry();
   public static final CommandRegistry Commands = new CommandRegistry();
   public static final StatusEffectsRegistry StatusEffects = new StatusEffectsRegistry();
   public static final DataComponentRegistry DataComponents = new DataComponentRegistry();
@@ -59,20 +57,18 @@ public class ArtentPotions implements ModInitializer {
         PotionRecipe.CODEC);
     DynamicRegistries.registerSynced(
         ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY,
-        PotionRecipe.CODEC,
-        PotionRecipe.CODEC);
-    Potions.register();
-    FermentedPotions.register();
+        PotionEnhancementRecipe.CODEC,
+        PotionEnhancementRecipe.CODEC);
 
     Blocks.register();
     Items.register();
+    StatusEffects.register();
     BlockEntities.register();
     Entities.register();
     Features.register();
     Particles.register();
 
     LootTableModifiers.modifyLootTables();
-    Brewing.register();
 
     Commands.register();
     ServerHook.load();

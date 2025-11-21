@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 63,
+    "green": 90,
+    "red": 197
+  },
+  "effects": [
+    {
+      "amplifier": 2,
+      "duration": 2025,
+      "id": "artent_potions:lumberjack",
+      "show_icon": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:blackberry",
+    "artent_potions:nether_wart",
+    "artent_potions:ender_pearl",
+    "artent_potions:phantom_membrane"
+  ],
+  "result": "artent_potions:levitation"
+}

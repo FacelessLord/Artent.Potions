@@ -1,7 +1,7 @@
 package faceless.artent.potions.client.datagen;
 
 import faceless.artent.potions.bootstrap.*;
-import faceless.artent.potions.client.datagen.potions.PotionIngredientProvider;
+import faceless.artent.potions.client.datagen.potions.PotionRecipesProvider;
 import faceless.artent.potions.features.WorldGenContext;
 import faceless.artent.potions.objects.ModFeatures;
 import faceless.artent.potions.objects.ModRegistries;
@@ -18,7 +18,7 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
     FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
     pack.addProvider(DamageProvider::new);
     pack.addProvider(DryingRecipeProvider::new);
-    pack.addProvider(PotionIngredientProvider::new);
+    pack.addProvider(PotionRecipesProvider::new);
     pack.addProvider(WorldGenProvider::new);
     pack.addProvider(BlockTagsProvider::new);
     pack.addProvider(DamageTagsProvider::new);
@@ -36,25 +36,20 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
     registryBuilder.addRegistry(ModRegistries.POTION_INGREDIENT_REGISTRY_KEY, BrewingIngredientsBootstrap::bootstrap);
     registryBuilder.addRegistry(ModRegistries.POTION_EFFECTS_REGISTRY_KEY, PotionEffectsBootstrap::bootstrap);
 
-    this.aggregatePotionRegistries(registryBuilder, PotionRecipeBootstrap::bootstrap);
+    registryBuilder.addRegistry(ModRegistries.POTION_RECIPES_REGISTRY_KEY, PotionRecipeBootstrap::bootstrap);
+    registryBuilder.addRegistry(
+        ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY,
+        PotionEnhancementRecipeBootstrap::bootstrap);
+
     this.aggregateRegistries(registryBuilder, ModFeatures::bootstrap);
   }
 
-  public void aggregateRegistries(
-      RegistryBuilder registryBuilder, Consumer<WorldGenContext> consumer) {
+  public void aggregateRegistries(RegistryBuilder registryBuilder, Consumer<WorldGenContext> consumer) {
     var acceptor = new RegistryAcceptor(consumer);
 
     registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, acceptor::acceptConfiguredFeatures);
     registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, acceptor::acceptPlacedFeatures);
     registryBuilder.addRegistry(RegistryKeys.BIOME, acceptor::acceptBiomes);
     registryBuilder.addRegistry(RegistryKeys.CONFIGURED_CARVER, acceptor::acceptCarvers);
-  }
-
-  public void aggregatePotionRegistries(
-      RegistryBuilder registryBuilder, Consumer<PotionRegisterContext> consumer) {
-    var acceptor = new PotionRecipeRegistryAcceptor(consumer);
-
-    registryBuilder.addRegistry(ModRegistries.POTION_RECIPES_REGISTRY_KEY, acceptor::acceptPotionRecipeRegistry);
-    registryBuilder.addRegistry(ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY, acceptor::acceptPotionEnhancementRecipeRegistry);
   }
 }

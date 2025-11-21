@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 96,
+    "green": 148,
+    "red": 41
+  },
+  "effects": [
+    {
+      "duration": 1800,
+      "id": "minecraft:jump_boost",
+      "show_icon": true
+    }
+  ]
+}

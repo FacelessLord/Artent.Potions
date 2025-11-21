@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 151,
+    "green": 72,
+    "red": 120
+  },
+  "effects": [
+    {
+      "duration": 1800,
+      "id": "artent_potions:feather_falling",
+      "show_icon": true
+    }
+  ]
+}

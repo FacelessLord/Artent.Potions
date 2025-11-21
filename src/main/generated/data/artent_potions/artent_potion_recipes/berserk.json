@@ -1,0 +1,10 @@
+{
+  "ingredients": [
+    "artent_potions:raspberry",
+    "artent_potions:shroom",
+    "artent_potions:nether_wart",
+    "artent_potions:glistening_melon",
+    "artent_potions:crimson_berry"
+  ],
+  "result": "artent_potions:berserk"
+}

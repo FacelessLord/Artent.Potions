@@ -10,7 +10,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryElementCodec;
 import net.minecraft.registry.entry.RegistryEntry;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

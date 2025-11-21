@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 171,
+    "green": 139,
+    "red": 144
+  },
+  "effects": [
+    {
+      "duration": 3600,
+      "id": "artent_potions:stone_skin",
+      "show_icon": true
+    }
+  ]
+}

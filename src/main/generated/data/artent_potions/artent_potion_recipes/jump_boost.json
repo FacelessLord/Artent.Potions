@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:cloudberry",
+    "artent_potions:shroom",
+    "artent_potions:slime"
+  ],
+  "result": "artent_potions:jump_boost"
+}

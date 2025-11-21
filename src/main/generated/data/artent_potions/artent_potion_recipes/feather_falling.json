@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:blackberry",
+    "artent_potions:nether_wart",
+    "artent_potions:crimson_leaf"
+  ],
+  "result": "artent_potions:feather_falling"
+}

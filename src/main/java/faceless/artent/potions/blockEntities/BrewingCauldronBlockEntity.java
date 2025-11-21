@@ -7,23 +7,24 @@ import faceless.artent.potions.block.BrewingCauldron;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.brewingApi.IBrewable;
+import faceless.artent.potions.brewingApi.PotionWorldAccess;
 import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.network.CauldronSyncPayload;
-import faceless.artent.potions.objects.*;
+import faceless.artent.potions.objects.ModBlockEntities;
+import faceless.artent.potions.objects.ModBlocks;
+import faceless.artent.potions.objects.ModItems;
+import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.registry.AlchemicalPotionRegistry;
-import faceless.artent.potions.registry.BrewingRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -69,15 +70,18 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
   private void brewIngredients(World world, BlockPos pos, BlockState state) {
     var waterBox = getWaterBox(pos);
+
     var items = world.getEntitiesByClass(
         ItemEntity.class,
         waterBox,
         ie -> (canExtractPotion()
                && ie.getStack().getItem() == ModItems.ICE_CRYSTAL_SHARD)
-              || BrewingIngredients.IsIngredient(ie.getStack()));
+              || PotionWorldAccess.isIngredient(world, ie.getStack()));
     if (items.isEmpty()) return;
 
-    var brewingCooldown = state.getBlock() == ModBlocks.BREWING_CAULDRON_COPPER.block() ? CopperBrewingCooldown : BrewingCooldown;
+    var brewingCooldown = state.getBlock() == ModBlocks.BREWING_CAULDRON_COPPER.block()
+        ? CopperBrewingCooldown
+        : BrewingCooldown;
     var first = items.getFirst();
     var brewable = (IBrewable) first;
     if ((brewable.getBrewingTime() > brewingCooldown)) {
@@ -137,7 +141,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
     final var brewable = (IBrewable) item;
     final var stack = item.getStack();
-    var ingredient = BrewingIngredients.AsIngredient(stack);
+    var ingredient = PotionWorldAccess.asIngredient(this.world, stack);
     var isCrystal = stack.getItem() == ModItems.ICE_CRYSTAL_SHARD;
 
     var potionLeveledUp = handleLeveledPotions(ingredient);
@@ -154,8 +158,8 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         crystalsRequired--;
       } else if (ingredient != null) {
         ingredients.add(ingredient);
-        if (ingredients.size() == 1) color = BrewingRegistry.Ingredients.get(ingredient);
-        else color = color.add(BrewingRegistry.Ingredients.get(ingredient));
+        if (ingredients.size() == 1) color = ingredient.color;
+        else color = color.add(ingredient.color);
       }
     }
     // Only there brewing state can be finishing. After that `ingredients` will empty and `potions` will be extended
@@ -167,19 +171,16 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     if (!ingredients.isEmpty() || potions.isEmpty()) return false;
 
     var lastPotion = potions.getLast();
-    var automataState = BrewingIngredients.RecipeAutomata.LastIngredients.get(lastPotion.id);
-    if (automataState == null) return false;
+    var brewingAutomata = PotionWorldAccess.getBrewingAutomata(this.world);
+    var enhancementRecipe = brewingAutomata.potionEnhancements.getOrDefault(lastPotion, null);
+    if (enhancementRecipe == null) return false;
 
-    var edges = BrewingIngredients.RecipeAutomata.Edges.get(automataState);
-    if (edges == null) return false;
+    if (!enhancementRecipe.ingredient().equals(ingredient)) return false;
 
-    var possibleEdges = edges.stream().filter(e -> e.Character().equals(ingredient)).toList();
-    if (possibleEdges.isEmpty()) return false;
-
-    var newPotion = possibleEdges.getFirst();
-    if (newPotion.Target().brewedPotion() != null) {
+    var newPotion = enhancementRecipe.resultPotion();
+    if (newPotion != null) {
       potions.removeLast();
-      potions.add(newPotion.Target().brewedPotion());
+      potions.add(newPotion);
       markDirty();
       return true;
     }
@@ -203,12 +204,12 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   }
 
   public BrewingAutomata.State getBrewingState() {
-    return BrewingIngredients.RecipeAutomata.getStateFromIngredients(ingredients);
+    return PotionWorldAccess.getBrewingAutomata(this.world).getStateFromIngredients(ingredients);
   }
 
   private void updateBrewingState() {
     var brewingState = getBrewingState();
-    // Breaks leveled potion brewing
+    // Breaks leveled resultPotion brewing
     if (brewingState.isFinishing()) {
       potions.add(brewingState.brewedPotion());
       ingredients.clear();
@@ -256,13 +257,11 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     for (int i = 0; i < ingredientsCount; i++) {
       var ingredientTag = ingredientsTag.getCompound("" + i);
       var id = ingredientTag.getString("id");
-      var item = Registries.ITEM.get(Identifier.of(id));
-      if (item == Items.AIR) {
-        System.out.println("Unknown item with identifier '" + id + "' in cauldron. Removing it.");
+      var ingredient = PotionWorldAccess.ingredientFromIdentifier(world, Identifier.of(id));
+      if (ingredient == null) {
+        System.out.println("Unknown ingredient with identifier '" + id + "' in cauldron. Removing it.");
         continue;
       }
-      var meta = ingredientTag.getInt("meta");
-      var ingredient = new BrewingIngredient(item, meta);
       ingredients.add(ingredient);
     }
 
@@ -271,7 +270,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
       var id = potionsTag.getString(i + "");
       var potion = AlchemicalPotionRegistry.getPotion(id);
       if (potion == null) {
-        System.out.println("Unknown potion with identifier '" + id + "' in cauldron. Removing it.");
+        System.out.println("Unknown resultPotion with identifier '" + id + "' in cauldron. Removing it.");
         crystalsRequired = Math.max(0, crystalsRequired - 1);
         continue;
       }
@@ -302,9 +301,8 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     for (int i = 0; i < ingredients.size(); i++) {
       var ingredient = ingredients.get(i);
       var ingredientTag = new NbtCompound();
-      var id = Registries.ITEM.getId(ingredient.item());
-      ingredientTag.putString("id", id.toString());
-      ingredientTag.putInt("meta", ingredient.meta());
+      var id = ingredient.getRegistryEntry().getIdAsString();
+      ingredientTag.putString("id", id);
       ingredientsTag.put(i + "", ingredientTag);
     }
     nbt.put("ingredients", ingredientsTag);

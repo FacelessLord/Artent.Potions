@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 127,
+    "green": 30,
+    "red": 117
+  },
+  "effects": [
+    {
+      "amplifier": 1,
+      "duration": 1350,
+      "id": "minecraft:dolphins_grace",
+      "show_icon": true
+    }
+  ]
+}

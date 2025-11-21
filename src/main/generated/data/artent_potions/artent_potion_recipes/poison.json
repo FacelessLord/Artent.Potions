@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:blueberry",
+    "artent_potions:rotten_flesh",
+    "artent_potions:spider_eye"
+  ],
+  "result": "artent_potions:poison"
+}

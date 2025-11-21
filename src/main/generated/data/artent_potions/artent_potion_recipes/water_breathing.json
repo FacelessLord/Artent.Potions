@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:blueberry",
+    "artent_potions:red_mushroom",
+    "artent_potions:kelp"
+  ],
+  "result": "artent_potions:water_breathing"
+}

@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:cloudberry",
+    "artent_potions:bone",
+    "artent_potions:apple"
+  ],
+  "result": "artent_potions:saturation"
+}

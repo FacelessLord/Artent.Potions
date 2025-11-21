@@ -11,7 +11,7 @@ public class ModItemGroups {
   public static final ArtentItemGroupBuilder POTIONS = new ArtentItemGroupBuilder(
       () -> {
         var stack = new ItemStack(ModItems.SMALL_BOTTLE);
-        AlchemicalPotionUtil.setPotion(stack, AlchemicalPotions.FLIGHT);
+//        AlchemicalPotionUtil.setPotion(stack, AlchemicalPotions.FLIGHT);
         return stack;
       },
       "potions");

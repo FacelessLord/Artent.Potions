@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 101,
+    "green": 152,
+    "red": 54
+  },
+  "effects": [
+    {
+      "duration": 1800,
+      "id": "artent_potions:fortune",
+      "show_icon": true
+    }
+  ]
+}

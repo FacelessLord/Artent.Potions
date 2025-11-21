@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 0,
+    "green": 93,
+    "red": 224
+  },
+  "effects": [
+    {
+      "amplifier": 2,
+      "duration": 2025,
+      "id": "artent_potions:holy_water",
+      "show_icon": true
+    }
+  ]
+}

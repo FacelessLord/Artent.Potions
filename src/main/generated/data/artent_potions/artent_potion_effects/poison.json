@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 49,
+    "green": 143,
+    "red": 36
+  },
+  "effects": [
+    {
+      "duration": 2400,
+      "id": "minecraft:poison",
+      "show_icon": true
+    }
+  ]
+}

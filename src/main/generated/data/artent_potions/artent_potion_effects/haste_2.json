@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 0,
+    "green": 107,
+    "red": 220
+  },
+  "effects": [
+    {
+      "amplifier": 2,
+      "duration": 1012,
+      "id": "minecraft:haste",
+      "show_icon": true
+    }
+  ]
+}

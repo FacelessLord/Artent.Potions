@@ -1,0 +1,10 @@
+{
+  "ingredients": [
+    "artent_potions:blackberry",
+    "artent_potions:crimson_leaf",
+    "artent_potions:nether_wart",
+    "artent_potions:diamond",
+    "artent_potions:rabbit_foot"
+  ],
+  "result": "artent_potions:fortune"
+}

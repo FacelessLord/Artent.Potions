@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:cloudberry",
+    "artent_potions:lapis_lazuly",
+    "artent_potions:redstone_dust",
+    "artent_potions:puffer_fish"
+  ],
+  "result": "artent_potions:haste"
+}

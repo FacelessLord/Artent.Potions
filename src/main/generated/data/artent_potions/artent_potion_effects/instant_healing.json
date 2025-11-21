@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 0,
+    "green": 0,
+    "red": 194
+  },
+  "effects": [
+    {
+      "duration": 1,
+      "id": "artent_potions:instant_healing",
+      "show_icon": true
+    }
+  ]
+}

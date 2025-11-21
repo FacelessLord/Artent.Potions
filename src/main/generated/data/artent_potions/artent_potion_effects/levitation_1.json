@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 127,
+    "green": 0,
+    "red": 163
+  },
+  "effects": [
+    {
+      "amplifier": 1,
+      "duration": 150,
+      "id": "minecraft:levitation",
+      "show_icon": true
+    }
+  ]
+}

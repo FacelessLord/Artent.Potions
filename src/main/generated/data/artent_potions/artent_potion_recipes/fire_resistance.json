@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:raspberry",
+    "artent_potions:brown_mushroom",
+    "artent_potions:magma_cream"
+  ],
+  "result": "artent_potions:fire_resistance"
+}

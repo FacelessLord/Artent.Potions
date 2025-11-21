@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:blueberry",
+    "artent_potions:glistening_melon",
+    "artent_potions:golden_carrot",
+    "artent_potions:glowstone_dust"
+  ],
+  "result": "artent_potions:holy_water"
+}

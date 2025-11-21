@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:cloudberry",
+    "artent_potions:glistening_melon",
+    "artent_potions:blaze_powder"
+  ],
+  "result": "artent_potions:strength"
+}

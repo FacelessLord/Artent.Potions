@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 40,
+    "green": 84,
+    "red": 173
+  },
+  "effects": [
+    {
+      "duration": 2400,
+      "id": "minecraft:fire_resistance",
+      "show_icon": true
+    }
+  ]
+}

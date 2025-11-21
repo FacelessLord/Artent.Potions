@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 0,
+    "green": 0,
+    "red": 194
+  },
+  "effects": [
+    {
+      "amplifier": 1,
+      "duration": 2700,
+      "id": "artent_potions:berserk",
+      "show_icon": true
+    }
+  ]
+}

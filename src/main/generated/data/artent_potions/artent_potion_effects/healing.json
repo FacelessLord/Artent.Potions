@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 40,
+    "green": 58,
+    "red": 184
+  },
+  "effects": [
+    {
+      "duration": 600,
+      "id": "minecraft:regeneration",
+      "show_icon": true
+    }
+  ]
+}

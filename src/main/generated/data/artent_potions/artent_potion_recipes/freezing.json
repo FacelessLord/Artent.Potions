@@ -1,0 +1,10 @@
+{
+  "ingredients": [
+    "artent_potions:blueberry",
+    "artent_potions:glistening_melon",
+    "artent_potions:nether_wart",
+    "artent_potions:shroom",
+    "artent_potions:frost_pumpking"
+  ],
+  "result": "artent_potions:freezing"
+}

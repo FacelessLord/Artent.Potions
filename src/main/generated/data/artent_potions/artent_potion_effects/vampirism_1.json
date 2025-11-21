@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 63,
+    "green": 0,
+    "red": 178
+  },
+  "effects": [
+    {
+      "amplifier": 1,
+      "duration": 2700,
+      "id": "artent_potions:vampirism",
+      "show_icon": true
+    }
+  ]
+}

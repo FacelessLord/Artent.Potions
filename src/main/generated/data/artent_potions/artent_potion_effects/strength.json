@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 40,
+    "green": 151,
+    "red": 215
+  },
+  "effects": [
+    {
+      "duration": 3600,
+      "id": "minecraft:strength",
+      "show_icon": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 48,
+    "green": 131,
+    "red": 192
+  },
+  "effects": [
+    {
+      "duration": 1800,
+      "id": "minecraft:haste",
+      "show_icon": true
+    }
+  ]
+}

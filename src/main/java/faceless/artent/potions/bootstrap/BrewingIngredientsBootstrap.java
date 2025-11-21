@@ -12,107 +12,105 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
+import static faceless.artent.potions.ArtentPotions.LOGGER;
+
 public class BrewingIngredientsBootstrap {
 
-  public static BrewingIngredient Shroom;
-  public static BrewingIngredient Shadowveil;
-  public static BrewingIngredient CrimsonwoodBerry;
-  public static BrewingIngredient CrimsonLeaf;
-  public static BrewingIngredient Blackberry;
-  public static BrewingIngredient Blueberry;
-  public static BrewingIngredient Cloudberry;
-  public static BrewingIngredient Raspberry;
-  public static BrewingIngredient StoneScale;
-  public static BrewingIngredient Acorn;
-  public static BrewingIngredient ManaFeather;
-  public static BrewingIngredient FrostPumpkin;
+  public static BrewingIngredient Shroom = new BrewingIngredient(ModBlocks.SHROOM.item(), Color.Cobalt);
+  public static BrewingIngredient Shadowveil = new BrewingIngredient(
+      ModBlocks.SHADOWVEIL.item(),
+      Color.Purple.add(Color.Red));
+  public static BrewingIngredient CrimsonwoodBerry = new BrewingIngredient(ModItems.BERRIES[4], Color.Red);
+  public static BrewingIngredient CrimsonLeaf = new BrewingIngredient(ModItems.CRIMSON_LEAF, Color.Gray);
+  public static BrewingIngredient Blackberry = new BrewingIngredient(ModItems.BERRIES[0], Color.Purple);
+  public static BrewingIngredient Blueberry = new BrewingIngredient(ModItems.BERRIES[1], Color.Blue);
+  public static BrewingIngredient Cloudberry = new BrewingIngredient(ModItems.BERRIES[2], Color.Gold);
+  public static BrewingIngredient Raspberry = new BrewingIngredient(ModItems.BERRIES[3], Color.Red);
+  public static BrewingIngredient StoneScale = new BrewingIngredient(ModItems.STONE_SCALE, Color.Cobalt);
+  public static BrewingIngredient Acorn = new BrewingIngredient(ModItems.ACORN, Color.Brown.add(Color.White));
+  public static BrewingIngredient ManaFeather = new BrewingIngredient(ModItems.MANA_FEATHER, Color.Purple);
+  public static BrewingIngredient FrostPumpkin = new BrewingIngredient(ModBlocks.FROST_PUMPKIN.item(), Color.LightBlue);
 
-  public static BrewingIngredient Bone;
-  public static BrewingIngredient GlowstoneDust;
-  public static BrewingIngredient RedstoneDust;
-  public static BrewingIngredient Apple;
-  public static BrewingIngredient BrownMushroom;
-  public static BrewingIngredient RedMushroom;
-  public static BrewingIngredient ChorusPlant;
-  public static BrewingIngredient BlazePowder;
-  public static BrewingIngredient EnderPearl;
-  public static BrewingIngredient GlisteningMelon;
-  public static BrewingIngredient Kelp;
-  public static BrewingIngredient Slime;
-  public static BrewingIngredient PufferFish;
-  public static BrewingIngredient DragonBreath;
-  public static BrewingIngredient NetherWart;
-  public static BrewingIngredient SpiderEye;
-  public static BrewingIngredient FermentedSpiderEye;
-  public static BrewingIngredient MagmaCream;
-  public static BrewingIngredient PhantomMembrane;
-  public static BrewingIngredient IronChestplate;
-  public static BrewingIngredient GoldenCarrot;
-  public static BrewingIngredient RottenFlesh;
-  public static BrewingIngredient Stick;
-  public static BrewingIngredient LapisLazuli;
-  public static BrewingIngredient Diamond;
-  public static BrewingIngredient RabbitFoot;
+  public static BrewingIngredient Bone = new BrewingIngredient(Items.BONE, Color.White);
+  public static BrewingIngredient GlowstoneDust = new BrewingIngredient(Items.GLOWSTONE_DUST, Color.Orange);
+  public static BrewingIngredient RedstoneDust = new BrewingIngredient(Items.REDSTONE, Color.Red);
+  public static BrewingIngredient Apple = new BrewingIngredient(Items.APPLE, Color.Red);
+  public static BrewingIngredient BrownMushroom = new BrewingIngredient(Items.BROWN_MUSHROOM, Color.Brown);
+  public static BrewingIngredient RedMushroom = new BrewingIngredient(Items.RED_MUSHROOM, Color.Red);
+  public static BrewingIngredient ChorusPlant = new BrewingIngredient(Items.CHORUS_FRUIT, Color.Purple);
+  public static BrewingIngredient BlazePowder = new BrewingIngredient(Items.BLAZE_POWDER, Color.Orange);
+  public static BrewingIngredient EnderPearl = new BrewingIngredient(Items.ENDER_PEARL, Color.Cyan);
+  public static BrewingIngredient GlisteningMelon = new BrewingIngredient(
+      Items.GLISTERING_MELON_SLICE,
+      Color.Gold.add(Color.Red));
+  public static BrewingIngredient Kelp = new BrewingIngredient(Items.KELP, Color.Cyan);
+  public static BrewingIngredient Slime = new BrewingIngredient(Items.SLIME_BALL, Color.Green);
+  public static BrewingIngredient PufferFish = new BrewingIngredient(Items.PUFFERFISH, Color.Yellow);
+  public static BrewingIngredient DragonBreath = new BrewingIngredient(
+      Items.DRAGON_BREATH,
+      Color.Pink.add(Color.Purple));
+  public static BrewingIngredient NetherWart = new BrewingIngredient(Items.NETHER_WART, Color.Red.add(Color.Purple));
+  public static BrewingIngredient SpiderEye = new BrewingIngredient(Items.SPIDER_EYE, Color.Green);
+  public static BrewingIngredient FermentedSpiderEye = new BrewingIngredient(
+      Items.FERMENTED_SPIDER_EYE,
+      Color.Blue.add(Color.Green));
+  public static BrewingIngredient MagmaCream = new BrewingIngredient(Items.MAGMA_CREAM, Color.Red.add(Color.Gold));
+  public static BrewingIngredient PhantomMembrane = new BrewingIngredient(Items.PHANTOM_MEMBRANE, Color.Purple);
+  public static BrewingIngredient IronChestplate = new BrewingIngredient(Items.IRON_CHESTPLATE, Color.Gray);
+  public static BrewingIngredient GoldenCarrot = new BrewingIngredient(Items.GOLDEN_CARROT, Color.Green);
+  public static BrewingIngredient RottenFlesh = new BrewingIngredient(Items.ROTTEN_FLESH, Color.Brown);
+  public static BrewingIngredient Stick = new BrewingIngredient(Items.STICK, Color.Green);
+  public static BrewingIngredient LapisLazuli = new BrewingIngredient(Items.LAPIS_LAZULI, Color.Cobalt);
+  public static BrewingIngredient Diamond = new BrewingIngredient(Items.DIAMOND, Color.LightBlue);
+  public static BrewingIngredient RabbitFoot = new BrewingIngredient(Items.RABBIT_FOOT, Color.Green);
 
   public static void bootstrap(Registerable<BrewingIngredient> brewingRegistry) {
-    Shroom = register(brewingRegistry, "shroom", ModBlocks.SHROOM.item(), -1, Color.Cobalt);
-    Shadowveil = register(brewingRegistry, "shadowveil", ModBlocks.SHADOWVEIL.item(), -1, Color.Purple.add(Color.Red));
-    CrimsonwoodBerry = register(brewingRegistry, "crimson_berry", ModItems.BERRIES[4], -1, Color.Red);
-    CrimsonLeaf = register(brewingRegistry, "crimson_leaf", ModItems.CRIMSON_LEAF, -1, Color.Gray);
-    Blackberry = register(brewingRegistry, "blackberry", ModItems.BERRIES[0], -1, Color.Purple);
-    Blueberry = register(brewingRegistry, "blueberry", ModItems.BERRIES[1], -1, Color.Blue);
-    Cloudberry = register(brewingRegistry, "cloudberry", ModItems.BERRIES[2], -1, Color.Gold);
-    Raspberry = register(brewingRegistry, "raspberry", ModItems.BERRIES[3], -1, Color.Red);
-    StoneScale = register(brewingRegistry, "stone_scale", ModItems.STONE_SCALE, -1, Color.Cobalt);
-    Acorn = register(brewingRegistry, "acorn", ModItems.ACORN, -1, Color.Brown.add(Color.White));
-    ManaFeather = register(brewingRegistry, "mana_feather", ModItems.MANA_FEATHER, -1, Color.Purple);
-    FrostPumpkin = register(brewingRegistry, "frost_pumpking", ModBlocks.FROST_PUMPKIN.item(), -1, Color.LightBlue);
+    LOGGER.info("BrewingIngredients bootstrap");
+    register(Shroom, brewingRegistry, "shroom");
+    register(Shadowveil, brewingRegistry, "shadowveil");
+    register(CrimsonwoodBerry, brewingRegistry, "crimson_berry");
+    register(CrimsonLeaf, brewingRegistry, "crimson_leaf");
+    register(Blackberry, brewingRegistry, "blackberry");
+    register(Blueberry, brewingRegistry, "blueberry");
+    register(Cloudberry, brewingRegistry, "cloudberry");
+    register(Raspberry, brewingRegistry, "raspberry");
+    register(StoneScale, brewingRegistry, "stone_scale");
+    register(Acorn, brewingRegistry, "acorn");
+    register(ManaFeather, brewingRegistry, "mana_feather");
+    register(FrostPumpkin, brewingRegistry, "frost_pumpking");
 
-    Bone = register(brewingRegistry, "bone", Items.BONE, -1, Color.White);
-    GlowstoneDust = register(brewingRegistry, "glowstone_dust", Items.GLOWSTONE_DUST, -1, Color.Orange);
-    RedstoneDust = register(brewingRegistry, "redstone_dust", Items.REDSTONE, -1, Color.Red);
-    Apple = register(brewingRegistry, "apple", Items.APPLE, -1, Color.Red);
-    BrownMushroom = register(brewingRegistry, "brown_mushroom", Items.BROWN_MUSHROOM, -1, Color.Brown);
-    RedMushroom = register(brewingRegistry, "red_mushroom", Items.RED_MUSHROOM, -1, Color.Red);
-    ChorusPlant = register(brewingRegistry, "chorus_plant", Items.CHORUS_FRUIT, -1, Color.Purple);
-    BlazePowder = register(brewingRegistry, "blaze_powder", Items.BLAZE_POWDER, -1, Color.Orange);
-    EnderPearl = register(brewingRegistry, "ender_pearl", Items.ENDER_PEARL, -1, Color.Cyan);
-    GlisteningMelon = register(
-        brewingRegistry,
-        "glistening_melon",
-        Items.GLISTERING_MELON_SLICE,
-        -1,
-        Color.Gold.add(Color.Red));
-    Kelp = register(brewingRegistry, "kelp", Items.KELP, -1, Color.Cyan);
-    Slime = register(brewingRegistry, "slime", Items.SLIME_BALL, -1, Color.Green);
-    PufferFish = register(brewingRegistry, "puffer_fish", Items.PUFFERFISH, -1, Color.Yellow);
-    DragonBreath = register(brewingRegistry, "dragon_breath", Items.DRAGON_BREATH, -1, Color.Pink.add(Color.Purple));
-    NetherWart = register(brewingRegistry, "nether_wart", Items.NETHER_WART, -1, Color.Red.add(Color.Purple));
-    SpiderEye = register(brewingRegistry, "spider_eye", Items.SPIDER_EYE, -1, Color.Green);
-    FermentedSpiderEye = register(
-        brewingRegistry,
-        "fermented_spider_eye",
-        Items.FERMENTED_SPIDER_EYE,
-        -1,
-        Color.Blue.add(Color.Green));
-    MagmaCream = register(brewingRegistry, "magma_cream", Items.MAGMA_CREAM, -1, Color.Red.add(Color.Gold));
-    PhantomMembrane = register(brewingRegistry, "phantom_membrane", Items.PHANTOM_MEMBRANE, -1, Color.Purple);
-    IronChestplate = register(brewingRegistry, "iron_chestplate", Items.IRON_CHESTPLATE, -1, Color.Gray);
-    GoldenCarrot = register(brewingRegistry, "golden_carrot", Items.GOLDEN_CARROT, -1, Color.Green);
-    RottenFlesh = register(brewingRegistry, "rotten_flesh", Items.ROTTEN_FLESH, -1, Color.Brown);
-    Stick = register(brewingRegistry, "stick", Items.STICK, -1, Color.Green);
-    LapisLazuli = register(brewingRegistry, "lapis_lazuly", Items.LAPIS_LAZULI, -1, Color.Cobalt);
-    Diamond = register(brewingRegistry, "diamond", Items.DIAMOND, -1, Color.LightBlue);
-    RabbitFoot = register(brewingRegistry, "rabbit_foot", Items.RABBIT_FOOT, -1, Color.Green);
+    register(Bone, brewingRegistry, "bone");
+    register(GlowstoneDust, brewingRegistry, "glowstone_dust");
+    register(RedstoneDust, brewingRegistry, "redstone_dust");
+    register(Apple, brewingRegistry, "apple");
+    register(BrownMushroom, brewingRegistry, "brown_mushroom");
+    register(RedMushroom, brewingRegistry, "red_mushroom");
+    register(ChorusPlant, brewingRegistry, "chorus_plant");
+    register(BlazePowder, brewingRegistry, "blaze_powder");
+    register(EnderPearl, brewingRegistry, "ender_pearl");
+    register(GlisteningMelon, brewingRegistry, "glistening_melon");
+    register(Kelp, brewingRegistry, "kelp");
+    register(Slime, brewingRegistry, "slime");
+    register(PufferFish, brewingRegistry, "puffer_fish");
+    register(DragonBreath, brewingRegistry, "dragon_breath");
+    register(NetherWart, brewingRegistry, "nether_wart");
+    register(SpiderEye, brewingRegistry, "spider_eye");
+    register(FermentedSpiderEye, brewingRegistry, "fermented_spider_eye");
+    register(MagmaCream, brewingRegistry, "magma_cream");
+    register(PhantomMembrane, brewingRegistry, "phantom_membrane");
+    register(IronChestplate, brewingRegistry, "iron_chestplate");
+    register(GoldenCarrot, brewingRegistry, "golden_carrot");
+    register(RottenFlesh, brewingRegistry, "rotten_flesh");
+    register(Stick, brewingRegistry, "stick");
+    register(LapisLazuli, brewingRegistry, "lapis_lazuly");
+    register(Diamond, brewingRegistry, "diamond");
+    register(RabbitFoot, brewingRegistry, "rabbit_foot");
   }
 
   public static BrewingIngredient register(
+      BrewingIngredient ingredient,
       Registerable<BrewingIngredient> brewingRegistry,
-      String key,
-      Item item,
-      int meta,
-      Color color) {
-    var ingredient = new BrewingIngredient(item, meta, color);
+      String key) {
 
     var registryKey = RegistryKey.of(
         ModRegistries.POTION_INGREDIENT_REGISTRY_KEY,

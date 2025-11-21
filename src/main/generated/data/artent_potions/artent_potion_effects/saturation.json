@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 96,
+    "green": 97,
+    "red": 192
+  },
+  "effects": [
+    {
+      "duration": 6000,
+      "id": "artent_potions:saturation",
+      "show_icon": true
+    }
+  ]
+}

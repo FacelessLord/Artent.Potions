@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:raspberry",
+    "artent_potions:shroom",
+    "artent_potions:crimson_leaf",
+    "artent_potions:shadowveil"
+  ],
+  "result": "artent_potions:vampirism"
+}

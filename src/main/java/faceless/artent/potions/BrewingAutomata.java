@@ -5,7 +5,7 @@ import faceless.artent.core.api.MiscUtils;
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
-import faceless.artent.potions.registry.BrewingRegistry;
+import faceless.artent.potions.recipes.PotionEnhancementRecipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,11 +14,12 @@ import java.util.List;
 
 public class BrewingAutomata {
   public final DefaultedDict<State, List<Edge>> Edges = new DefaultedDict<>(ArrayList::new);
+
   public final State zeroState = new State(0, false, null);
   public final State invalidState = new State(-1, false, null);
   public int nextId = 1;
 
-  public final Hashtable<String, State> LastIngredients = new Hashtable<>();
+  public final Hashtable<AlchemicalPotion, PotionEnhancementRecipe> potionEnhancements = new Hashtable<>();
 
   public State getStateFromIngredients(List<BrewingIngredient> ingredients) {
     var state = zeroState;
@@ -42,45 +43,37 @@ public class BrewingAutomata {
     Edges.get(source).add(edge);
   }
 
-  public void addRecipe(AlchemicalPotion[] potions, BrewingIngredient... ingredients) {
-    var newIngredients = new ArrayList<>(List.of(ingredients));
-    for (AlchemicalPotion potion : potions) {
-      var potionState = addRecipe(potion, newIngredients.toArray(BrewingIngredient[]::new));
-      var lastIngredient = ingredients[ingredients.length - 1];
-      newIngredients.add(lastIngredient);
-      LastIngredients.put(potion.id, potionState);
-    }
+  public void addEnhancement(PotionEnhancementRecipe recipe) {
+    potionEnhancements.put(recipe.sourcePotion(), recipe);
   }
 
-  public State addRecipe(AlchemicalPotion potion, BrewingIngredient... ingredients) {
+  public void addRecipe(AlchemicalPotion potion, List<BrewingIngredient> ingredients) {
     var color = Color.Blue;
     var state = zeroState;
     var i = 0;
     while (true) {
-      var ingredient = ingredients[i];
+      var ingredient = ingredients.get(i);
 
       var edges = Edges.get(state);
       var edge = edges.stream().filter(e -> e.Character.equals(ingredient)).findFirst();
       if (edge.isEmpty()) {
         break;
       }
-      color = color.add(BrewingRegistry.Ingredients.get(ingredient));
+      color = color.add(ingredient.color);
       state = edge.get().Target;
       i++;
     }
 
-    for (; i < ingredients.length; i++) {
-      var newState = i == ingredients.length - 1 ? new State(nextId++, true, potion) : new State(nextId++, false, null);
-      color = color.add(BrewingRegistry.Ingredients.get(ingredients[i]));
-      var edge = new Edge(state, newState, ingredients[i]);
+    for (; i < ingredients.size(); i++) {
+      var newState = i == ingredients.size() - 1 ? new State(nextId++, true, potion) : new State(nextId++, false, null);
+      color = color.add(ingredients.get(i).color);
+      var edge = new Edge(state, newState, ingredients.get(i));
       Edges.get(state).add(edge);
       state = newState;
     }
     potion.color = color;
     Color finalColor = color;
-    // TODO add more blue color to potions like true blue, purple, cyan, emerald green,
     Arrays.stream(potion.statusEffects).forEach(s -> MiscUtils.setStatusEffectColor(s, finalColor.toHex()));
-    return state;
   }
 
   public record Edge(State Source, State Target, BrewingIngredient Character) {

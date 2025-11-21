@@ -1,0 +1,16 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 127,
+    "green": 85,
+    "red": 141
+  },
+  "effects": [
+    {
+      "amplifier": 2,
+      "duration": 675,
+      "id": "artent_potions:freezing",
+      "show_icon": true
+    }
+  ]
+}

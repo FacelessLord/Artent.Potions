@@ -1,0 +1,8 @@
+{
+  "ingredients": [
+    "artent_potions:blackberry",
+    "artent_potions:spider_eye",
+    "artent_potions:golden_carrot"
+  ],
+  "result": "artent_potions:night_vision"
+}

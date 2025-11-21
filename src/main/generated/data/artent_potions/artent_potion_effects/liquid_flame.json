@@ -1,0 +1,15 @@
+{
+  "color": {
+    "alpha": 255,
+    "blue": 24,
+    "green": 173,
+    "red": 191
+  },
+  "effects": [
+    {
+      "duration": 2400,
+      "id": "artent_potions:liquid_flame",
+      "show_icon": true
+    }
+  ]
+}

@@ -122,7 +122,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
 
       if (transferResult == PotionContainerUtil.TransferResult.AIsEmpty
           || transferResult == PotionContainerUtil.TransferResult.BIsEmpty) {
-        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.potion.nothing_to_move");
+        ChatUtils.sendMessageToPlayer(world, player, "text.artent_potions.resultPotion.nothing_to_move");
       } else if (transferResult == PotionContainerUtil.TransferResult.MovedToB) {
         cauldron.crystalsRequired = cauldron.potions.size();
         cauldron.color = AlchemicalPotionUtil
@@ -236,7 +236,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
     var potions = new ArrayList<>(cauldron.potions);
     debugInfo.add("Potions: " + String.join(", ", potions.stream().map((i) -> i.id).toList()));
     debugInfo.add("Potion amount: " + cauldron.getPotionAmount() + "/" + cauldron.getMaxPotionAmount());
-    debugInfo.add("Can extract potion: " + cauldron.canExtractPotion());
+    debugInfo.add("Can extract resultPotion: " + cauldron.canExtractPotion());
     debugInfo.add("Is finishing state: " + cauldron.getBrewingState().isFinishing());
   }
 }

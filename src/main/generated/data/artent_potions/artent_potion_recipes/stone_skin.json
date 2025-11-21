@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:raspberry",
+    "artent_potions:shroom",
+    "artent_potions:bone",
+    "artent_potions:iron_chestplate"
+  ],
+  "result": "artent_potions:stone_skin"
+}

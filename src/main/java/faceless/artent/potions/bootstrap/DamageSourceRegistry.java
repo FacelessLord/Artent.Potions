@@ -7,6 +7,8 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
+import static faceless.artent.potions.ArtentPotions.LOGGER;
+
 public class DamageSourceRegistry {
   public static final Identifier BleedingDamageId = Identifier.of(ArtentPotions.MODID, "bleeding");
   public static final RegistryKey<DamageType> BleedingDamageKey = RegistryKey.of(
@@ -14,6 +16,7 @@ public class DamageSourceRegistry {
       BleedingDamageId);
 
   public static void bootstrap(Registerable<DamageType> damageTypeRegistry) {
+    LOGGER.info("DamageSourceRegistry bootstrap");
     damageTypeRegistry.register(BleedingDamageKey, new DamageType(ArtentPotions.MODID + "_bleeding", 0.0f));
   }
 }

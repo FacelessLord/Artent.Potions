@@ -1,0 +1,9 @@
+{
+  "ingredients": [
+    "artent_potions:blueberry",
+    "artent_potions:slime",
+    "artent_potions:blaze_powder",
+    "artent_potions:blaze_powder"
+  ],
+  "result": "artent_potions:liquid_flame"
+}
