@@ -4,7 +4,7 @@ import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.objects.ModParticles;
-import faceless.artent.potions.objects.ModRegistries;
+import faceless.artent.potions.objects.ModRecipes;
 import faceless.artent.potions.recipes.DryingRecipe;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -38,7 +38,7 @@ public class ArtentPotions implements ModInitializer {
 
   @Override
   public void onInitialize() {
-    DynamicRegistries.registerSynced(ModRegistries.DRYING_RECIPES_REGISTRY_KEY, DryingRecipe.Serializer.CODEC, DryingRecipe.Serializer.CODEC);
+    DynamicRegistries.registerSynced(ModRecipes.DRYING_RECIPES_REGISTRY_KEY, DryingRecipe.Serializer.CODEC, DryingRecipe.Serializer.CODEC);
 
     Potions.register();
     FermentedPotions.register();

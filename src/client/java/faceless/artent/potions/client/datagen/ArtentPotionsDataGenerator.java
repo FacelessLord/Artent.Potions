@@ -2,7 +2,7 @@ package faceless.artent.potions.client.datagen;
 
 import faceless.artent.potions.features.WorldGenContext;
 import faceless.artent.potions.objects.ModFeatures;
-import faceless.artent.potions.objects.ModRegistries;
+import faceless.artent.potions.objects.ModRecipes;
 import faceless.artent.potions.registry.DamageSourceRegistry;
 import faceless.artent.potions.registry.DryingRecipeRegistry;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -31,7 +31,7 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
   @Override
   public void buildRegistry(RegistryBuilder registryBuilder) {
     registryBuilder.addRegistry(RegistryKeys.DAMAGE_TYPE, DamageSourceRegistry::bootstrap);
-    registryBuilder.addRegistry(ModRegistries.DRYING_RECIPES_REGISTRY_KEY, DryingRecipeRegistry::bootstrap);
+    registryBuilder.addRegistry(ModRecipes.DRYING_RECIPES_REGISTRY_KEY, DryingRecipeRegistry::bootstrap);
 
     this.aggregateRegistries(registryBuilder, ModFeatures::bootstrap);
   }

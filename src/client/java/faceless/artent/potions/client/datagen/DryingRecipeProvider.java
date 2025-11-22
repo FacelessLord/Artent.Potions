@@ -1,7 +1,7 @@
 package faceless.artent.potions.client.datagen;
 
 import faceless.artent.potions.ArtentPotions;
-import faceless.artent.potions.objects.ModRegistries;
+import faceless.artent.potions.objects.ModRecipes;
 import faceless.artent.potions.recipes.DryingRecipe;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
@@ -18,7 +18,7 @@ public class DryingRecipeProvider extends FabricDynamicRegistryProvider {
 
   @Override
   protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-    final RegistryWrapper.Impl<DryingRecipe> dryingRecipeRegistry = registries.getOrThrow(ModRegistries.DRYING_RECIPES_REGISTRY_KEY);
+    final RegistryWrapper.Impl<DryingRecipe> dryingRecipeRegistry = registries.getOrThrow(ModRecipes.DRYING_RECIPES_REGISTRY_KEY);
     dryingRecipeRegistry.streamKeys().forEach(key -> entries.add(dryingRecipeRegistry, key));
   }
 
