@@ -125,15 +125,28 @@ public class FermentingBarrel extends BlockWithEntity implements INamed {
                               + ".of")
                 .append(potionNames), false);
       } else {
-        if (!barrel.potions.isEmpty()) player.sendMessage(
-            Text
-                .translatable("text.artent_potions.barrel.fermenting." + barrel.potionAmount + "/" + 9)
-                .append(potionNames)
-                .append(Text.translatable("text.artent_potions.fermentation.time.prefix"))
-                .append(Text.translatable(String.valueOf((FermentingBarrelBlockEntity.FERMENTATION_TIME
-                                                          - barrel.fermentedTime) / 20)))
-                .append(Text.translatable("text.artent_potions.fermentation.time.suffix")), false);
-        else player.sendMessage(Text.translatable("text.artent_potions.barrel.empty"), false);
+        if (!barrel.potions.isEmpty()) {
+          var timeLeftSecondsRaw = (int) (barrel.fermentedTime / world.getTickManager().getTickRate());
+          var timeLeftMinutes = timeLeftSecondsRaw / 60;
+          var timeLeftSeconds = timeLeftSecondsRaw % 60;
+          var timeText = Text.literal("");
+          if (timeLeftMinutes > 0) {
+            timeText
+                .append(Text.literal(timeLeftMinutes + ""))
+                .append(Text.translatable("text.artent_potions.fermentation.time.minute_suffix"));
+          }
+          timeText
+              .append(Text.literal(timeLeftSeconds + ""))
+              .append(Text.translatable("text.artent_potions.fermentation.time.seconds_suffix"))
+              .append(Text.translatable("text.artent_potions.fermentation.time.left_suffix"));
+
+          player.sendMessage(
+              Text
+                  .translatable("text.artent_potions.barrel.fermenting." + barrel.potionAmount + "/" + 9)
+                  .append(potionNames)
+                  .append(Text.translatable("text.artent_potions.fermentation.time.prefix"))
+                  .append(timeText), false);
+        } else player.sendMessage(Text.translatable("text.artent_potions.barrel.empty"), false);
       }
       return ActionResult.SUCCESS;
     }

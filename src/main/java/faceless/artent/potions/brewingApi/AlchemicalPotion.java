@@ -4,41 +4,44 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import faceless.artent.core.math.Color;
-import faceless.artent.potions.ArtentPotions;
+import faceless.artent.potions.api.ObjectWithIdentifier;
+import faceless.artent.potions.api.RegistryIdentifierCodec;
 import faceless.artent.potions.objects.ModRegistries;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.registry.entry.RegistryElementCodec;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.Objects;
 
-public class AlchemicalPotion {
+public class AlchemicalPotion implements ObjectWithIdentifier {
   public static Codec<AlchemicalPotion> CODEC = RecordCodecBuilder.create(instance -> instance
       .group(
           Color.CODEC.fieldOf("color").forGetter(potion -> potion.color),
           Codec.list(StatusEffectInstance.CODEC).fieldOf("effects").forGetter(potion -> potion.effects))
       .apply(instance, AlchemicalPotion::new));
 
-  public static final Codec<RegistryEntry<AlchemicalPotion>> ENTRY_CODEC = RegistryElementCodec.of(
+  public static final Codec<AlchemicalPotion> ENTRY_CODEC = RegistryIdentifierCodec.of(
       ModRegistries.POTION_EFFECTS_REGISTRY_KEY,
       CODEC);
 
-  @Deprecated
-  public String id;
   public Color color;
   public final ArtentStatusEffect[] statusEffects;
   private final ImmutableList<StatusEffectInstance> effects;
 
   // This thing isn't involved in CODEC, so you can set it after register
-  private RegistryEntry<AlchemicalPotion> registryEntry;
+  private Identifier id;
 
-  public void setRegistryEntry(RegistryEntry<AlchemicalPotion> registryEntry) {
-    this.registryEntry = registryEntry;
+  public void setId(Identifier id) {
+    this.id = id;
   }
 
-  public RegistryEntry<AlchemicalPotion> getRegistryEntry() {
-    return this.registryEntry;
+  public String getId() {
+    return id.toString();
+  }
+
+  @Override
+  public Identifier getIdentifier() {
+    return this.id;
   }
 
   public AlchemicalPotion(Color color, List<StatusEffectInstance> effects) {
@@ -48,14 +51,6 @@ public class AlchemicalPotion {
   }
 
   public AlchemicalPotion(StatusEffectInstance... effects) {
-    this.color = Color.Red;
-    this.effects = ImmutableList.copyOf(effects);
-    this.statusEffects = getArtentStatusEffects(this.effects);
-  }
-
-  @Deprecated
-  public AlchemicalPotion(String id, StatusEffectInstance... effects) {
-    this.id = ArtentPotions.MODID + "." + id;
     this.color = Color.Red;
     this.effects = ImmutableList.copyOf(effects);
     this.statusEffects = getArtentStatusEffects(this.effects);
@@ -77,7 +72,7 @@ public class AlchemicalPotion {
 
   @Override
   public String toString() {
-    return "AlchemicalPotion(" + id + ')';
+    return "AlchemicalPotion(" + this.getId() + ')';
   }
 
   @Override
@@ -85,11 +80,11 @@ public class AlchemicalPotion {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     AlchemicalPotion that = (AlchemicalPotion) o;
-    return id.equals(that.id) && color.equals(that.color);
+    return this.getId().equals(that.getId()) && color.equals(that.color);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, color);
+    return Objects.hash(getId(), color);
   }
 }

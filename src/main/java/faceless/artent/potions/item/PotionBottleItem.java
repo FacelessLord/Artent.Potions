@@ -5,7 +5,6 @@ import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.brewingApi.PotionDataUtil;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.LivingEntity;
@@ -27,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class PotionBottleItem extends Item implements IPotionContainerItem, IDebuggableItem {
@@ -43,14 +43,18 @@ public class PotionBottleItem extends Item implements IPotionContainerItem, IDeb
   @Override
   public List<AlchemicalPotion> getPotions(ItemStack stack) {
     var keys = PotionDataUtil.getPotionsKeys(stack);
-    if(keys == null)
+    if (keys == null)
       keys = List.of();
-    return keys.stream().map(AlchemicalPotionRegistry::getPotion).toList();
+    return keys
+        .stream()
+        .map(key -> AlchemicalPotionUtil.PotionsMap.getOrDefault(key, null))
+        .filter(Objects::nonNull)
+        .toList();
   }
 
   @Override
   public void setPotions(ItemStack stack, List<AlchemicalPotion> potions) {
-    PotionDataUtil.setPotionKeys(stack, potions.stream().map(potion -> potion.id).toList());
+    PotionDataUtil.setPotionKeys(stack, potions.stream().map(AlchemicalPotion::getId).toList());
   }
 
   @Override
@@ -190,7 +194,7 @@ public class PotionBottleItem extends Item implements IPotionContainerItem, IDeb
   @Override
   public void fillDebugInfo(ItemStack stack, List<String> debugInfo) {
     if (hasPotion(stack)) {
-      debugInfo.add("Potions: " + String.join(", ", getPotions(stack).stream().map((i) -> i.id).toList()));
+      debugInfo.add("Potions: " + String.join(", ", getPotions(stack).stream().map(AlchemicalPotion::getId).toList()));
     } else {
       debugInfo.add("No potions");
     }

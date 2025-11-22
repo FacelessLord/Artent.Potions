@@ -3,20 +3,23 @@ package faceless.artent.potions.brewingApi;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import faceless.artent.core.math.Color;
+import faceless.artent.potions.api.ObjectWithIdentifier;
+import faceless.artent.potions.api.RegistryIdentifierCodec;
 import faceless.artent.potions.objects.ModRegistries;
 import net.minecraft.item.Item;
 import net.minecraft.registry.entry.RegistryElementCodec;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Identifier;
 
 import java.util.Objects;
 
-public final class BrewingIngredient {
+public final class BrewingIngredient implements ObjectWithIdentifier {
   public static final Codec<BrewingIngredient> CODEC = RecordCodecBuilder.create(instance -> instance
       .group(
           Item.ENTRY_CODEC.fieldOf("item").forGetter(ingredient -> ingredient.item.getRegistryEntry()),
           Color.CODEC.fieldOf("color").forGetter(ingredient -> ingredient.color))
       .apply(instance, (item, color) -> new BrewingIngredient(item.value(), color)));
-  public static final Codec<RegistryEntry<BrewingIngredient>> ENTRY_CODEC = RegistryElementCodec.of(
+  public static final Codec<BrewingIngredient> ENTRY_CODEC = RegistryIdentifierCodec.of(
       ModRegistries.POTION_INGREDIENT_REGISTRY_KEY,
       CODEC);
 
@@ -29,14 +32,19 @@ public final class BrewingIngredient {
   }
 
   // This thing isn't involved in CODEC, so you can set it after register
-  private RegistryEntry<BrewingIngredient> registryEntry;
+  private Identifier id;
 
-  public void setRegistryEntry(RegistryEntry<BrewingIngredient> registryEntry) {
-    this.registryEntry = registryEntry;
+  public void setId(Identifier id) {
+    this.id = id;
   }
 
-  public RegistryEntry<BrewingIngredient> getRegistryEntry() {
-    return this.registryEntry;
+  public String getId() {
+    return id.toString();
+  }
+
+  @Override
+  public Identifier getIdentifier() {
+    return this.id;
   }
 
   @Override

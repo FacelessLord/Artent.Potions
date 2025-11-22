@@ -14,7 +14,6 @@ import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.objects.ModBlocks;
 import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.objects.ModParticles;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -223,8 +222,16 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     this.potionAmount = payload.portionsLeft();
     this.crystalsRequired = payload.crystalsRequired();
     this.color = payload.color();
-    this.ingredients = payload.ingredients();
-    this.potions = payload.potions();
+    this.ingredients = payload
+        .ingredients()
+        .stream()
+        .map(i -> PotionWorldAccess.ingredientFromIdentifier(world, i))
+        .toList();
+    this.potions = payload
+        .potions()
+        .stream()
+        .map(p -> PotionWorldAccess.potionFromIdentifier(world, p.toString()))
+        .toList();
     markDirty();
   }
 
@@ -235,8 +242,8 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         this.potionAmount,
         this.crystalsRequired,
         this.color,
-        this.ingredients,
-        this.potions);
+        this.ingredients.stream().map(BrewingIngredient::getIdentifier).toList(),
+        this.potions.stream().map(AlchemicalPotion::getIdentifier).toList());
   }
 
   @Override
@@ -268,7 +275,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var potions = new ArrayList<AlchemicalPotion>(potionCount);
     for (int i = 0; i < potionCount; i++) {
       var id = potionsTag.getString(i + "");
-      var potion = AlchemicalPotionRegistry.getPotion(id);
+      var potion = PotionWorldAccess.potionFromIdentifier(this.world, id);
       if (potion == null) {
         System.out.println("Unknown resultPotion with identifier '" + id + "' in cauldron. Removing it.");
         crystalsRequired = Math.max(0, crystalsRequired - 1);
@@ -282,8 +289,8 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         portionsLeft,
         crystalsRequired,
         color,
-        ingredients,
-        potions);
+        ingredients.stream().map(BrewingIngredient::getIdentifier).toList(),
+        potions.stream().map(AlchemicalPotion::getIdentifier).toList());
     this.acceptPayload(payload);
   }
 
@@ -301,7 +308,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     for (int i = 0; i < ingredients.size(); i++) {
       var ingredient = ingredients.get(i);
       var ingredientTag = new NbtCompound();
-      var id = ingredient.getRegistryEntry().getIdAsString();
+      var id = ingredient.getId();
       ingredientTag.putString("id", id);
       ingredientsTag.put(i + "", ingredientTag);
     }
@@ -310,7 +317,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var potionsTag = new NbtCompound();
     for (int i = 0; i < potions.size(); i++) {
       var potion = potions.get(i);
-      potionsTag.putString(i + "", potion.id);
+      potionsTag.putString(i + "", potion.getId());
     }
     nbt.put("potions", potionsTag);
   }

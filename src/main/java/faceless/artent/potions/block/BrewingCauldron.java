@@ -8,6 +8,7 @@ import faceless.artent.potions.api.IDebuggableBlock;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
+import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.objects.ModBlockEntities;
 import net.minecraft.block.*;
@@ -154,7 +155,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
 
   private void addFuel(BrewingCauldronBlockEntity cauldron, PlayerEntity player, Hand hand, ItemStack stack) {
     var result = cauldron.addFuel(stack, player.isSneaking());
-    if (!player.getAbilities().creativeMode) return;
+    if (player.getAbilities().creativeMode) return;
     if (result == BrewingCauldronBlockEntity.AddFuelResultType.ConsumeStack) {
       player.setStackInHand(hand, ItemStack.EMPTY);
     }
@@ -234,7 +235,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
             .map((i) -> i.item.getName().toString())
             .toList()));
     var potions = new ArrayList<>(cauldron.potions);
-    debugInfo.add("Potions: " + String.join(", ", potions.stream().map((i) -> i.id).toList()));
+    debugInfo.add("Potions: " + String.join(", ", potions.stream().map(AlchemicalPotion::getId).toList()));
     debugInfo.add("Potion amount: " + cauldron.getPotionAmount() + "/" + cauldron.getMaxPotionAmount());
     debugInfo.add("Can extract resultPotion: " + cauldron.canExtractPotion());
     debugInfo.add("Is finishing state: " + cauldron.getBrewingState().isFinishing());

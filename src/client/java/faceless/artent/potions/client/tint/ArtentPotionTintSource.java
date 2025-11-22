@@ -28,9 +28,7 @@ public record ArtentPotionTintSource(int defaultColor) implements TintSource {
 
   @Override
   public int getTint(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user) {
-    if (stack.getItem() instanceof IPotionContainerItem potionBottle) {
-      if (!potionBottle.hasPotion(stack))
-        return ColorHelper.zeroAlpha(defaultColor);
+    if (stack.getItem() instanceof IPotionContainerItem potionBottle && potionBottle.hasPotion(stack)) {
       var potions = potionBottle.getPotions(stack);
       return AlchemicalPotionUtil.getPotionListColor(potions)
                                  .orElse(defaultColor);

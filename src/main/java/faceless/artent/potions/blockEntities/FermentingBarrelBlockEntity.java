@@ -2,9 +2,8 @@ package faceless.artent.potions.blockEntities;
 
 import faceless.artent.potions.api.IPotionContainerBlock;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
+import faceless.artent.potions.brewingApi.PotionWorldAccess;
 import faceless.artent.potions.objects.ModBlockEntities;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
-import faceless.artent.potions.registry.FermentationRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,21 +27,21 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
     super(ModBlockEntities.FermentingBarrel, pos, state);
   }
 
-  public static final int FERMENTATION_TIME = 20 * 10;
   public int fermentedTime = 0;
   public int potionAmount = 9;
   public List<AlchemicalPotion> potions = new ArrayList<>();
 
   public void tick(World world, BlockPos pos, BlockState state) {
+//    world.getTickManager().getTickRate();
     if (!potions.isEmpty()) {
-      if (fermentedTime < FERMENTATION_TIME) {
-        fermentedTime++;
+      if (fermentedTime > 0) {
+        fermentedTime--;
       }
     }
   }
 
   public boolean isFermented() {
-    return !potions.isEmpty() && fermentedTime >= FERMENTATION_TIME;
+    return !potions.isEmpty() && fermentedTime == 0;
   }
 
   @Override
@@ -56,7 +55,7 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
     for (net.minecraft.nbt.NbtElement nbtElement : potionsTag) {
       var potionTag = (NbtString) nbtElement;
       var id = potionTag.asString();
-      var potion = AlchemicalPotionRegistry.getPotion(id);
+      var potion = PotionWorldAccess.potionFromIdentifier(this.world, id);
       potions.add(potion);
     }
   }
@@ -70,7 +69,7 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
     var potionsTag = new NbtList();
     for (int i = 0; i < potions.size(); i++) {
       var potion = potions.get(i);
-      potionsTag.add(i, NbtString.of(potion.id));
+      potionsTag.add(i, NbtString.of(potion.getId()));
     }
     nbt.put("potions", potionsTag);
   }
@@ -113,7 +112,7 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
   public void clear() {
     potionAmount = 9;
     potions = new ArrayList<>();
-    fermentedTime = 0;
+    fermentedTime = -1;
     markDirty();
   }
 
@@ -125,11 +124,17 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
   @Override
   public void setPotions(List<AlchemicalPotion> potions) {
     this.potions = potions;
+    fermentedTime = potions
+        .stream()
+        .map(potion -> PotionWorldAccess.getFermentationRecipe(this.world, potion).seconds())
+        .reduce(
+            0,
+            Integer::sum);
   }
 
   @Override
-  public boolean canContainPotion(List<AlchemicalPotion> potion) {
-    return potion.stream().allMatch(id -> FermentationRegistry.getFermentedPotion(id) != null);
+  public boolean canContainPotion(List<AlchemicalPotion> potions) {
+    return potions.stream().allMatch(potion -> PotionWorldAccess.getFermentationRecipe(this.world, potion) != null);
   }
 
   @Override

@@ -14,7 +14,7 @@ public record DryingRecipe(Ingredient source, ItemStack result, int time, ItemSt
       .group(
           Ingredient.CODEC.fieldOf("source").forGetter(recipe -> recipe.source),
           ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-          Codecs.POSITIVE_INT.fieldOf("time").forGetter(recipe -> recipe.time),
+          Codecs.POSITIVE_INT.fieldOf("seconds").forGetter(recipe -> recipe.time),
           ItemStack.CODEC
               .fieldOf("byproduct")
               .forGetter(recipe -> recipe.byproduct != null ? recipe.byproduct : ItemStack.EMPTY),

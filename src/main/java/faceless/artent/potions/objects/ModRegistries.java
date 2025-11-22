@@ -3,6 +3,7 @@ package faceless.artent.potions.objects;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.recipes.DryingRecipe;
+import faceless.artent.potions.recipes.FermentationRecipe;
 import faceless.artent.potions.recipes.PotionEnhancementRecipe;
 import faceless.artent.potions.recipes.PotionRecipe;
 import net.minecraft.registry.Registry;
@@ -21,5 +22,7 @@ public class ModRegistries {
       Identifier.of("artent_potion_recipes"));
   public static final RegistryKey<Registry<PotionEnhancementRecipe>> POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY = RegistryKey.ofRegistry(
       Identifier.of("artent_potion_enhancement_recipes"));
+  public static final RegistryKey<Registry<FermentationRecipe>> POTION_FERMENTATION_RECIPE_REGISTRY_KEY = RegistryKey.ofRegistry(
+      Identifier.of("artent_potion_fermentation_recipes"));
 
 }

@@ -183,11 +183,7 @@ public final class ModItems {
         new Item.Settings().maxCount(64),
         ModItemGroups.BASE);
 
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE, 1, ModItemGroups.POTIONS);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE, 3, ModItemGroups.POTIONS);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE, 9, ModItemGroups.POTIONS);
-
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE_EXPLOSIVE, 1, ModItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItemGroups.POTIONS);
 
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CRIMSONWOOD_LEAVES.block().asItem(), 0.5F);
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CRIMSONWOOD_SAPLING.block().asItem(), 0.5F);

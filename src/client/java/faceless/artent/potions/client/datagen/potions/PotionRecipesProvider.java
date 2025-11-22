@@ -4,6 +4,7 @@ import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.objects.ModRegistries;
+import faceless.artent.potions.recipes.FermentationRecipe;
 import faceless.artent.potions.recipes.PotionEnhancementRecipe;
 import faceless.artent.potions.recipes.PotionRecipe;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -30,8 +31,11 @@ public class PotionRecipesProvider extends FabricDynamicRegistryProvider {
     final RegistryWrapper.Impl<PotionRecipe> potionRecipeRegistry = registries.getOrThrow(ModRegistries.POTION_RECIPES_REGISTRY_KEY);
     potionRecipeRegistry.streamKeys().forEach(key -> entries.add(potionRecipeRegistry, key));
 
-    final RegistryWrapper.Impl<PotionEnhancementRecipe> potionEnhancementRecipe = registries.getOrThrow(ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY);
-    potionEnhancementRecipe.streamKeys().forEach(key -> entries.add(potionEnhancementRecipe, key));
+    final RegistryWrapper.Impl<PotionEnhancementRecipe> potionEnhancementRegistry = registries.getOrThrow(ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY);
+    potionEnhancementRegistry.streamKeys().forEach(key -> entries.add(potionEnhancementRegistry, key));
+
+    final RegistryWrapper.Impl<FermentationRecipe> potionFermentationRegistry = registries.getOrThrow(ModRegistries.POTION_FERMENTATION_RECIPE_REGISTRY_KEY);
+    potionFermentationRegistry.streamKeys().forEach(key -> entries.add(potionFermentationRegistry, key));
   }
 
   @Override

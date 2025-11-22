@@ -4,30 +4,30 @@ import faceless.artent.core.item.group.ArtentItemGroupBuilder;
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.api.ListUtils;
-import faceless.artent.potions.registry.AlchemicalPotionRegistry;
+import faceless.artent.potions.objects.ModItems;
+import faceless.artent.potions.objects.ModRegistries;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.ColorHelper;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class AlchemicalPotionUtil {
+  public static Hashtable<String, AlchemicalPotion> PotionsMap = new Hashtable<>();
 
   public static boolean comparePotions(List<AlchemicalPotion> a, List<AlchemicalPotion> b) {
     if (a.size() != b.size())
       return false;
     for (int i = 0; i < a.size(); i++) {
-      if (!Objects.equals(a.get(i).id, b.get(i).id))
+      if (!Objects.equals(a.get(i), b.get(i)))
         return false;
     }
     return true;
@@ -41,18 +41,11 @@ public class AlchemicalPotionUtil {
   }
 
   public static void setPotion(ItemStack stack, AlchemicalPotion potion) {
-    PotionDataUtil.setPotionKeys(stack, List.of(potion.id));
+    PotionDataUtil.setPotionKeys(stack, List.of(potion.getId()));
   }
 
   public static void setPotions(ItemStack stack, List<AlchemicalPotion> potions) {
-    PotionDataUtil.setPotionKeys(stack, potions.stream().map(potion -> potion.id).toList());
-  }
-
-  public static boolean hasPotion(ItemStack stack) {
-    var item = stack.getItem();
-    if (!(item instanceof IPotionContainerItem potionContainer))
-      return false;
-    return potionContainer.hasPotion(stack);
+    PotionDataUtil.setPotionKeys(stack, potions.stream().map(AlchemicalPotion::getId).toList());
   }
 
   public static int getColor(ItemStack itemStack) {
@@ -71,20 +64,6 @@ public class AlchemicalPotionUtil {
     var potions = getPotions(itemStack);
     if (ListUtils.isNullOrEmpty(potions)) return new ArrayList<>();
     return potions.stream().filter(Objects::nonNull).flatMap(potion -> potion.getEffects().stream()).toList();
-  }
-
-  public static void createEffectListTooltip(ItemStack stack, List<Text> tooltip) {
-    if (!hasPotion(stack)) {
-      tooltip.add(Text.translatable("text.artent_potions.potion.unidentified"));
-      return;
-    }
-
-    getPotionEffects(stack)
-        .stream()
-        .map(sei -> Text
-            .translatable(sei.getTranslationKey())
-            .formatted(sei.getEffectType().value().getCategory().getFormatting()))
-        .forEach(tooltip::add);
   }
 
   public static void applyPotionEffects(
@@ -107,26 +86,34 @@ public class AlchemicalPotionUtil {
     }
   }
 
-  public static void appendPotionStacks(Item base, int size, ArtentItemGroupBuilder group) {
-    List<ItemStack> stacks = new ArrayList<>();
+  public static void appendPotionStacks(ArtentItemGroupBuilder group) {
+    group.setCustomEntryCollector((ctx, entries) -> {
+      AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE, 1, ctx, entries);
+      AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE, 3, ctx, entries);
+      AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE, 9, ctx, entries);
+      AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE_EXPLOSIVE, 1, ctx, entries);
+    });
+  }
+
+  public static void appendPotionStacks(Item base, int size, ItemGroup.DisplayContext ctx, ItemGroup.Entries entries) {
+    var registry = ctx.lookup().getOrThrow(ModRegistries.POTION_EFFECTS_REGISTRY_KEY);
 
     var phialStack = new ItemStack(base);
     PotionDataUtil.setConcentrateAmount(phialStack, 0);
-    stacks.add(phialStack);
+    entries.add(phialStack);
 
-    for (var key : AlchemicalPotionRegistry.getRegisteredPotions()) {
+    registry.streamKeys().forEach(key -> {
       var stack = new ItemStack(base);
-      PotionDataUtil.setPotionKeys(stack, List.of(key));
+      PotionDataUtil.setPotionKeys(stack, List.of(key.toString()));
       PotionDataUtil.setConcentrateAmount(stack, size);
-      stacks.add(stack);
-    }
+      entries.add(stack);
+    });
 //    { // multipotion
 //      var stack = new ItemStack(base);
 //      PotionDataUtil.setPotionKeys(stack, AlchemicalPotionRegistry.getRegisteredPotions());
 //      PotionDataUtil.setConcentrateAmount(stack, size);
 //      stacks.add(stack);
 //    }
-    group.Items.addAll(stacks);
   }
 
   public static Text getPotionNames(List<StatusEffectInstance> effects) {

@@ -222,7 +222,7 @@ public class PotionEffectsBootstrap {
         ModRegistries.POTION_EFFECTS_REGISTRY_KEY,
         Identifier.of(ArtentPotions.MODID, key));
     var entry = ingredientsRegistry.register(registryKey, potion);
-    potion.setRegistryEntry(entry);
+    potion.setId(entry.getKey().get().getValue());
   }
 
   private static void register(

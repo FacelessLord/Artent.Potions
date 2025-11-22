@@ -1,5 +1,6 @@
 package faceless.artent.potions;
 
+import com.mojang.serialization.Lifecycle;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.network.ArtentServerHook;
@@ -8,11 +9,14 @@ import faceless.artent.potions.objects.ModItems;
 import faceless.artent.potions.objects.ModParticles;
 import faceless.artent.potions.objects.ModRegistries;
 import faceless.artent.potions.recipes.DryingRecipe;
+import faceless.artent.potions.recipes.FermentationRecipe;
 import faceless.artent.potions.recipes.PotionEnhancementRecipe;
 import faceless.artent.potions.recipes.PotionRecipe;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.event.registry.*;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.SimpleRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,12 +41,23 @@ public class ArtentPotions implements ModInitializer {
   public static final ArtentLootTableModifiers LootTableModifiers = new ArtentLootTableModifiers();
   public static final ModParticles Particles = new ModParticles();
 
+  public static Registry<BrewingIngredient> INGREDIENT_REGISTRY;
+  public static Registry<AlchemicalPotion> POTION_REGISTRY;
+
   @Override
   public void onInitialize() {
     DynamicRegistries.registerSynced(
-        ModRegistries.DRYING_RECIPES_REGISTRY_KEY,
-        DryingRecipe.CODEC,
-        DryingRecipe.CODEC);
+        ModRegistries.POTION_FERMENTATION_RECIPE_REGISTRY_KEY,
+        FermentationRecipe.CODEC,
+        FermentationRecipe.CODEC);
+    DynamicRegistries.registerSynced(
+        ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY,
+        PotionEnhancementRecipe.CODEC,
+        PotionEnhancementRecipe.CODEC);
+    DynamicRegistries.registerSynced(
+        ModRegistries.POTION_RECIPES_REGISTRY_KEY,
+        PotionRecipe.CODEC,
+        PotionRecipe.CODEC);
     DynamicRegistries.registerSynced(
         ModRegistries.POTION_INGREDIENT_REGISTRY_KEY,
         BrewingIngredient.CODEC,
@@ -52,13 +67,31 @@ public class ArtentPotions implements ModInitializer {
         AlchemicalPotion.CODEC,
         AlchemicalPotion.CODEC);
     DynamicRegistries.registerSynced(
-        ModRegistries.POTION_RECIPES_REGISTRY_KEY,
-        PotionRecipe.CODEC,
-        PotionRecipe.CODEC);
-    DynamicRegistries.registerSynced(
-        ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY,
-        PotionEnhancementRecipe.CODEC,
-        PotionEnhancementRecipe.CODEC);
+        ModRegistries.DRYING_RECIPES_REGISTRY_KEY,
+        DryingRecipe.CODEC,
+        DryingRecipe.CODEC);
+
+    INGREDIENT_REGISTRY = FabricRegistryBuilder
+        .from(new SimpleRegistry<>(ModRegistries.POTION_INGREDIENT_REGISTRY_KEY, Lifecycle.stable(), true))
+        .attribute(
+            RegistryAttribute.SYNCED)
+        .buildAndRegister();
+    POTION_REGISTRY = FabricRegistryBuilder
+        .from(new SimpleRegistry<>(ModRegistries.POTION_EFFECTS_REGISTRY_KEY, Lifecycle.stable(), true)).attribute(
+            RegistryAttribute.SYNCED).buildAndRegister();
+
+    DynamicRegistrySetupCallback.EVENT.register((DynamicRegistryView registryView) -> {
+      registryView.registerEntryAdded(
+          ModRegistries.POTION_INGREDIENT_REGISTRY_KEY, (rawId, identifier, object) -> {
+            LOGGER.info("ingredient: {}", identifier.toString());
+            object.setId(identifier);
+          });
+      registryView.registerEntryAdded(
+          ModRegistries.POTION_EFFECTS_REGISTRY_KEY, (rawId, identifier, object) -> {
+            LOGGER.info("potion: {}", identifier.toString());
+            object.setId(identifier);
+          });
+    });
 
     Blocks.register();
     Items.register();

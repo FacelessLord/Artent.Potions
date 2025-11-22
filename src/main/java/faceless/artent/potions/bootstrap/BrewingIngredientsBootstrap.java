@@ -77,7 +77,7 @@ public class BrewingIngredientsBootstrap {
     register(StoneScale, brewingRegistry, "stone_scale");
     register(Acorn, brewingRegistry, "acorn");
     register(ManaFeather, brewingRegistry, "mana_feather");
-    register(FrostPumpkin, brewingRegistry, "frost_pumpking");
+    register(FrostPumpkin, brewingRegistry, "frost_pumpkin");
 
     register(Bone, brewingRegistry, "bone");
     register(GlowstoneDust, brewingRegistry, "glowstone_dust");
@@ -117,7 +117,7 @@ public class BrewingIngredientsBootstrap {
         Identifier.of(ArtentPotions.MODID, key));
 
     var entry = brewingRegistry.register(registryKey, ingredient);
-    ingredient.setRegistryEntry(entry);
+    ingredient.setId(entry.getKey().get().getValue());
 
     return ingredient;
   }

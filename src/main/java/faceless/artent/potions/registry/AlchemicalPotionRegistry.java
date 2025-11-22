@@ -17,12 +17,4 @@ public class AlchemicalPotionRegistry {
   public static AlchemicalPotion getPotion(String key) {
     return PotionsMap.getOrDefault(key, null);
   }
-
-  public static AlchemicalPotion getFermentedPotion(String key) {
-    return FermentedPotionsMap.getOrDefault(key, null);
-  }
-
-  public static List<String> getRegisteredPotions() {
-    return PotionsList;
-  }
 }

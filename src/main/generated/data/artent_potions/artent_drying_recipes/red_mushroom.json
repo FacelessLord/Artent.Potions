@@ -8,6 +8,6 @@
     "count": 1,
     "id": "artent_potions:dried_red_mushroom"
   },
-  "source": "minecraft:red_mushroom",
-  "time": 400
+  "seconds": 400,
+  "source": "minecraft:red_mushroom"
 }

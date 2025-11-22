@@ -14,6 +14,7 @@ import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record CauldronSyncPayload(
@@ -22,8 +23,8 @@ public record CauldronSyncPayload(
     int portionsLeft,
     int crystalsRequired,
     Color color,
-    List<BrewingIngredient> ingredients,
-    List<AlchemicalPotion> potions
+    List<Identifier> ingredients,
+    List<Identifier> potions
 ) implements CustomPayload {
 
   public static final Id<CauldronSyncPayload> PayloadId = new Id<>(Identifier.of(
@@ -40,18 +41,11 @@ public record CauldronSyncPayload(
       CauldronSyncPayload::crystalsRequired,
       Color.PACKET_CODEC,
       CauldronSyncPayload::color,
-      PacketCodecs.registryEntryList(ModRegistries.POTION_INGREDIENT_REGISTRY_KEY),
-      payload -> RegistryEntryList.of(BrewingIngredient::getRegistryEntry, payload.ingredients()),
-      PacketCodecs.registryEntryList(ModRegistries.POTION_EFFECTS_REGISTRY_KEY),
-      payload -> RegistryEntryList.of(AlchemicalPotion::getRegistryEntry, payload.potions()),
-      (pos, fuelAmount, portionsLeft, crystalsRequired, color, ingredientsList, potionsList) -> new CauldronSyncPayload(
-          pos,
-          fuelAmount,
-          portionsLeft,
-          crystalsRequired,
-          color,
-          ingredientsList.stream().map(RegistryEntry::value).toList(),
-          potionsList.stream().map(RegistryEntry::value).toList()));
+      PacketCodecs.collection(ArrayList::new, Identifier.PACKET_CODEC),
+      CauldronSyncPayload::ingredients,
+      PacketCodecs.collection(ArrayList::new, Identifier.PACKET_CODEC),
+      CauldronSyncPayload::potions,
+      CauldronSyncPayload::new);
 
   @Override
   public Id<? extends CustomPayload> getId() {

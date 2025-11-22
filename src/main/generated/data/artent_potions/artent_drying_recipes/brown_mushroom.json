@@ -8,6 +8,6 @@
     "count": 1,
     "id": "artent_potions:dried_brown_mushroom"
   },
-  "source": "minecraft:brown_mushroom",
-  "time": 400
+  "seconds": 400,
+  "source": "minecraft:brown_mushroom"
 }

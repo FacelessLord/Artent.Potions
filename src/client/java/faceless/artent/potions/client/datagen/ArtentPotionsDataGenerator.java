@@ -41,6 +41,8 @@ public class ArtentPotionsDataGenerator implements DataGeneratorEntrypoint {
         ModRegistries.POTION_ENHANCEMENT_RECIPE_REGISTRY_KEY,
         PotionEnhancementRecipeBootstrap::bootstrap);
 
+    registryBuilder.addRegistry(ModRegistries.POTION_FERMENTATION_RECIPE_REGISTRY_KEY, FermentationRecipeBootstrap::bootstrap);
+
     this.aggregateRegistries(registryBuilder, ModFeatures::bootstrap);
   }
 
