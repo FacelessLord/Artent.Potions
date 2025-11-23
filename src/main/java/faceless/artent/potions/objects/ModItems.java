@@ -6,9 +6,15 @@ import faceless.artent.potions.api.MushroomType;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.item.*;
+import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
+import net.fabricmc.fabric.mixin.content.registry.FuelRegistryMixin;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.block.FurnaceBlock;
+import net.minecraft.component.type.Consumable;
+import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
@@ -191,6 +197,15 @@ public final class ModItems {
 
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CRIMSONWOOD_LEAVES.block().asItem(), 0.5F);
     ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModBlocks.CRIMSONWOOD_SAPLING.block().asItem(), 0.5F);
+//    Registry.register(Registries.Com)
+    FuelRegistryEvents.BUILD.register((builder, ctx) -> {
+      builder.add(ModBlocks.DRYING_RACK.item(), 300);
+      builder.add(ModBlocks.FEMENTING_BARREL.item(), 300);
+      builder.add(ACORN, 100);
+      for (int i = 0; i < ModBlocks.BERRY_BUSH.length; i++) {
+        builder.add(ModBlocks.BERRY_BUSH[0].item(), 200);
+      }
+    });
   }
 
   public static Item register(

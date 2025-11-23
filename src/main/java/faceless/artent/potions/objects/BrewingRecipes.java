@@ -8,7 +8,7 @@ import net.minecraft.item.Items;
 
 public class BrewingRecipes {
 
-    public static final BrewingIngredient Shroom = new BrewingIngredient(ModBlocks.SHROOM.item(), -1);
+    public static final BrewingIngredient DriedShroom = new BrewingIngredient(ModItems.DRIED_SHROOM, -1);
     public static final BrewingIngredient Shadowveil = new BrewingIngredient(ModBlocks.SHADOWVEIL.item(), -1);
     public static final BrewingIngredient CrimsonwoodBerry = new BrewingIngredient(ModItems.BERRIES[4], -1);
     public static final BrewingIngredient CrimsonLeaf = new BrewingIngredient(ModItems.CRIMSON_LEAF, -1);
@@ -25,8 +25,8 @@ public class BrewingRecipes {
     public static final BrewingIngredient GlowstoneDust = new BrewingIngredient(Items.GLOWSTONE_DUST, -1);
     public static final BrewingIngredient RedstoneDust = new BrewingIngredient(Items.REDSTONE, -1);
     public static final BrewingIngredient Apple = new BrewingIngredient(Items.APPLE, -1);
-    public static final BrewingIngredient BrownMushroom = new BrewingIngredient(Items.BROWN_MUSHROOM, -1);
-    public static final BrewingIngredient RedMushroom = new BrewingIngredient(Items.RED_MUSHROOM, -1);
+    public static final BrewingIngredient DriedBrownMushroom = new BrewingIngredient(ModItems.DRIED_BROWN_MUSHROOM, -1);
+    public static final BrewingIngredient DriedRedMushroom = new BrewingIngredient(ModItems.DRIED_RED_MUSHROOM, -1);
     public static final BrewingIngredient ChorusPlant = new BrewingIngredient(Items.CHORUS_FRUIT, -1);
     public static final BrewingIngredient BlazePowder = new BrewingIngredient(Items.BLAZE_POWDER, -1);
     public static final BrewingIngredient EnderPearl = new BrewingIngredient(Items.ENDER_PEARL, -1);

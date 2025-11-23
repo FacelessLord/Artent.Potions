@@ -7,6 +7,7 @@ import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.objects.ModRecipes;
 import faceless.artent.potions.recipes.DryingRecipe;
 import faceless.artent.potions.recipes.DryingRecipeInput;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +17,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +41,7 @@ public class DryingRackBlockEntity extends BlockEntity {
   }
 
   public void tick(World world, BlockPos pos, BlockState state) {
+    if (world.isClient) return;
     for (int i = 0; i < inventorySize; i++) {
       var stack = items[i];
       if (stack == null) continue;
@@ -54,7 +57,16 @@ public class DryingRackBlockEntity extends BlockEntity {
         } else {
           ArtentPotions.LOGGER.warn("Drying rack has not empty byproduct before recipe is done");
         }
+        syncAround();
         markDirty();
+      }
+    }
+  }
+
+  public void syncAround() {
+    if (world != null) {
+      for (var player : PlayerLookup.tracking((ServerWorld) world, pos)) {
+        ArtentServerHook.packetSyncDryingRack(player, this);
       }
     }
   }
@@ -92,13 +104,12 @@ public class DryingRackBlockEntity extends BlockEntity {
     } else if (!items[slot].isEmpty()) {
       dropSlot(slot).forEach(player::giveOrDropStack);
     }
-    ArtentServerHook.packetSyncDryingRack(player, this);
+    syncAround();
   }
 
   public List<ItemStack> dropSlot(int slot) {
     var result = new ArrayList<ItemStack>(0);
-    if (slot < 0 || slot >= inventorySize)
-      return result;
+    if (slot < 0 || slot >= inventorySize) return result;
     result.add(items[slot]);
     result.add(byproducts[slot]);
     items[slot] = ItemStack.EMPTY;
@@ -119,8 +130,7 @@ public class DryingRackBlockEntity extends BlockEntity {
         this.getPos(),
         Arrays.stream(this.items).toList(),
         Arrays.stream(this.timesLeft).boxed().toList(),
-        Arrays.stream(this.byproducts).toList()
-    );
+        Arrays.stream(this.byproducts).toList());
   }
 
   @Override

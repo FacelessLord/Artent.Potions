@@ -23,7 +23,9 @@ public class MushroomSpores extends Item {
     var player = context.getPlayer();
     if (block == Blocks.DIRT && player != null && context.getWorld().isAir(pos.up())) {
       context.getWorld().setBlockState(pos, ModBlocks.MUSHROOM_INFO[this.type.ordinal()].mycelium().getDefaultState());
-      return ItemUsage.consumeHeldItem(context.getWorld(), player, context.getHand());
+
+      player.getStackInHand(context.getHand()).decrementUnlessCreative(1, player);
+      return ActionResult.SUCCESS;
     }
 
     return super.useOnBlock(context);

@@ -2,19 +2,26 @@ package faceless.artent.potions.blockEntities;
 
 import faceless.artent.potions.api.IPotionContainerBlock;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
+import faceless.artent.potions.network.ArtentServerHook;
+import faceless.artent.potions.network.BarrelSyncPayload;
+import faceless.artent.potions.network.DryingRackSyncPayload;
 import faceless.artent.potions.objects.ModBlockEntities;
 import faceless.artent.potions.registry.AlchemicalPotionRegistry;
 import faceless.artent.potions.registry.FermentationRegistry;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -37,6 +44,9 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
     if (!potions.isEmpty()) {
       if (fermentedTime < FERMENTATION_TIME) {
         fermentedTime++;
+        for (var player : PlayerLookup.tracking((ServerWorld) world, pos)) {
+          ArtentServerHook.packetSyncBarrel(player, this);
+        }
       }
     }
   }
@@ -135,5 +145,16 @@ public class FermentingBarrelBlockEntity extends BlockEntity implements IPotionC
   @Override
   public void onCanNotContainPotion(PlayerEntity player, List<AlchemicalPotion> potion) {
     player.sendMessage(Text.translatable("text.artent_potions.potion.infermentable"), false);
+  }
+
+  public BarrelSyncPayload createSyncPayload() {
+    return new BarrelSyncPayload(this.pos, potions, potionAmount, fermentedTime);
+  }
+
+  public void acceptPayload(BarrelSyncPayload payload) {
+    potions = payload.potions();
+    potionAmount = payload.potionAmount();
+    fermentedTime = payload.fermentedTime();
+    markDirty();
   }
 }

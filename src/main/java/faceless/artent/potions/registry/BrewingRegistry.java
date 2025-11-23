@@ -20,7 +20,7 @@ public class BrewingRegistry implements IRegistry {
   }
 
   private void registerIngredients() {
-    Ingredients.put(BrewingRecipes.Shroom, Color.Cobalt);
+    Ingredients.put(BrewingRecipes.DriedShroom, Color.Cobalt);
     Ingredients.put(BrewingRecipes.Shadowveil, Color.Purple.add(Color.Red));
     Ingredients.put(BrewingRecipes.CrimsonwoodBerry, Color.Red);
     Ingredients.put(BrewingRecipes.CrimsonLeaf, Color.Gray);
@@ -37,8 +37,8 @@ public class BrewingRegistry implements IRegistry {
     Ingredients.put(BrewingRecipes.GlowstoneDust, Color.Orange);
     Ingredients.put(BrewingRecipes.RedstoneDust, Color.Red);
     Ingredients.put(BrewingRecipes.Apple, Color.Red);
-    Ingredients.put(BrewingRecipes.BrownMushroom, Color.Brown);
-    Ingredients.put(BrewingRecipes.RedMushroom, Color.Red);
+    Ingredients.put(BrewingRecipes.DriedBrownMushroom, Color.Brown);
+    Ingredients.put(BrewingRecipes.DriedRedMushroom, Color.Red);
     Ingredients.put(BrewingRecipes.ChorusPlant, Color.Purple);
     Ingredients.put(BrewingRecipes.BlazePowder, Color.Orange);
     Ingredients.put(BrewingRecipes.EnderPearl, Color.Cyan);
@@ -69,7 +69,7 @@ public class BrewingRegistry implements IRegistry {
     BrewingRecipes.RecipeAutomata.addRecipe(
         WATER_BREATHING,
         BrewingRecipes.Blueberry,
-        BrewingRecipes.RedMushroom,
+        BrewingRecipes.DriedRedMushroom,
         BrewingRecipes.Kelp);
     BrewingRecipes.RecipeAutomata.addRecipe(
         LIQUID_FLAME,
@@ -82,7 +82,7 @@ public class BrewingRegistry implements IRegistry {
         BrewingRecipes.Blueberry,
         BrewingRecipes.GlisteningMelon,
         BrewingRecipes.NetherWart,
-        BrewingRecipes.Shroom,
+        BrewingRecipes.DriedShroom,
         BrewingRecipes.FrostPumpkin);
     BrewingRecipes.RecipeAutomata.addRecipe(
         HOLY_WATER,
@@ -105,7 +105,7 @@ public class BrewingRegistry implements IRegistry {
     BrewingRecipes.RecipeAutomata.addRecipe(
         FAST_SWIMMING,
         BrewingRecipes.Cloudberry,
-        BrewingRecipes.BrownMushroom,
+        BrewingRecipes.DriedBrownMushroom,
         BrewingRecipes.StoneScale);
     BrewingRecipes.RecipeAutomata.addRecipe(
         LUMBERJACK,
@@ -126,7 +126,7 @@ public class BrewingRegistry implements IRegistry {
     BrewingRecipes.RecipeAutomata.addRecipe(
         JUMP_BOOST,
         BrewingRecipes.Cloudberry,
-        BrewingRecipes.Shroom,
+        BrewingRecipes.DriedShroom,
         BrewingRecipes.Slime);
 
     // BLACKBERRY
@@ -151,7 +151,7 @@ public class BrewingRegistry implements IRegistry {
         FLIGHT,
         BrewingRecipes.Blackberry,
         BrewingRecipes.NetherWart,
-        BrewingRecipes.Shroom,
+        BrewingRecipes.DriedShroom,
         BrewingRecipes.ManaFeather);
     BrewingRecipes.RecipeAutomata.addRecipe(
         LEVITATION,
@@ -169,36 +169,36 @@ public class BrewingRegistry implements IRegistry {
     BrewingRecipes.RecipeAutomata.addRecipe(
         HEALING,
         BrewingRecipes.Raspberry,
-        BrewingRecipes.RedMushroom,
+        BrewingRecipes.DriedRedMushroom,
         BrewingRecipes.GlisteningMelon);
     BrewingRecipes.RecipeAutomata.addRecipe(
         ANTIDOTE,
         BrewingRecipes.Raspberry,
-        BrewingRecipes.RedMushroom,
+        BrewingRecipes.DriedRedMushroom,
         BrewingRecipes.FermentedSpiderEye);
     BrewingRecipes.RecipeAutomata.addRecipe(
         VAMPIRISM,
         BrewingRecipes.Raspberry,
-        BrewingRecipes.Shroom,
+        BrewingRecipes.DriedShroom,
         BrewingRecipes.CrimsonLeaf,
         BrewingRecipes.Shadowveil);
     BrewingRecipes.RecipeAutomata.addRecipe(
         BERSERK,
         BrewingRecipes.Raspberry,
-        BrewingRecipes.Shroom,
+        BrewingRecipes.DriedShroom,
         BrewingRecipes.NetherWart,
         BrewingRecipes.GlisteningMelon,
         BrewingRecipes.CrimsonwoodBerry);
     BrewingRecipes.RecipeAutomata.addRecipe(
         STONE_SKIN,
         BrewingRecipes.Raspberry,
-        BrewingRecipes.Shroom,
+        BrewingRecipes.DriedShroom,
         BrewingRecipes.Bone,
         BrewingRecipes.IronChestplate);
     BrewingRecipes.RecipeAutomata.addRecipe(
         FIRE_RESISTANCE,
         BrewingRecipes.Raspberry,
-        BrewingRecipes.BrownMushroom,
+        BrewingRecipes.DriedBrownMushroom,
         BrewingRecipes.MagmaCream);
   }
 }
