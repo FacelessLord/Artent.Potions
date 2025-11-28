@@ -62,7 +62,7 @@ public class PotionContainerUtil {
       if (potionStack != PotionStack.Empty) {
         potionStack.setAmount(potionStack.getAmount() + bAmount);
         b.overridePotion(potionStack);
-        return TransferResult.MovedToA;
+        return TransferResult.MovedToB;
       }
       return TransferResult.AIsEmpty;
     }

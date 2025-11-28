@@ -25,10 +25,10 @@ public class AlchemicalPotions {
           StatusEffectsRegistry.VAMPIRISM,
           3 * 1200));
   public static final AlchemicalPotion[] HOLY_WATER = createPotionWithLevels(
-      "holy_water",
+      "sanctity",
       3,
       new StatusEffectInstance(
-          StatusEffectsRegistry.HOLY_WATER,
+          StatusEffectsRegistry.SANCTITY,
           3 * 1200));
   public static final AlchemicalPotion[] BERSERK = createPotionWithLevels(
       "berserk",
@@ -45,9 +45,9 @@ public class AlchemicalPotions {
           3 * 1200));
   public static final AlchemicalPotion FIRE_RESISTANCE = new AlchemicalPotion(
       "fire_resistance",
-                                                                              new StatusEffectInstance(
-                                                                                  StatusEffects.FIRE_RESISTANCE,
-                                                                                                       2 * 1200));
+      new StatusEffectInstance(
+          StatusEffects.FIRE_RESISTANCE,
+          2 * 1200));
   public static final AlchemicalPotion[] FREEZING = createPotionWithLevels(
       "freezing",
       3,
@@ -82,9 +82,9 @@ public class AlchemicalPotions {
           1800));
   public static final AlchemicalPotion WATER_BREATHING = new AlchemicalPotion(
       "water_breathing",
-                                                                              new StatusEffectInstance(
-                                                                                  StatusEffects.WATER_BREATHING,
-                                                                                                       1800));
+      new StatusEffectInstance(
+          StatusEffects.WATER_BREATHING,
+          1800));
   public static final AlchemicalPotion[] JUMP_BOOST = createPotionWithLevels(
       "jump_boost",
       3,
@@ -93,20 +93,20 @@ public class AlchemicalPotions {
           1800));
   public static final AlchemicalPotion FEATHER_FALLING = new AlchemicalPotion(
       "feather_falling",
-                                                                              new StatusEffectInstance(
-                                                                                  StatusEffectsRegistry.FEATHER_FALLING,
-                                                                                  1800));
+      new StatusEffectInstance(
+          StatusEffectsRegistry.FEATHER_FALLING,
+          1800));
   public static final AlchemicalPotion NIGHT_VISION = new AlchemicalPotion(
       "night_vision",
-                                                                           new StatusEffectInstance(
-                                                                               StatusEffects.NIGHT_VISION,
-                                                                                                    1800));
+      new StatusEffectInstance(
+          StatusEffects.NIGHT_VISION,
+          1800));
 
   public static final AlchemicalPotion FLIGHT = new AlchemicalPotion(
       "flight",
-                                                                     new StatusEffectInstance(
-                                                                         StatusEffectsRegistry.FLIGHT,
-                                                                                              3600));
+      new StatusEffectInstance(
+          StatusEffectsRegistry.FLIGHT,
+          3600));
   public static final AlchemicalPotion[] FORTUNE = createPotionWithLevels(
       "fortune",
       3,
@@ -119,11 +119,11 @@ public class AlchemicalPotions {
       new StatusEffectInstance(
           StatusEffectsRegistry.SATURATION,
           6000));
-  public static final AlchemicalPotion SURFACE_TELEPORTATION = new AlchemicalPotion(
-      "surface_teleportation",
-                                                                                    new StatusEffectInstance(
-                                                                                        StatusEffectsRegistry.SURFACE_TELEPORTATION,
-                                                                                        1));
+  public static final AlchemicalPotion[] SURFACE_TELEPORTATION = createPotionWithLevels(
+      "surface_teleportation", 3,
+      new StatusEffectInstance(
+          StatusEffectsRegistry.SURFACE_TELEPORTATION,
+          1));
   public static final AlchemicalPotion[] LUMBERJACK = createPotionWithLevels(
       "lumberjack",
       3,
@@ -143,28 +143,28 @@ public class AlchemicalPotions {
           StatusEffects.LEVITATION,
           200));
 
-    public static final AlchemicalPotion INSTANT_HARM = new AlchemicalPotion(
+  public static final AlchemicalPotion INSTANT_HARM = new AlchemicalPotion(
       "instant_harm",
       new StatusEffectInstance(
           StatusEffects.INSTANT_DAMAGE,
           1));
   public static final AlchemicalPotion[] FERMENTED_VAMPIRISM = createPotionWithLevels(
-      "fermented_vampirism",
+      "vampire_baron",
       3,
       new StatusEffectInstance(
-          StatusEffectsRegistry.FERMENTED_VAMPIRISM,
+          StatusEffectsRegistry.VAMPIRE_BARON,
           1200));
   public static final AlchemicalPotion[] FERMENTED_HOLY_WATER = createPotionWithLevels(
-      "fermented_holy_water",
+      "cleansing",
       3,
       new StatusEffectInstance(
-          StatusEffectsRegistry.FERMENTED_HOLY_WATER,
+          StatusEffectsRegistry.CLEANSING,
           1200));
   public static final AlchemicalPotion[] FERMENTED_LIQUID_FLAME = createPotionWithLevels(
-      "fermented_liquid_flame",
+      "flaming_soul",
       3,
       new StatusEffectInstance(
-          StatusEffectsRegistry.FERMENTED_LIQUID_FLAME,
+          StatusEffectsRegistry.FLAMING_SOUL,
           1200));
   public static final AlchemicalPotion[] INSTANT_HEALING = createPotionWithLevels(
       "instant_healing",
@@ -172,17 +172,18 @@ public class AlchemicalPotions {
       new StatusEffectInstance(
           StatusEffectsRegistry.INSTANT_HEALING,
           1));
-  public static final AlchemicalPotion[] FERMENTED_ANTIDOTE = createPotionWithLevels(
-      "fermented_antidote",
+//  public static final AlchemicalPotion[] FERMENTED_ANTIDOTE = createPotionWithLevels(
+//      "fermented_antidote",
+//      3,
+//      new StatusEffectInstance(
+//          StatusEffectsRegistry.FERMENTED_ANTIDOTE,
+//          1200));
+  public static final AlchemicalPotion[] FERMENTED_SATURATION = createPotionWithLevels(
+      "liquid_meat",
       3,
       new StatusEffectInstance(
-          StatusEffectsRegistry.FERMENTED_ANTIDOTE,
-          1200));
-  public static final AlchemicalPotion FERMENTED_SATURATION = new AlchemicalPotion(
-      "fermented_saturation",
-                                                                                   new StatusEffectInstance(
-                                                                                       StatusEffectsRegistry.FERMENTED_SATURATION,
-                                                                                       1));
+          StatusEffectsRegistry.LIQUID_MEAT,
+          1));
 
   private static AlchemicalPotion[] createPotionWithLevels(
       String id,

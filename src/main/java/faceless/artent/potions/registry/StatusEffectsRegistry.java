@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 public class StatusEffectsRegistry {
 
     public static final RegistryEntry.Reference<StatusEffect> VAMPIRISM = register("vampirism", ModPotionEffects.VAMPIRISM);
-    public static final RegistryEntry.Reference<StatusEffect> HOLY_WATER = register("holy_water", ModPotionEffects.HOLY_WATER);
+    public static final RegistryEntry.Reference<StatusEffect> SANCTITY = register("sanctity", ModPotionEffects.SANCTITY);
     public static final RegistryEntry.Reference<StatusEffect> BERSERK = register("berserk", ModPotionEffects.BERSERK);
     public static final RegistryEntry.Reference<StatusEffect> BERSERK_RECOIL = register("berserk_recoil", ModPotionEffects.BERSERK_RECOIL);
     public static final RegistryEntry.Reference<StatusEffect> STONE_SKIN = register("stone_skin", ModPotionEffects.STONE_SKIN);
@@ -28,12 +28,12 @@ public class StatusEffectsRegistry {
     public static final RegistryEntry.Reference<StatusEffect> INSTANT_HEALING = register("instant_healing", ModPotionEffects.INSTANT_HEALING);
 
     public static final RegistryEntry.Reference<StatusEffect> SURFACE_TELEPORTATION = register("surface_teleportation", ModPotionEffects.SURFACE_TELEPORTATION);
-    public static final RegistryEntry.Reference<StatusEffect> FERMENTED_SATURATION = register("fermented_saturation", ModPotionEffects.FERMENTED_SATURATION);
-    public static final RegistryEntry.Reference<StatusEffect> FERMENTED_LIQUID_FLAME = register("fermented_liquid_flame", ModPotionEffects.FERMENTED_LIQUID_FLAME);
-    public static final RegistryEntry.Reference<StatusEffect> FERMENTED_ANTIDOTE = register("fermented_antidote", ModPotionEffects.FERMENTED_ANTIDOTE);
+    public static final RegistryEntry.Reference<StatusEffect> LIQUID_MEAT = register("liquid_meat", ModPotionEffects.LIQUID_MEAT);
+    public static final RegistryEntry.Reference<StatusEffect> FLAMING_SOUL = register("flaming_soul", ModPotionEffects.FLAMING_SOUL);
+//    public static final RegistryEntry.Reference<StatusEffect> FERMENTED_ANTIDOTE = register("fermented_antidote", ModPotionEffects.FERMENTED_ANTIDOTE);
 
-    public static final RegistryEntry.Reference<StatusEffect> FERMENTED_VAMPIRISM = register("fermented_vampirism", ModPotionEffects.FERMENTED_VAMPIRISM);
-    public static final RegistryEntry.Reference<StatusEffect> FERMENTED_HOLY_WATER = register("fermented_holy_water", ModPotionEffects.FERMENTED_HOLY_WATER);
+    public static final RegistryEntry.Reference<StatusEffect> VAMPIRE_BARON = register("vampire_baron", ModPotionEffects.VAMPIRE_BARON);
+    public static final RegistryEntry.Reference<StatusEffect> CLEANSING = register("cleansing", ModPotionEffects.CLEANSING);
 
     private static RegistryEntry.Reference<StatusEffect> register(String id, StatusEffect entry) {
         return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(ArtentPotions.MODID, id), entry);

@@ -63,7 +63,8 @@
 			"translation": [0, -2.5, -12.25]
 		},
 		"fixed": {
-			"translation": [0, 0, -6]
+			"translation": [0, 0, -3],
+			"scale": [0.5, 0.5, 0.5]
 		},
 		"on_shelf": {
 			"translation": [0, 0, -9.5]

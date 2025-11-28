@@ -33,14 +33,12 @@ public class ArtentStatusEffect extends StatusEffect {
     this.isInstant = isInstant;
   }
 
-  //TODO
   public void onEffectRemoved(LivingEntity entity, int amplifier, List<StatusEffectInstance> statusEffectQueue) {
     if (!(entity instanceof ServerPlayerEntity player)) return;
 
     if (this == ModPotionEffects.FLIGHT && !player.isCreative()) {
-      player.interactionManager.getGameMode().setAbilities(player.getAbilities());
-      player.sendAbilitiesUpdate();
       player.getAbilities().allowFlying = false;
+      player.interactionManager.getGameMode().setAbilities(player.getAbilities());
       player.sendAbilitiesUpdate();
     }
     if (this == ModPotionEffects.BERSERK) {
@@ -70,8 +68,8 @@ public class ArtentStatusEffect extends StatusEffect {
       entity.extinguish();
       return true;
     }
-    if (this == ModPotionEffects.HOLY_WATER) {
-      if (entity.getStatusEffect(StatusEffectsRegistry.FERMENTED_HOLY_WATER) != null) {
+    if (this == ModPotionEffects.SANCTITY) {
+      if (entity.getStatusEffect(StatusEffectsRegistry.CLEANSING) != null) {
         return true;
       }
       var damage = collectHolyWaterDamage(entity, amplifier);
@@ -90,7 +88,7 @@ public class ArtentStatusEffect extends StatusEffect {
       var vampires = world.getEntitiesByClass(
           LivingEntity.class,
           Box.enclosing(entity.getBlockPos().add(-3, -3, -3), entity.getBlockPos().add(3, 3, 3)),
-          (e) -> e.hasStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM));
+          (e) -> e.hasStatusEffect(StatusEffectsRegistry.VAMPIRE_BARON));
 
       for (var vampire : vampires) {
         vampire.heal(damage * 0.5f);
@@ -115,7 +113,7 @@ public class ArtentStatusEffect extends StatusEffect {
     if (entity.hasStatusEffect(StatusEffectsRegistry.VAMPIRISM)) {
       damage += 2 * (amplifier + 1);
     }
-    if (entity.hasStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM)) {
+    if (entity.hasStatusEffect(StatusEffectsRegistry.VAMPIRE_BARON)) {
       damage += 4 * (amplifier + 1);
     }
     return damage;
@@ -123,7 +121,7 @@ public class ArtentStatusEffect extends StatusEffect {
 
   private static void cutVampirismDuration(LivingEntity entity, int duration) {
     cutEffectDuration(entity, StatusEffectsRegistry.VAMPIRISM, duration);
-    cutEffectDuration(entity, StatusEffectsRegistry.FERMENTED_VAMPIRISM, duration);
+    cutEffectDuration(entity, StatusEffectsRegistry.VAMPIRE_BARON, duration);
   }
 
   private static void cutEffectDuration(
@@ -171,7 +169,7 @@ public class ArtentStatusEffect extends StatusEffect {
            || this == ModPotionEffects.FREEZING && duration % 10 == 0
            || this == ModPotionEffects.BERSERK && duration == 600
            || this == ModPotionEffects.BLEEDING && duration % 40 == 0
-           || this == ModPotionEffects.HOLY_WATER && duration % 40 == 0
+           || this == ModPotionEffects.SANCTITY && duration % 40 == 0
            || this == ModPotionEffects.SATURATION && (duration % (80 / (amplifier + 1)) == 0);
   }
 

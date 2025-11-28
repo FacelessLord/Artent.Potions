@@ -28,13 +28,13 @@ public class AntidoteMixin {
       checkAndClearPoison(living, level, duration);
     }
 
-    if (living.hasStatusEffect(StatusEffectsRegistry.FERMENTED_ANTIDOTE)) {
-      var potion = living.getStatusEffect(StatusEffectsRegistry.ANTIDOTE);
-      if (potion == null) return;
-      var level = potion.getAmplifier();
-      var duration = potion.getDuration();
-      checkAndClearPoison(living, level + 1, duration);
-    }
+//    if (living.hasStatusEffect(StatusEffectsRegistry.FERMENTED_ANTIDOTE)) {
+//      var potion = living.getStatusEffect(StatusEffectsRegistry.ANTIDOTE);
+//      if (potion == null) return;
+//      var level = potion.getAmplifier();
+//      var duration = potion.getDuration();
+//      checkAndClearPoison(living, level + 1, duration);
+//    }
   }
 
   @Unique

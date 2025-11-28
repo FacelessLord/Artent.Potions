@@ -42,23 +42,26 @@ public class LivingEntityMixin {
   @Inject(at = @At("HEAD"), method = "onStatusEffectsRemoved")
   protected void onStatusEffectRemoved(Collection<StatusEffectInstance> effects, CallbackInfo ci) {
     var living = get();
-    if (!living.getWorld().isClient) {
-      for (var effect : effects) {
-        var type = effect.getEffectType();
-        if (type instanceof ArtentStatusEffect artentStatusEffect) {
-          artentStatusEffect.onEffectRemoved(living, effect.getAmplifier(), statusEffectQueue);
-          this.updateAttributes();
-        }
+    if (living.getWorld().isClient) return;
+
+    for (var effect : effects) {
+      var type = effect.getEffectType().value();
+      if (type instanceof ArtentStatusEffect artentStatusEffect) {
+        artentStatusEffect.onEffectRemoved(living, effect.getAmplifier(), statusEffectQueue);
+        this.updateAttributes();
       }
     }
   }
 
   @Inject(at = @At("HEAD"), method = "onStatusEffectUpgraded")
   protected void onStatusEffectUpgraded(
-      StatusEffectInstance effect, boolean reapplyEffect, @Nullable Entity source, CallbackInfo ci) {
+      StatusEffectInstance effect,
+      boolean reapplyEffect,
+      @Nullable Entity source,
+      CallbackInfo ci) {
     var living = get();
     if (reapplyEffect && !living.getWorld().isClient) {
-      var type = effect.getEffectType();
+      var type = effect.getEffectType().value();
       if (!(type instanceof ArtentStatusEffect artentStatusEffect)) {
         return;
       }
@@ -75,19 +78,19 @@ public class LivingEntityMixin {
       if (source.isDirect()) {
         if (!target.getType().isIn(EntityTypeTags.UNDEAD)) {
           var vampirism = attacker.getStatusEffect(StatusEffectsRegistry.VAMPIRISM);
-          var fermentedVampirism = attacker.getStatusEffect(StatusEffectsRegistry.FERMENTED_VAMPIRISM);
+          var fermentedVampirism = attacker.getStatusEffect(StatusEffectsRegistry.VAMPIRE_BARON);
           if (vampirism != null) attacker.heal(amount * (vampirism.getAmplifier() + 1) / 10);
           if (fermentedVampirism != null) {
             attacker.heal(amount * (fermentedVampirism.getAmplifier() + 1) / 10);
             target.addStatusEffect(new StatusEffectInstance(
                 StatusEffectsRegistry.BLEEDING,
-                6 * 20,
-                fermentedVampirism.getAmplifier(),
-                false,
-                false));
+                                                            6 * 20,
+                                                            fermentedVampirism.getAmplifier(),
+                                                            false,
+                                                            false));
           }
         } else {
-          var holyWater = attacker.getStatusEffect(StatusEffectsRegistry.HOLY_WATER);
+          var holyWater = attacker.getStatusEffect(StatusEffectsRegistry.SANCTITY);
           if (holyWater != null && !source.isOf(DamageTypes.INDIRECT_MAGIC) && !source.isOf(DamageTypes.ON_FIRE)) {
             target.timeUntilRegen = 5;
             target.damage(
@@ -124,8 +127,8 @@ public class LivingEntityMixin {
   public void damage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
     var target = this.get();
     if (source.isOf(DamageTypes.ON_FIRE) || source.isOf(DamageTypes.IN_FIRE)) {
-      if (target.hasStatusEffect(StatusEffectsRegistry.FERMENTED_LIQUID_FLAME)) {
-        var fermentedLiquidFlame = target.getStatusEffect(StatusEffectsRegistry.FERMENTED_LIQUID_FLAME);
+      if (target.hasStatusEffect(StatusEffectsRegistry.FLAMING_SOUL)) {
+        var fermentedLiquidFlame = target.getStatusEffect(StatusEffectsRegistry.FLAMING_SOUL);
         if (fermentedLiquidFlame != null) {
           if (target.timeUntilRegen < 10) {
             target.heal(amount);

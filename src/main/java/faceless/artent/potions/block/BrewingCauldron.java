@@ -87,7 +87,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
   protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
     var be = world.getBlockEntity(pos);
     if (!(be instanceof BrewingCauldronBlockEntity cauldron)) {
-      return ActionResult.SUCCESS;
+      return ActionResult.FAIL;
     }
 
     var stack = player.getEquippedStack(player.getActiveHand() == Hand.MAIN_HAND
@@ -154,7 +154,7 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
 
   private void addFuel(BrewingCauldronBlockEntity cauldron, PlayerEntity player, Hand hand, ItemStack stack) {
     var result = cauldron.addFuel(stack, player.isSneaking());
-    if (!player.getAbilities().creativeMode) return;
+    if (player.getAbilities().creativeMode) return;
     if (result == BrewingCauldronBlockEntity.AddFuelResultType.ConsumeStack) {
       player.setStackInHand(hand, ItemStack.EMPTY);
     }

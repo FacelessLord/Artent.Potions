@@ -1,10 +1,8 @@
 package faceless.artent.potions;
 
+import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.network.ArtentServerHook;
-import faceless.artent.potions.objects.ModBlocks;
-import faceless.artent.potions.objects.ModItems;
-import faceless.artent.potions.objects.ModParticles;
-import faceless.artent.potions.objects.ModRecipes;
+import faceless.artent.potions.objects.*;
 import faceless.artent.potions.recipes.DryingRecipe;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -40,9 +38,6 @@ public class ArtentPotions implements ModInitializer {
   public void onInitialize() {
     DynamicRegistries.registerSynced(ModRecipes.DRYING_RECIPES_REGISTRY_KEY, DryingRecipe.Serializer.CODEC, DryingRecipe.Serializer.CODEC);
 
-    Potions.register();
-    FermentedPotions.register();
-
     Blocks.register();
     Items.register();
     BlockEntities.register();
@@ -51,7 +46,16 @@ public class ArtentPotions implements ModInitializer {
     Particles.register();
 
     LootTableModifiers.modifyLootTables();
+
+    Potions.register();
     Brewing.register();
+    FermentedPotions.register();
+
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE, 1, ModItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE, 3, ModItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE, 9, ModItemGroups.POTIONS);
+
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE_EXPLOSIVE, 1, ModItemGroups.POTIONS);
 
     Commands.register();
     ServerHook.load();

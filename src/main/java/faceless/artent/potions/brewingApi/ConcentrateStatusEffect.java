@@ -35,10 +35,10 @@ public class ConcentrateStatusEffect extends StatusEffect {
       LivingEntity target,
       int amplifier,
       double proximity) {
-    if (this == ModPotionEffects.FERMENTED_SATURATION) {
+    if (this == ModPotionEffects.LIQUID_MEAT) {
       if (target instanceof PlayerEntity player) player.getHungerManager().add(20 * (amplifier + 1), 5);
     }
-    if (this == ModPotionEffects.FERMENTED_HOLY_WATER) {
+    if (this == ModPotionEffects.CLEANSING) {
       var damage = ArtentStatusEffect.collectHolyWaterDamage(target, amplifier);
       if (damage > 0) {
         target.damage(world, world.getDamageSources().magic(), damage * 2);
@@ -51,7 +51,7 @@ public class ConcentrateStatusEffect extends StatusEffect {
         var key = effect.getKey();
         if (instance.getAmplifier() <= amplifier && (key.value().getCategory() == StatusEffectCategory.HARMFUL
                                                      || key == StatusEffectsRegistry.VAMPIRISM
-                                                     || key == StatusEffectsRegistry.FERMENTED_VAMPIRISM)) {
+                                                     || key == StatusEffectsRegistry.VAMPIRE_BARON)) {
 
           effectsToRemove.add(effect.getKey());
         }
@@ -62,7 +62,7 @@ public class ConcentrateStatusEffect extends StatusEffect {
 
   @Override
   public void onApplied(LivingEntity entity, int amplifier) {
-    if (this == ModPotionEffects.FERMENTED_LIQUID_FLAME) {
+    if (this == ModPotionEffects.FLAMING_SOUL) {
       entity.setFireTicks(200 * (amplifier + 1));
     }
   }

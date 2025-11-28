@@ -69,6 +69,9 @@ public class AlchemicalPotionUtil {
 
   public static List<StatusEffectInstance> getPotionEffects(ItemStack itemStack) {
     var potions = getPotions(itemStack);
+    return getPotionEffects(potions);
+  }
+  public static List<StatusEffectInstance> getPotionEffects(List<AlchemicalPotion> potions) {
     if (ListUtils.isNullOrEmpty(potions)) return new ArrayList<>();
     return potions.stream().filter(Objects::nonNull).flatMap(potion -> potion.getEffects().stream()).toList();
   }

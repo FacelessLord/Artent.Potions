@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record BarrelSyncPayload(
-    BlockPos pos, List<AlchemicalPotion> potions, int potionAmount, int fermentedTime
+    BlockPos pos, List<AlchemicalPotion> potions, int potionAmount, int fermentedTime, boolean fermentationStarted
 ) implements CustomPayload {
   public static final Id<BarrelSyncPayload> PayloadId = new Id<>(Identifier.of(
       ArtentPotions.MODID,
@@ -25,6 +25,7 @@ public record BarrelSyncPayload(
       buf.writeBlockPos(value.pos);
       buf.writeInt(value.potionAmount);
       buf.writeInt(value.fermentedTime);
+      buf.writeBoolean(value.fermentationStarted);
 
       var potionsCount = value.potions.size();
       buf.writeInt(potionsCount);
@@ -40,6 +41,7 @@ public record BarrelSyncPayload(
       var pos = buf.readBlockPos();
       var potionAmount = buf.readInt();
       var fermentedTime = buf.readInt();
+      var fermentationStarted = buf.readBoolean();
       var potionsCount = buf.readInt();
 
       var potions = new ArrayList<AlchemicalPotion>(potionsCount);
@@ -54,7 +56,7 @@ public record BarrelSyncPayload(
         potions.add(potion);
       }
 
-      return new BarrelSyncPayload(pos, potions, potionAmount, fermentedTime);
+      return new BarrelSyncPayload(pos, potions, potionAmount, fermentedTime, fermentationStarted);
     }
   };
 

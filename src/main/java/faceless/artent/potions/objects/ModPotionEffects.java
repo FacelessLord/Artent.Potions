@@ -11,7 +11,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class ModPotionEffects {
   public static final StatusEffect VAMPIRISM = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
-  public static final StatusEffect HOLY_WATER = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
+  public static final StatusEffect SANCTITY = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect BERSERK = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red)
       .addAttributeModifier(
           EntityAttributes.MOVEMENT_SPEED,
@@ -78,7 +78,7 @@ public class ModPotionEffects {
       .addAttributeModifier(
           EntityAttributes.MOVEMENT_SPEED,
           AttributeUuids.StoneSkin,
-          -0.5,
+          -0.1,
           EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
       .addAttributeModifier(
           EntityAttributes.ARMOR_TOUGHNESS,
@@ -128,21 +128,21 @@ public class ModPotionEffects {
       Color.Red,
       true);
 
-  public static final StatusEffect FERMENTED_LIQUID_FLAME = new ConcentrateStatusEffect(
+  public static final StatusEffect FLAMING_SOUL = new ConcentrateStatusEffect(
       StatusEffectCategory.BENEFICIAL,
       Color.Red,
       false);
-  public static final StatusEffect FERMENTED_ANTIDOTE = new ConcentrateStatusEffect(
+//  public static final StatusEffect FERMENTED_ANTIDOTE = new ConcentrateStatusEffect(
+//      StatusEffectCategory.BENEFICIAL,
+//      Color.Red);
+  public static final StatusEffect LIQUID_MEAT = new ConcentrateStatusEffect(
       StatusEffectCategory.BENEFICIAL,
       Color.Red);
-  public static final StatusEffect FERMENTED_SATURATION = new ConcentrateStatusEffect(
-      StatusEffectCategory.BENEFICIAL,
-      Color.Red);
-  public static final StatusEffect FERMENTED_VAMPIRISM = new ConcentrateStatusEffect(
+  public static final StatusEffect VAMPIRE_BARON = new ConcentrateStatusEffect(
       StatusEffectCategory.BENEFICIAL,
       Color.Red,
       false);
-  public static final StatusEffect FERMENTED_HOLY_WATER = new ConcentrateStatusEffect(
+  public static final StatusEffect CLEANSING = new ConcentrateStatusEffect(
       StatusEffectCategory.BENEFICIAL,
-      Color.Red);
+      Color.Red, false);
 }

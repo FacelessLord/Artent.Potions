@@ -43,7 +43,7 @@ public class PotionBottleItem extends Item implements IPotionContainerItem, IDeb
   @Override
   public List<AlchemicalPotion> getPotions(ItemStack stack) {
     var keys = PotionDataUtil.getPotionsKeys(stack);
-    if(keys == null)
+    if (keys == null)
       keys = List.of();
     return keys.stream().map(AlchemicalPotionRegistry::getPotion).toList();
   }
@@ -81,7 +81,8 @@ public class PotionBottleItem extends Item implements IPotionContainerItem, IDeb
     if (!hasPotion(stack))
       return Text.translatable(translationId).append(Text.translatable("text.artent_potions.potion.unidentified"));
 
-    var text = Text.translatable(translationId);
+    var text = Text.translatable(translationId).append(Text.translatable("artent.item.potion"));
+
     effects
         .stream()
         .map(effect -> Text.translatable(effect.getTranslationKey()))
