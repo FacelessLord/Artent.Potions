@@ -28,7 +28,7 @@ public class FermentationRegistry implements IRegistry {
 
   @Override
   public void register() {
-    register(HOLY_WATER, FERMENTED_HOLY_WATER, 600, 1.5f);
+    register(SANCTITY, CLEANSING, 600, 1.5f);
     register(VAMPIRISM, FERMENTED_VAMPIRISM, 600, 1.5f);
     register(LIQUID_FLAME, FERMENTED_LIQUID_FLAME, 600, 1.5f);
     register(HEALING, INSTANT_HEALING, 600, 1.5f);
@@ -36,6 +36,7 @@ public class FermentationRegistry implements IRegistry {
 
     register(SATURATION, FERMENTED_SATURATION, 600, 1.5f);
     register(LEVITATION, SURFACE_TELEPORTATION, 600, 1.5f);
+    register(SPEED, BLINK, 600, 1.5f);
   }
 
   private void register(

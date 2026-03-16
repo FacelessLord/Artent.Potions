@@ -17,6 +17,7 @@ public class StatusEffectsRegistry {
     public static final RegistryEntry.Reference<StatusEffect> STONE_SKIN = register("stone_skin", ModPotionEffects.STONE_SKIN);
     public static final RegistryEntry.Reference<StatusEffect> FREEZING = register("freezing", ModPotionEffects.FREEZING);
     public static final RegistryEntry.Reference<StatusEffect> SATURATION = register("saturation", ModPotionEffects.SATURATION);
+    public static final RegistryEntry.Reference<StatusEffect> HOT_CHOCOLATE = register("hot_chocolate", ModPotionEffects.HOT_CHOCOLATE);
     public static final RegistryEntry.Reference<StatusEffect> ANTIDOTE = register("antidote", ModPotionEffects.ANTIDOTE);
     public static final RegistryEntry.Reference<StatusEffect> FORTUNE = register("fortune", ModPotionEffects.FORTUNE);
 
@@ -34,6 +35,7 @@ public class StatusEffectsRegistry {
 
     public static final RegistryEntry.Reference<StatusEffect> VAMPIRE_BARON = register("vampire_baron", ModPotionEffects.VAMPIRE_BARON);
     public static final RegistryEntry.Reference<StatusEffect> CLEANSING = register("cleansing", ModPotionEffects.CLEANSING);
+    public static final RegistryEntry.Reference<StatusEffect> BLINK = register("blink", ModPotionEffects.BLINK);
 
     private static RegistryEntry.Reference<StatusEffect> register(String id, StatusEffect entry) {
         return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(ArtentPotions.MODID, id), entry);

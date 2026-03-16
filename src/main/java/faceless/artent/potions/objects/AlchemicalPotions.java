@@ -24,7 +24,7 @@ public class AlchemicalPotions {
       new StatusEffectInstance(
           StatusEffectsRegistry.VAMPIRISM,
           3 * 1200));
-  public static final AlchemicalPotion[] HOLY_WATER = createPotionWithLevels(
+  public static final AlchemicalPotion[] SANCTITY = createPotionWithLevels(
       "sanctity",
       3,
       new StatusEffectInstance(
@@ -113,11 +113,23 @@ public class AlchemicalPotions {
       new StatusEffectInstance(
           StatusEffectsRegistry.FORTUNE,
           1800));
+  public static final AlchemicalPotion[] HOT_CHOCOLATE = createPotionWithLevels(
+      "hot_chocolate",
+      3,
+      new StatusEffectInstance(
+          StatusEffectsRegistry.HOT_CHOCOLATE,
+          6000));
   public static final AlchemicalPotion[] SATURATION = createPotionWithLevels(
       "saturation",
       3,
       new StatusEffectInstance(
           StatusEffectsRegistry.SATURATION,
+          6000));
+  public static final AlchemicalPotion[] SPEED = createPotionWithLevels(
+      "speed",
+      3,
+      new StatusEffectInstance(
+          StatusEffects.SPEED,
           6000));
   public static final AlchemicalPotion[] SURFACE_TELEPORTATION = createPotionWithLevels(
       "surface_teleportation", 3,
@@ -154,7 +166,7 @@ public class AlchemicalPotions {
       new StatusEffectInstance(
           StatusEffectsRegistry.VAMPIRE_BARON,
           1200));
-  public static final AlchemicalPotion[] FERMENTED_HOLY_WATER = createPotionWithLevels(
+  public static final AlchemicalPotion[] CLEANSING = createPotionWithLevels(
       "cleansing",
       3,
       new StatusEffectInstance(
@@ -183,6 +195,12 @@ public class AlchemicalPotions {
       3,
       new StatusEffectInstance(
           StatusEffectsRegistry.LIQUID_MEAT,
+          1));
+  public static final AlchemicalPotion[] BLINK = createPotionWithLevels(
+      "blink",
+      3,
+      new StatusEffectInstance(
+          StatusEffectsRegistry.BLINK,
           1));
 
   private static AlchemicalPotion[] createPotionWithLevels(

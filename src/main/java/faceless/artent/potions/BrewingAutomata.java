@@ -64,14 +64,14 @@ public class BrewingAutomata {
       if (edge.isEmpty()) {
         break;
       }
-      color = color.add(BrewingRegistry.Ingredients.get(ingredient));
+      color = color.add(ingredient.color());
       state = edge.get().Target;
       i++;
     }
 
     for (; i < ingredients.length; i++) {
       var newState = i == ingredients.length - 1 ? new State(nextId++, true, potion) : new State(nextId++, false, null);
-      color = color.add(BrewingRegistry.Ingredients.get(ingredients[i]));
+      color = color.add(ingredients[i].color());
       var edge = new Edge(state, newState, ingredients[i]);
       Edges.get(state).add(edge);
       state = newState;

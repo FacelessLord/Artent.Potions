@@ -14,7 +14,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.data.TrackedDataHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.SnowGolemEntity;
@@ -22,7 +22,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -45,7 +47,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   private static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("attack");
   private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
   private static final RawAnimation GROUND_DOWN = RawAnimation.begin().thenPlay("ground_down");
-  private static final TrackedData<Boolean> IS_FROZEN;
+  private static final TrackedData<FreezingStatus> FREEZING_STATUS_TRACKED_DATA;
   private final AnimatableInstanceCache instanceCache;
   private final AnimationController<FrostedGolem> animationController;
   private final ActionQueue actionQueue;
@@ -73,7 +75,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
 
   protected void initDataTracker(DataTracker.Builder builder) {
     super.initDataTracker(builder);
-    builder.add(IS_FROZEN, false);
+    builder.add(FREEZING_STATUS_TRACKED_DATA, new FreezingStatus(false, 0));
   }
 
   public static DefaultAttributeContainer.Builder createFrostedGolemAttributes() {
@@ -102,7 +104,7 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   }
 
   static {
-    IS_FROZEN = DataTracker.registerData(FrostedGolem.class, TrackedDataHandlerRegistry.BOOLEAN);
+    FREEZING_STATUS_TRACKED_DATA = DataTracker.registerData(FrostedGolem.class, FreezingStatus.FREEZING_STATUS);
   }
 
   @Override
@@ -110,13 +112,13 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     super.tick();
     this.actionQueue.tickQueue();
 
-    var isFrozen = getIsFrozen();
+    var freezingStatus = getFreezingStatus();
 
-    if (isFrozen && !this.goalSelector.getGoals().isEmpty()) {
+    if (freezingStatus.isFrozen && !this.goalSelector.getGoals().isEmpty()) {
       this.updateGoalsWhenFrozen();
     }
 
-    if (isFrozen) {
+    if (freezingStatus.isFrozen) {
       frozenAnimationTick();
 
       if (this.getWorld() instanceof ServerWorld serverWorld) {
@@ -161,61 +163,71 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   }
 
   private void generateCrystalClusters(ServerWorld serverWorld) {
-    var angle = serverWorld.random.nextDouble() * Math.TAU;
-    var range = serverWorld.random.nextInt(4) + 3;
-    var x = (int) Math.floor(range * Math.sin(angle));
-    var z = (int) Math.floor(range * Math.cos(angle));
+    var freezingStatus = getFreezingStatus();
 
-    var growPos = serverWorld.getTopPosition(
-        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-        new BlockPos(
-            x + this.getBlockX(),
-            this.getBlockY(),
-            z + this.getBlockZ())).down();
+    for (int i = 0; i < freezingStatus.level; i++) {
 
-    var isSnowOnTop = serverWorld.getBlockState(growPos.up()).isIn(BlockTags.SNOW);
-    if (isSnowOnTop) {
-      growPos = growPos.up();
-    }
-    var blockState = serverWorld.getBlockState(growPos);
+      var angle = serverWorld.random.nextDouble() * Math.TAU;
+      var range = serverWorld.random.nextInt(4) + 5;
+      var x = (int) Math.floor(range * Math.sin(angle));
+      var z = (int) Math.floor(range * Math.cos(angle));
 
-    var canPlaceCluster = ModBlocks.ICE_CRYSTAL_CLUSTER.block().canPlaceAt(
-        ModBlocks.ICE_CRYSTAL_BUD_SMALL.block().getDefaultState(),
-        serverWorld,
-        growPos);
+      var growPos = serverWorld.getTopPosition(
+          Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+          new BlockPos(
+              x + this.getBlockX(),
+              this.getBlockY(),
+              z + this.getBlockZ())).down();
 
-    var targetIsCluster = blockState.getBlock() instanceof IceCrystalCluster;
+      var isSnowOnTop = serverWorld.getBlockState(growPos.up()).isIn(BlockTags.SNOW);
+      if (isSnowOnTop) {
+        growPos = growPos.up();
+      }
+      var blockState = serverWorld.getBlockState(growPos);
 
-    if (targetIsCluster) {
-      var nextState = IceCrystalCluster.createNextStage(blockState);
-      serverWorld.setBlockState(growPos, nextState);
-    } else if (!isSnowOnTop) {
-      serverWorld.setBlockState(growPos.up(), Blocks.SNOW.getDefaultState());
-    } else if (canPlaceCluster) {
-      serverWorld.setBlockState(growPos, ModBlocks.ICE_CRYSTAL_BUD_SMALL.block().getDefaultState());
+      var canPlaceCluster = ModBlocks.ICE_CRYSTAL_CLUSTER.block().canPlaceAt(
+          ModBlocks.ICE_CRYSTAL_BUD_SMALL.block().getDefaultState(),
+          serverWorld,
+          growPos);
+
+      var targetIsCluster = blockState.getBlock() instanceof IceCrystalCluster;
+
+      if (targetIsCluster) {
+        var nextState = IceCrystalCluster.createNextStage(blockState);
+        serverWorld.setBlockState(growPos, nextState);
+      } else if (!isSnowOnTop) {
+        serverWorld.setBlockState(growPos.up(), Blocks.SNOW.getDefaultState());
+      } else if (canPlaceCluster) {
+        serverWorld.setBlockState(growPos, ModBlocks.ICE_CRYSTAL_BUD_SMALL.block().getDefaultState());
+      }
     }
   }
 
   private void freezeNearbyEntities(ServerWorld serverWorld) {
     var entities = serverWorld.getEntitiesByClass(
         LivingEntity.class,
-        Box.of(this.getBlockPos().down(6).toCenterPos(), 9, 12, 9),
+        Box.of(this.getBlockPos().down(6).toCenterPos(), 9 * 2, 12 * 2, 9 * 2),
         e -> e != this);
     for (var entity : entities) {
-      var dist = this.getBlockPos().toCenterPos().subtract(entity.getPos()).length();
+      var dist = this.getBlockPos().down(6).toCenterPos().subtract(entity.getPos()).length() - 7.5;
+      if (dist < -2.5)
+        continue;
       var frozenTime = 100 - (int) (dist * dist);
 
-      entity.addStatusEffect(new StatusEffectInstance(StatusEffectsRegistry.FREEZING, frozenTime), this);
-      entity.setFrozenTicks(entity.getFrozenTicks() + frozenTime / 10);
+      entity.addStatusEffect(
+          new StatusEffectInstance(
+              StatusEffectsRegistry.FREEZING,
+              frozenTime,
+              this.getFreezingStatus().level-1), this);
     }
   }
 
-  private Boolean getIsFrozen() {
-    return this.getDataTracker().get(IS_FROZEN);
+  private FreezingStatus getFreezingStatus() {
+    return this.getDataTracker().get(FREEZING_STATUS_TRACKED_DATA);
   }
 
-  private void setIsFrozen(boolean isFrozen) {
-    this.getDataTracker().set(IS_FROZEN, isFrozen);
+  private void setFreezingStatus(FreezingStatus freezingStatus) {
+    this.getDataTracker().set(FREEZING_STATUS_TRACKED_DATA, freezingStatus);
   }
 
   @Override
@@ -223,10 +235,11 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
     super.onStatusEffectApplied(effect, source);
     var isServer = this.getWorld() instanceof ServerWorld;
     var freezingEffectAdded = effect.getEffectType() == StatusEffectsRegistry.FREEZING;
-    var isFrozen = getIsFrozen();
+    var freezingStatus = getFreezingStatus();
 
-    if (isServer && freezingEffectAdded && !isFrozen) {
-      setIsFrozen(true);
+    if (isServer && freezingEffectAdded && !freezingStatus.isFrozen) {
+      var newFreezingStatus = new FreezingStatus(true, effect.getAmplifier() + 1);
+      this.setFreezingStatus(newFreezingStatus);
       this.markEffectsDirty();
       this.updateGoalsWhenFrozen();
     }
@@ -234,15 +247,16 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
 
   @Override
   protected void onStatusEffectsRemoved(Collection<StatusEffectInstance> effects) {
+    var freezingStatus = getFreezingStatus();
     super.onStatusEffectsRemoved(effects);
     var isServer = this.getWorld() instanceof ServerWorld;
     var freezingEffectRemoved = effects
         .stream()
         .anyMatch(effect -> effect.getEffectType() == StatusEffectsRegistry.FREEZING);
-    var isFrozen = getIsFrozen();
 
-    if (isServer && freezingEffectRemoved && isFrozen) {
-      setIsFrozen(false);
+    if (isServer && freezingEffectRemoved && freezingStatus.isFrozen) {
+      var newFreezingStatus = new FreezingStatus(false, 0);
+      this.setFreezingStatus(newFreezingStatus);
       this.markEffectsDirty();
       this.initGoals();
 
@@ -313,23 +327,6 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   }
 
   @Override
-  public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
-  }
-
-  @Override
-  public void readCustomDataFromNbt(NbtCompound nbt) {
-    super.readCustomDataFromNbt(nbt);
-    setIsFrozen(nbt.getBoolean("isFrozen"));
-  }
-
-  @Override
-  public void writeCustomDataToNbt(NbtCompound nbt) {
-    super.writeCustomDataToNbt(nbt);
-    nbt.putBoolean("isFrozen", getIsFrozen());
-  }
-
-  @Override
   public void setHeadYaw(float headYaw) {
     super.setHeadYaw(headYaw);
     this.setYaw(headYaw);
@@ -347,5 +344,16 @@ public class FrostedGolem extends SnowGolemEntity implements GeoEntity {
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {
     return this.instanceCache;
+  }
+
+  public record FreezingStatus(boolean isFrozen, int level) {
+    public static PacketCodec<? super RegistryByteBuf, FreezingStatus> CODEC = PacketCodec.tuple(
+        PacketCodecs.BOOLEAN,
+        (FreezingStatus status) -> status.isFrozen,
+        PacketCodecs.INTEGER,
+        (FreezingStatus status) -> status.level,
+        FreezingStatus::new);
+
+    public static final TrackedDataHandler<FreezingStatus> FREEZING_STATUS = TrackedDataHandler.create(CODEC);
   }
 }

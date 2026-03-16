@@ -74,10 +74,12 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         waterBox,
         ie -> (canExtractPotion()
                && ie.getStack().getItem() == ModItems.ICE_CRYSTAL_SHARD)
-              || BrewingRecipes.IsIngredient(ie.getStack()));
+              || BrewingIngredients.IsIngredient(ie.getStack()));
     if (items.isEmpty()) return;
 
-    var brewingCooldown = state.getBlock() == ModBlocks.BREWING_CAULDRON_COPPER.block() ? CopperBrewingCooldown : BrewingCooldown;
+    var brewingCooldown = state.getBlock() == ModBlocks.BREWING_CAULDRON_COPPER.block()
+        ? CopperBrewingCooldown
+        : BrewingCooldown;
     var first = items.getFirst();
     var brewable = (IBrewable) first;
     if ((brewable.getBrewingTime() > brewingCooldown)) {
@@ -137,7 +139,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
     final var brewable = (IBrewable) item;
     final var stack = item.getStack();
-    var ingredient = BrewingRecipes.AsIngredient(stack);
+    var ingredient = BrewingIngredients.AsIngredient(stack);
     var isCrystal = stack.getItem() == ModItems.ICE_CRYSTAL_SHARD;
 
     var potionLeveledUp = handleLeveledPotions(ingredient);
@@ -154,8 +156,8 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
         crystalsRequired--;
       } else if (ingredient != null) {
         ingredients.add(ingredient);
-        if (ingredients.size() == 1) color = BrewingRegistry.Ingredients.get(ingredient);
-        else color = color.add(BrewingRegistry.Ingredients.get(ingredient));
+        if (ingredients.size() == 1) color = ingredient.color();
+        else color = color.add(ingredient.color());
       }
     }
     // Only there brewing state can be finishing. After that `ingredients` will empty and `potions` will be extended
@@ -167,10 +169,10 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     if (!ingredients.isEmpty() || potions.isEmpty()) return false;
 
     var lastPotion = potions.getLast();
-    var automataState = BrewingRecipes.RecipeAutomata.LastIngredients.get(lastPotion.id);
+    var automataState = BrewingRegistry.RecipeAutomata.LastIngredients.get(lastPotion.id);
     if (automataState == null) return false;
 
-    var edges = BrewingRecipes.RecipeAutomata.Edges.get(automataState);
+    var edges = BrewingRegistry.RecipeAutomata.Edges.get(automataState);
     if (edges == null) return false;
 
     var possibleEdges = edges.stream().filter(e -> e.Character().equals(ingredient)).toList();
@@ -203,7 +205,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
   }
 
   public BrewingAutomata.State getBrewingState() {
-    return BrewingRecipes.RecipeAutomata.getStateFromIngredients(ingredients);
+    return BrewingRegistry.RecipeAutomata.getStateFromIngredients(ingredients);
   }
 
   private void updateBrewingState() {
@@ -254,15 +256,12 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
 
     var ingredients = new ArrayList<BrewingIngredient>(ingredientsCount);
     for (int i = 0; i < ingredientsCount; i++) {
-      var ingredientTag = ingredientsTag.getCompound("" + i);
-      var id = ingredientTag.getString("id");
-      var item = Registries.ITEM.get(Identifier.of(id));
-      if (item == Items.AIR) {
-        System.out.println("Unknown item with identifier '" + id + "' in cauldron. Removing it.");
+      var id = ingredientsTag.getString("" + i);
+      var ingredient = BrewingRegistry.getIngredient(id);
+      if (ingredient == null) {
+        System.out.println("Unknown ingredient with identifier '" + id + "' in cauldron. Removing it.");
         continue;
       }
-      var meta = ingredientTag.getInt("meta");
-      var ingredient = new BrewingIngredient(item, meta);
       ingredients.add(ingredient);
     }
 
@@ -301,11 +300,7 @@ public class BrewingCauldronBlockEntity extends BlockEntity implements IPotionCo
     var ingredientsTag = new NbtCompound();
     for (int i = 0; i < ingredients.size(); i++) {
       var ingredient = ingredients.get(i);
-      var ingredientTag = new NbtCompound();
-      var id = Registries.ITEM.getId(ingredient.item());
-      ingredientTag.putString("id", id.toString());
-      ingredientTag.putInt("meta", ingredient.meta());
-      ingredientsTag.put(i + "", ingredientTag);
+      ingredientsTag.putString(i + "", ingredient.id());
     }
     nbt.put("ingredients", ingredientsTag);
 

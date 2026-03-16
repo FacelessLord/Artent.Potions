@@ -4,9 +4,11 @@
   "package": "faceless.artent.potions.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AntidoteMixin",
+    "ApplyBonusLootFunctionMixin",
     "BreakBlockMixin",
     "BrewingItemMixin",
-    "AntidoteMixin",
+    "EnchantmentHelperMixin",
     "LivingEntityMixin",
     "StrippingMixin",
     "TableBonusLootConditionMixin",

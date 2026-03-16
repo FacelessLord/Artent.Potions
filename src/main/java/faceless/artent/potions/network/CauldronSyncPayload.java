@@ -5,6 +5,7 @@ import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.BrewingIngredient;
 import faceless.artent.potions.registry.AlchemicalPotionRegistry;
+import faceless.artent.potions.registry.BrewingRegistry;
 import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -49,7 +50,6 @@ public record CauldronSyncPayload(
         var ingredient = value.ingredients.get(i);
         var id = Registries.ITEM.getId(ingredient.item());
         buf.writeString(id.toString());
-        buf.writeInt(ingredient.meta());
       }
 
       for (int i = 0; i < potionsCount; i++) {
@@ -73,14 +73,11 @@ public record CauldronSyncPayload(
       var ingredients = new ArrayList<BrewingIngredient>(ingredientCount);
       for (int i = 0; i < ingredientCount; i++) {
         var id = buf.readString();
-        var meta = buf.readInt();
-
-        var item = Registries.ITEM.get(Identifier.of(id));
-        if (item == Items.AIR) {
+        var ingredient = BrewingRegistry.getIngredient(id);
+        if (ingredient == null) {
           System.out.println("Unknown item with identifier '" + id + "' in cauldron. Removing it.");
           continue;
         }
-        var ingredient = new BrewingIngredient(item, meta);
         ingredients.add(ingredient);
       }
 

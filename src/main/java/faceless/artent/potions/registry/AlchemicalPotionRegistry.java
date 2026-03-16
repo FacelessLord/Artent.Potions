@@ -29,8 +29,8 @@ public class AlchemicalPotionRegistry implements IRegistry {
     register(STRENGTH);
     register(VAMPIRISM);
     register(FERMENTED_VAMPIRISM);
-    register(HOLY_WATER);
-    register(FERMENTED_HOLY_WATER);
+    register(SANCTITY);
+    register(CLEANSING);
     register(BERSERK);
 
     register(STONE_SKIN);
@@ -51,12 +51,15 @@ public class AlchemicalPotionRegistry implements IRegistry {
 
     register(FLIGHT);
     register(FORTUNE);
+    register(HOT_CHOCOLATE);
     register(SATURATION);
     register(FERMENTED_SATURATION);
     register(LUMBERJACK);
     register(HASTE);
     register(LEVITATION);
     register(SURFACE_TELEPORTATION);
+    register(SPEED);
+    register(BLINK);
   }
 
   public void register(AlchemicalPotion potion) {

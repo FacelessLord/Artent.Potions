@@ -3,7 +3,7 @@ package faceless.artent.potions.objects;
 import faceless.artent.core.math.Color;
 import faceless.artent.potions.api.AttributeUuids;
 import faceless.artent.potions.brewingApi.ArtentStatusEffect;
-import faceless.artent.potions.brewingApi.ConcentrateStatusEffect;
+import faceless.artent.potions.brewingApi.ArtentInstantStatusEffect;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -85,27 +85,8 @@ public class ModPotionEffects {
           AttributeUuids.StoneSkin,
           1.5,
           EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-  public static final StatusEffect FREEZING = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.LightBlue, false)
-      .addAttributeModifier(
-          EntityAttributes.MOVEMENT_SPEED,
-          AttributeUuids.Freezing,
-          -0.15,
-          EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-      .addAttributeModifier(
-          EntityAttributes.ATTACK_DAMAGE,
-          AttributeUuids.Freezing,
-          -0.15,
-          EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-      .addAttributeModifier(
-          EntityAttributes.BLOCK_BREAK_SPEED,
-          AttributeUuids.Freezing,
-          -0.15,
-          EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-      .addAttributeModifier(
-          EntityAttributes.JUMP_STRENGTH,
-          AttributeUuids.Freezing,
-          -0.15,
-          EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+  public static final StatusEffect FREEZING = new ArtentStatusEffect(StatusEffectCategory.HARMFUL, Color.LightBlue);
+  public static final StatusEffect HOT_CHOCOLATE = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Brown);
   public static final StatusEffect SATURATION = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect LIQUID_FLAME = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect ANTIDOTE = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
@@ -113,36 +94,26 @@ public class ModPotionEffects {
 
   public static final StatusEffect FEATHER_FALLING = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
   public static final StatusEffect FLIGHT = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
-  public static final StatusEffect SURFACE_TELEPORTATION = new ArtentStatusEffect(
-      StatusEffectCategory.BENEFICIAL,
-      Color.Red,
-      true);
-  public static final StatusEffect LUMBERJACK = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
-
-  public static final StatusEffect BLEEDING = new ArtentStatusEffect(
-      StatusEffectCategory.HARMFUL,
-      Color.Red,
-      false);
-  public static final StatusEffect INSTANT_HEALING = new ArtentStatusEffect(
-      StatusEffectCategory.BENEFICIAL,
-      Color.Red,
-      true);
-
-  public static final StatusEffect FLAMING_SOUL = new ConcentrateStatusEffect(
-      StatusEffectCategory.BENEFICIAL,
-      Color.Red,
-      false);
-//  public static final StatusEffect FERMENTED_ANTIDOTE = new ConcentrateStatusEffect(
-//      StatusEffectCategory.BENEFICIAL,
-//      Color.Red);
-  public static final StatusEffect LIQUID_MEAT = new ConcentrateStatusEffect(
+  public static final StatusEffect SURFACE_TELEPORTATION = new ArtentInstantStatusEffect(
       StatusEffectCategory.BENEFICIAL,
       Color.Red);
-  public static final StatusEffect VAMPIRE_BARON = new ConcentrateStatusEffect(
+  public static final StatusEffect LUMBERJACK = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
+
+  public static final StatusEffect BLEEDING = new ArtentStatusEffect(StatusEffectCategory.HARMFUL, Color.Red);
+  public static final StatusEffect INSTANT_HEALING = new ArtentInstantStatusEffect(
       StatusEffectCategory.BENEFICIAL,
-      Color.Red,
-      false);
-  public static final StatusEffect CLEANSING = new ConcentrateStatusEffect(
+      Color.Red);
+
+  public static final StatusEffect FLAMING_SOUL = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
+  //  public static final StatusEffect FERMENTED_ANTIDOTE = new ArtentInstantStatusEffect(
+//      StatusEffectCategory.BENEFICIAL,
+//      Color.Red);
+  public static final StatusEffect LIQUID_MEAT = new ArtentInstantStatusEffect(
       StatusEffectCategory.BENEFICIAL,
-      Color.Red, false);
+      Color.Red);
+  public static final StatusEffect VAMPIRE_BARON = new ArtentStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
+  public static final StatusEffect CLEANSING = new ArtentInstantStatusEffect(
+      StatusEffectCategory.BENEFICIAL,
+      Color.Red);
+  public static final StatusEffect BLINK = new ArtentInstantStatusEffect(StatusEffectCategory.BENEFICIAL, Color.Red);
 }

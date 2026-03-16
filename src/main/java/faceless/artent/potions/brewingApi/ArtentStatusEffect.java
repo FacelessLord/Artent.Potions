@@ -1,10 +1,10 @@
 package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.math.Color;
+import faceless.artent.potions.entity.FrostedGolem;
 import faceless.artent.potions.objects.ModPotionEffects;
 import faceless.artent.potions.registry.DamageSourceRegistry;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -15,22 +15,12 @@ import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static net.minecraft.world.Heightmap.Type.MOTION_BLOCKING;
-
 public class ArtentStatusEffect extends StatusEffect {
-  private boolean isInstant = false;
-
   public ArtentStatusEffect(StatusEffectCategory category, Color color) {
     super(category, color.toHex());
-  }
-
-  public ArtentStatusEffect(StatusEffectCategory category, Color color, boolean isInstant) {
-    super(category, color.toHex());
-    this.isInstant = isInstant;
   }
 
   public void onEffectRemoved(LivingEntity entity, int amplifier, List<StatusEffectInstance> statusEffectQueue) {
@@ -60,12 +50,19 @@ public class ArtentStatusEffect extends StatusEffect {
       player.sendAbilitiesUpdate();
       return true;
     }
+    if (this == ModPotionEffects.HOT_CHOCOLATE) {
+      var currentFreezingTicks = entity.getFrozenTicks();
+      entity.setFrozenTicks(currentFreezingTicks - (amplifier + 1) * 10);
+      return true;
+    }
     if (this == ModPotionEffects.BERSERK) {
       super.applyUpdateEffect(world, entity, amplifier);
       return true;
     }
     if (this == ModPotionEffects.FREEZING) {
       entity.extinguish();
+      if (!(entity instanceof FrostedGolem))
+        entity.setFrozenTicks(Math.min(entity.getFrozenTicks() + amplifier * 2, 20 * 10 * (1 + amplifier)));
       return true;
     }
     if (this == ModPotionEffects.SANCTITY) {
@@ -98,7 +95,16 @@ public class ArtentStatusEffect extends StatusEffect {
     }
     if (this == ModPotionEffects.SATURATION) {
       if (entity instanceof PlayerEntity playerEntity && world != null) {
-        playerEntity.getHungerManager().add(amplifier + 1, 1.0F);
+        var currentSaturation = playerEntity.getHungerManager().getSaturationLevel();
+        if (currentSaturation < 20) {
+          var saturationSpeed = 2 + amplifier;
+          playerEntity.getHungerManager().setSaturationLevel(Math.min(currentSaturation + saturationSpeed, 20));
+        }
+        var currentFood = playerEntity.getHungerManager().getFoodLevel();
+        if (currentFood < 20) {
+          var foodSpeed = 2 + amplifier;
+          playerEntity.getHungerManager().setFoodLevel(Math.min(currentFood + foodSpeed, 20));
+        }
       }
       return true;
     }
@@ -139,42 +145,25 @@ public class ArtentStatusEffect extends StatusEffect {
     entity.addStatusEffect(newEffect);
   }
 
-
-  public void applyInstantEffect(
-      ServerWorld world,
-      @Nullable Entity effectEntity,
-      @Nullable Entity attacker,
-      LivingEntity target,
-      int amplifier,
-      double proximity) {
-    if (this == ModPotionEffects.SURFACE_TELEPORTATION) {
-      var pos = target.getBlockPos();
-      if (world == null) return;
-
-      var topPosition = world.getTopPosition(MOTION_BLOCKING, pos);
-      var diff = topPosition.subtract(pos).getY();
-      if (diff > 0 && diff < 64 * (amplifier + 1)) {
-        target.teleport(topPosition.getX() + 0.5f, topPosition.getY() + 1, topPosition.getZ() + 0.5f, false);
-      }
+  @Override
+  public void onApplied(LivingEntity entity, int amplifier) {
+    if (this == ModPotionEffects.FLAMING_SOUL) {
+      entity.setFireTicks(200 * (amplifier + 1));
     }
-    if (this == ModPotionEffects.INSTANT_HEALING) {
-      var damage = 8 * (amplifier + 1);
-      target.heal(damage);
+    if (this == ModPotionEffects.HOT_CHOCOLATE) {
+      var currentFreezingTicks = entity.getFrozenTicks();
+      entity.setFrozenTicks(currentFreezingTicks - (amplifier + 1) * 100);
     }
   }
 
   public boolean canApplyUpdateEffect(int duration, int amplifier) {
     return super.canApplyUpdateEffect(duration, amplifier)
            || this == ModPotionEffects.FLIGHT
-           || this == ModPotionEffects.FREEZING && duration % 10 == 0
+           || this == ModPotionEffects.HOT_CHOCOLATE
+           || this == ModPotionEffects.FREEZING
            || this == ModPotionEffects.BERSERK && duration == 600
            || this == ModPotionEffects.BLEEDING && duration % 40 == 0
            || this == ModPotionEffects.SANCTITY && duration % 40 == 0
            || this == ModPotionEffects.SATURATION && (duration % (80 / (amplifier + 1)) == 0);
-  }
-
-  @Override
-  public boolean isInstant() {
-    return isInstant;
   }
 }

@@ -1,12 +1,14 @@
 package faceless.artent.potions;
 
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
+import faceless.artent.potions.entity.FrostedGolem;
 import faceless.artent.potions.network.ArtentServerHook;
 import faceless.artent.potions.objects.*;
 import faceless.artent.potions.recipes.DryingRecipe;
 import faceless.artent.potions.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ public class ArtentPotions implements ModInitializer {
   @Override
   public void onInitialize() {
     DynamicRegistries.registerSynced(ModRecipes.DRYING_RECIPES_REGISTRY_KEY, DryingRecipe.Serializer.CODEC, DryingRecipe.Serializer.CODEC);
+    TrackedDataHandlerRegistry.register(FrostedGolem.FreezingStatus.FREEZING_STATUS);
 
     Blocks.register();
     Items.register();
