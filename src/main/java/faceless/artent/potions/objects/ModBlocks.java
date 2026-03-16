@@ -34,13 +34,19 @@ public final class ModBlocks {
   public static RegisteredBlock<?> SHADOWVEIL;
   public static RegisteredBlock<?> BLAZING_MARIGOLD;
   public static RegisteredBlock<?> SLIME_BERRY;
+  public static RegisteredBlock<?> DRAGORA;
 
   public static RegisteredBlock<?>[] BERRY_BUSH;
 
   public static RegisteredBlock<?> CRIMSONWOOD_LOG;
+  public static RegisteredBlock<?> CRIMSONWOOD_LOG_STRIPPED;
 
   public static RegisteredBlock<?> CRIMSONWOOD_LEAVES;
   public static RegisteredBlock<?> CRIMSONWOOD_PLANKS;
+
+  public static RegisteredBlock<?> CRIMSONWOOD_PLANKS_SLAB;
+  public static RegisteredBlock<?> CRIMSONWOOD_PLANKS_STAIRS;
+
   public static RegisteredBlock<?> CRIMSONWOOD_SAPLING;
 
   public static RegisteredBlock<?> DRYING_RACK;
@@ -148,6 +154,18 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.SLIME),
         ModItemGroups.BASE);
 
+    DRAGORA = register(
+        "dragora",
+        (settings) -> new SpecialFlower(StatusEffects.HEALTH_BOOST, 5, Blocks.END_STONE, settings),
+        Block.Settings
+            .copy(Blocks.ALLIUM)
+            .offset(AbstractBlock.OffsetType.NONE)
+            .nonOpaque()
+            .noCollision()
+            .breakInstantly()
+            .sounds(BlockSoundGroup.GRASS),
+        ModItemGroups.BASE);
+
     BERRY_BUSH = new RegisteredBlock[4];
     for (int type = 0; type < BERRY_BUSH.length; type++) {
       int finalType = type;
@@ -160,6 +178,17 @@ public final class ModBlocks {
 
     CRIMSONWOOD_LOG = register(
         "crimsonwood_log",
+        PillarBlock::new,
+        Block.Settings
+            .copy(Blocks.OAK_LOG)
+            .mapColor(MapColor.SPRUCE_BROWN)
+            .strength(2.0f)
+            .sounds(BlockSoundGroup.WOOD)
+            .burnable(),
+        ModItemGroups.BASE);
+
+    CRIMSONWOOD_LOG_STRIPPED = register(
+        "crimsonwood_log_stripped",
         PillarBlock::new,
         Block.Settings
             .copy(Blocks.OAK_LOG)
@@ -185,6 +214,28 @@ public final class ModBlocks {
             .sounds(BlockSoundGroup.WOOD)
             .burnable(),
         ModItemGroups.BASE);
+    CRIMSONWOOD_PLANKS_SLAB = register(
+        "crimsonwood_planks_slab",
+        SlabBlock::new,
+        Block.Settings
+            .copy(Blocks.OAK_PLANKS)
+            .mapColor(MapColor.BROWN)
+            .strength(2.0f, 3.0f)
+            .sounds(BlockSoundGroup.WOOD)
+            .burnable(),
+        ModItemGroups.BASE);
+    CRIMSONWOOD_PLANKS_STAIRS = register(
+        "crimsonwood_planks_stairs",
+        (AbstractBlock.Settings settings) -> new StairsBlock(CRIMSONWOOD_PLANKS.block().getDefaultState(), settings),
+        Block.Settings
+            .copy(Blocks.OAK_PLANKS)
+            .mapColor(MapColor.BROWN)
+            .strength(2.0f, 3.0f)
+            .sounds(BlockSoundGroup.WOOD)
+            .burnable(),
+        ModItemGroups.BASE);
+
+
 
     var crimsonSaplingGenerator = new SaplingGenerator(
         ArtentPotions.MODID + "_crimsonwood",
@@ -331,7 +382,7 @@ public final class ModBlocks {
         Block.Settings.copy(Blocks.BROWN_MUSHROOM).ticksRandomly().mapColor(MapColor.BROWN));
     MUSHROOM_INFO[MushroomType.Brown.ordinal()] = new MushroomBlockInfo(
         BrownMushroomMycelium.block(),
-                                                                        growingBrownMushroom.block());
+        growingBrownMushroom.block());
 
     var RedMushroomMycelium = register(
         "red_mushroom_mycelium",
@@ -348,7 +399,7 @@ public final class ModBlocks {
         Block.Settings.copy(Blocks.RED_MUSHROOM).ticksRandomly());
     MUSHROOM_INFO[MushroomType.Red.ordinal()] = new MushroomBlockInfo(
         RedMushroomMycelium.block(),
-                                                                      growingRedMushroom.block());
+        growingRedMushroom.block());
 
     var ShroomMycelium = register(
         "shroom_mycelium",
@@ -365,7 +416,7 @@ public final class ModBlocks {
         Block.Settings.copy(Blocks.RED_MUSHROOM).ticksRandomly().mapColor(MapColor.LAPIS_BLUE));
     MUSHROOM_INFO[MushroomType.Shroom.ordinal()] = new MushroomBlockInfo(
         ShroomMycelium.block(),
-                                                                         growingShroomMushroom.block());
+        growingShroomMushroom.block());
 
     FireBlock fireBlock = (FireBlock) Blocks.FIRE;
     fireBlock.registerFlammableBlock(CRIMSONWOOD_LOG.block(), 5, 20);

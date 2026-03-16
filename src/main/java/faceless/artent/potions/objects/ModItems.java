@@ -56,6 +56,8 @@ public final class ModItems {
   public static Item DRIED_BROWN_MUSHROOM;
   public static Item DRIED_RED_MUSHROOM;
   public static Item DRIED_SHROOM;
+  public static Item DRAGORA_PETALS;
+  public static Item DRAGORA_POTION;
 
   public void register() {
     for (int i = 0; i < BERRIES.length; i++) {
@@ -185,6 +187,16 @@ public final class ModItems {
         ModItemGroups.BASE);
     DRIED_SHROOM = register(
         "dried_shroom",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.BASE);
+    DRAGORA_PETALS = register(
+        "dragora_petals",
+        Item::new,
+        new Item.Settings().maxCount(64),
+        ModItemGroups.BASE);
+    DRAGORA_POTION = register(
+        "dragora_potion",
         Item::new,
         new Item.Settings().maxCount(64),
         ModItemGroups.BASE);

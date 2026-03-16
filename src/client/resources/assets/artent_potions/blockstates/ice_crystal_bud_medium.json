@@ -1,7 +1,30 @@
 {
-    "variants": {
-      "": {
-        "model": "artent_potions:block/ice_crystal_bud_medium"
-      }
+  "variants": {
+    "facing=down": {
+      "model": "artent_potions:block/ice_crystal_bud_medium",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "artent_potions:block/ice_crystal_bud_medium",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "artent_potions:block/ice_crystal_bud_medium",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "artent_potions:block/ice_crystal_bud_medium",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "artent_potions:block/ice_crystal_bud_medium"
+    },
+    "facing=west": {
+      "model": "artent_potions:block/ice_crystal_bud_medium",
+      "x": 90,
+      "y": 270
     }
   }
+}

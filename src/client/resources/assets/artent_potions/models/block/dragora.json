@@ -1,0 +1,9 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "artent_potions:block/dragora/dragora",
+		"particle": "artent_potions:block/dragora/dragora",
+		"missing": "artent_potions:block/empty"
+	}
+}

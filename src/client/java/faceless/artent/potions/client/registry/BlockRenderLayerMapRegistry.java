@@ -18,6 +18,7 @@ public class BlockRenderLayerMapRegistry implements IRegistry {
         ModBlocks.SHADOWVEIL_CROPS.block(),
         ModBlocks.SLIME_BERRY_CROPS.block(),
         ModBlocks.SLIME_BERRY.block(),
+        ModBlocks.DRAGORA.block(),
         ModBlocks.BERRY_BUSH[0].block(),
         ModBlocks.BERRY_BUSH[1].block(),
         ModBlocks.BERRY_BUSH[2].block(),

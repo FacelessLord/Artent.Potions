@@ -102,49 +102,49 @@ public class CraftingRecipeProvider extends FabricRecipeProvider {
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.BROWN_MUSHROOM_SPORES, 1)
             .input(ModItems.DRIED_BROWN_MUSHROOM)
-            .group("artent:brown_mushroom_spores")
+            .group("artent:mushroom_spores")
             .criterion(
                 hasItem(ModItems.DRIED_BROWN_MUSHROOM),
                 conditionsFromItem(ModItems.DRIED_BROWN_MUSHROOM))
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.RED_MUSHROOM_SPORES, 1)
             .input(ModItems.DRIED_RED_MUSHROOM)
-            .group("artent:red_mushroom_spores")
+            .group("artent:mushroom_spores")
             .criterion(
                 hasItem(ModItems.DRIED_RED_MUSHROOM),
                 conditionsFromItem(ModItems.DRIED_RED_MUSHROOM))
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.SHROOM_SPORES, 1)
             .input(ModItems.DRIED_SHROOM)
-            .group("artent:shroom_spores")
+            .group("artent:mushroom_spores")
             .criterion(
                 hasItem(ModItems.DRIED_SHROOM),
                 conditionsFromItem(ModItems.DRIED_SHROOM))
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.FROST_PUMPKIN_SEEDS, 4)
             .input(ModBlocks.FROST_PUMPKIN.item())
-            .group("artent:frost_pumpkin_seeds")
+            .group("artent:artent_seeds")
             .criterion(
                 hasItem(ModBlocks.FROST_PUMPKIN.item()),
                 conditionsFromItem(ModBlocks.FROST_PUMPKIN.item()))
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.BLAZING_MARIGOLD_SEEDS, 1)
             .input(ModBlocks.BLAZING_MARIGOLD.item())
-            .group("artent:blazing_marigold_seeds")
+            .group("artent:artent_seeds")
             .criterion(
                 hasItem(ModBlocks.BLAZING_MARIGOLD.item()),
                 conditionsFromItem(ModBlocks.BLAZING_MARIGOLD.item()))
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.SHADOWVEIL_SEEDS, 1)
             .input(ModBlocks.SHADOWVEIL.item())
-            .group("artent:shadowveil_seeds")
+            .group("artent:artent_seeds")
             .criterion(
                 hasItem(ModBlocks.SHADOWVEIL.item()),
                 conditionsFromItem(ModBlocks.SHADOWVEIL.item()))
             .offerTo(recipeExporter);
         createShapeless(RecipeCategory.BREWING, ModItems.SLIME_BERRY_SEEDS, 1)
             .input(ModBlocks.SLIME_BERRY.item())
-            .group("artent:slime_berry_seeds")
+            .group("artent:artent_seeds")
             .criterion(
                 hasItem(ModBlocks.SLIME_BERRY.item()),
                 conditionsFromItem(ModBlocks.SLIME_BERRY.item()))

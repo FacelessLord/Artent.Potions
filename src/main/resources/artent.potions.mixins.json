@@ -8,10 +8,9 @@
     "BrewingItemMixin",
     "AntidoteMixin",
     "LivingEntityMixin",
-    "VanillaBiomeParametersMixin",
-    "EnchantmentHelperMixin",
-    "ApplyBonusLootFunctionMixin",
-    "TableBonusLootConditionMixin"
+    "StrippingMixin",
+    "TableBonusLootConditionMixin",
+    "VanillaBiomeParametersMixin"
   ],
   "injectors": {
     "defaultRequire": 1

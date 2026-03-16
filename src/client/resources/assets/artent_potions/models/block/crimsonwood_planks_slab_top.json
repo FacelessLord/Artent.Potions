@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "artent_potions:block/crimsonwood/_planks",
+    "side": "artent_potions:block/crimsonwood/_planks",
+    "top": "artent_potions:block/crimsonwood/_planks"
+  }
+}
