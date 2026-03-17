@@ -1,5 +1,5 @@
 {
-  "itemGroup.artent.potions": "Artent",
+  "itemGroup.artent_potions.potions": "Artent Potions",
   "block.artent_potions.cauldron": "Iron Cauldron",
   "block.artent_potions.cauldron_copper": "Copper Cauldron",
   "block.artent_potions.shroom": "Shroom",
@@ -82,6 +82,7 @@
   "effect.artent_potions.berserk_recoil": "Berserk (Recoil)",
   "effect.artent_potions.stone_skin": "Stone Skin",
   "effect.artent_potions.freezing": "Freezing",
+  "effect.artent_potions.hot_chocolate": "Hot Chocolate",
   "effect.artent_potions.liquid_flame": "Liquid Flame",
   "effect.artent_potions.antidote": "Antidote",
   "effect.artent_potions.fast_swimming": "Fast Swimming",
@@ -101,6 +102,7 @@
   "effect.artent_potions.flaming_soul": "Flaming soul",
   "effect.artent_potions.fortune": "Fortune",
   "effect.artent_potions.bleeding": "Bleeding",
+  "effect.artent_potions.blink": "Blink",
 
   "artent.item.potion": "Potion of ",
   "artent.item.explosive_potion": "Potion of ",

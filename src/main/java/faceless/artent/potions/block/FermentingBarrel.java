@@ -2,10 +2,13 @@ package faceless.artent.potions.block;
 
 import com.mojang.serialization.MapCodec;
 import faceless.artent.core.api.ChatUtils;
+import faceless.artent.core.api.debug.DebugInfoConsumer;
+import faceless.artent.core.api.debug.IDebuggableBlock;
 import faceless.artent.core.item.INamed;
-import faceless.artent.potions.api.IDebuggableBlock;
+import faceless.artent.core.text.TextUtils;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.api.PotionContainerUtil;
+import faceless.artent.potions.api.TimeUtils;
 import faceless.artent.potions.blockEntities.FermentingBarrelBlockEntity;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.objects.ModBlockEntities;
@@ -35,8 +38,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class FermentingBarrel extends BlockWithEntity implements INamed, IDebuggableBlock {
   public static final MapCodec<FermentingBarrel> CODEC = FermentingBarrel.createCodec(FermentingBarrel::new);
@@ -89,6 +93,10 @@ public class FermentingBarrel extends BlockWithEntity implements INamed, IDebugg
                                             : EquipmentSlot.OFFHAND);
     var item = stack.getItem();
 
+//    if(item == ArtentCore.DebugBook){
+//      return stack.getItem().useOnBlock(new ItemUsageContext(world, player, player.getActiveHand(), stack, hit));
+//    }
+
     if (item instanceof IPotionContainerItem) {
       var barrelInterface = PotionContainerUtil.createInterface(barrel);
       var updatedBottle = stack.copyWithCount(1);
@@ -120,8 +128,12 @@ public class FermentingBarrel extends BlockWithEntity implements INamed, IDebugg
       var effects = AlchemicalPotionUtil.getPotionEffects(barrel.getPotions());
       var potionNames = AlchemicalPotionUtil.getPotionNames(effects);
       ChatUtils.sendMessageToPlayer(
-          world, player, Text.translatable("text.artent_potions.barrel.fermentation.started")
-                             .append(Text.translatable("text.artent_potions.barrel.fermented.of")).append(potionNames));
+          world,
+          player,
+          Text
+              .translatable("text.artent_potions.barrel.fermentation.started")
+              .append(Text.translatable("text.artent_potions.barrel.fermented.of"))
+              .append(potionNames));
       var newStack = stack.copy();
       newStack.setCount(stack.getCount() - 1);
       player.setStackInHand(player.getActiveHand(), newStack);
@@ -132,14 +144,13 @@ public class FermentingBarrel extends BlockWithEntity implements INamed, IDebugg
       var effects = AlchemicalPotionUtil.getPotionEffects(barrel.getPotions());
       var potionNames = AlchemicalPotionUtil.getPotionNames(effects);
 
-      var barrelContentText =
-          Text
-              .translatable("text.artent_potions.barrel.contains")
-              .append(Text.literal(barrel.potionAmount + ""))
-              .append(Text.literal(" "))
-              .append(Text.translatable("text.artent_potions.barrel.portions_" + barrel.potionAmount))
-              .append(Text.translatable("text.artent_potions.barrel.fermented.of"))
-              .append(potionNames);
+      var barrelContentText = Text
+          .translatable("text.artent_potions.barrel.contains")
+          .append(Text.literal(barrel.potionAmount + ""))
+          .append(Text.literal(" "))
+          .append(Text.translatable("text.artent_potions.barrel.portions_" + barrel.potionAmount))
+          .append(Text.translatable("text.artent_potions.barrel.fermented.of"))
+          .append(potionNames);
 
       if (barrel.isFermented()) {
         player.sendMessage(barrelContentText, false);
@@ -169,7 +180,8 @@ public class FermentingBarrel extends BlockWithEntity implements INamed, IDebugg
               .append(Text.translatable("text.artent_potions.fermentation.time.left_suffix"));
 
           ChatUtils.sendMessageToPlayer(
-              world, player,
+              world,
+              player,
               Text
                   .translatable("text.artent_potions.barrel.fermenting")
                   .append(Text.literal(barrel.potionAmount + ""))
@@ -259,17 +271,38 @@ public class FermentingBarrel extends BlockWithEntity implements INamed, IDebugg
   }
 
   @Override
-  public void fillDebugInfo(World world, BlockPos pos, BlockState state, List<String> debugInfo) {
+  public void fillDebugInfo(
+      World world,
+      BlockPos pos,
+      BlockState state,
+      DebugInfoConsumer debugInfo,
+      boolean extended) {
     if (!(world.getBlockEntity(pos) instanceof FermentingBarrelBlockEntity barrel)) return;
 
-    debugInfo.add("Fermentation time: " + barrel.fermentedTime);
-    debugInfo.add("PotionAmount: " + barrel.potionAmount);
-    debugInfo.add("Fermentation started: " + barrel.fermentationStarted);
-    debugInfo.add("Fermentation finished: " + barrel.isFermented());
-    debugInfo.add("Potions: " + barrel.potions
-        .stream()
-        .map(p -> p.id)
-        .reduce((a, b) -> a + ", " + b).orElse("Empty"));
+    var tickRate = world.getTickManager().getTickRate();
+    var fermentationTime = TimeUtils.ticksToTime(barrel.fermentedTime, (int) tickRate);
+    var fermentationStatus = barrel.fermentationStarted
+        ? barrel.isFermented()
+        ? Text.literal("Finished")
+        : Text.literal("Fermenting: ").append(TimeUtils.timeToText(fermentationTime)).append(" left")
+        : Text.literal("Not started");
+    debugInfo.add(Text.literal("Fermentation status: ").append(fermentationStatus));
+
+    var commaText = Text.of(", ");
+    var potionsListText = TextUtils.join(
+        commaText,
+        barrel.potions
+            .stream()
+            .flatMap((i) -> Arrays.stream(i.statusEffects))
+            .map(sei -> Text.translatable(sei.getTranslationKey()))
+            .collect(Collectors.toUnmodifiableList()));
+    var potionText = Text
+        .literal("Potions: ")
+        .append(barrel.potions.isEmpty() ? Text.literal("Empty") : potionsListText);
+
+    debugInfo.add(potionText);
+
+    debugInfo.add("Potion amount: " + barrel.getPotionAmount() + "/" + barrel.getMaxPotionAmount());
   }
 
   public enum BarrelType implements StringIdentifiable {

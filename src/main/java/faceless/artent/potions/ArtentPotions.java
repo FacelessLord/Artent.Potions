@@ -38,7 +38,10 @@ public class ArtentPotions implements ModInitializer {
 
   @Override
   public void onInitialize() {
-    DynamicRegistries.registerSynced(ModRecipes.DRYING_RECIPES_REGISTRY_KEY, DryingRecipe.Serializer.CODEC, DryingRecipe.Serializer.CODEC);
+    DynamicRegistries.registerSynced(
+        ModRecipes.DRYING_RECIPES_REGISTRY_KEY,
+        DryingRecipe.Serializer.CODEC,
+        DryingRecipe.Serializer.CODEC);
     TrackedDataHandlerRegistry.register(FrostedGolem.FreezingStatus.FREEZING_STATUS);
 
     Blocks.register();
@@ -54,11 +57,11 @@ public class ArtentPotions implements ModInitializer {
     Brewing.register();
     FermentedPotions.register();
 
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE, 1, ModItemGroups.POTIONS);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE, 3, ModItemGroups.POTIONS);
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE, 9, ModItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE, 1, ArtentPotionsItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.MEDIUM_BOTTLE, 3, ArtentPotionsItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.BIG_BOTTLE, 9, ArtentPotionsItemGroups.POTIONS);
 
-    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE_EXPLOSIVE, 1, ModItemGroups.POTIONS);
+    AlchemicalPotionUtil.appendPotionStacks(ModItems.SMALL_BOTTLE_EXPLOSIVE, 1, ArtentPotionsItemGroups.POTIONS);
 
     Commands.register();
     ServerHook.load();

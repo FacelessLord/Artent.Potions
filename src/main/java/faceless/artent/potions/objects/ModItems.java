@@ -1,20 +1,15 @@
 package faceless.artent.potions.objects;
 
 import faceless.artent.core.item.group.ArtentItemGroupBuilder;
+import faceless.artent.core.item.group.ModItemGroups;
 import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.api.MushroomType;
-import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.item.*;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
-import net.fabricmc.fabric.mixin.content.registry.FuelRegistryMixin;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.FurnaceBlock;
-import net.minecraft.component.type.Consumable;
-import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
@@ -45,7 +40,6 @@ public final class ModItems {
   public static Item ACORN;
   public static Item STONE_SCALE;
   public static Item ICE_CRYSTAL_SHARD;
-  public static Item DEBUG_BREWING_BOOK;
   public static Item FROST_PUMPKIN_SEEDS;
   public static Item BLAZING_MARIGOLD_SEEDS;
   public static Item SHADOWVEIL_SEEDS;
@@ -130,11 +124,6 @@ public final class ModItems {
     ICE_CRYSTAL_SHARD = register(
         "ice_crystal_shard",
         Item::new,
-        new Item.Settings().maxCount(64),
-        ModItemGroups.BASE);
-    DEBUG_BREWING_BOOK = register(
-        "brew_book",
-        DebugBrewBook::new,
         new Item.Settings().maxCount(64),
         ModItemGroups.BASE);
 

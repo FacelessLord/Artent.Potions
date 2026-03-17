@@ -1,6 +1,7 @@
 package faceless.artent.potions.objects;
 
 import faceless.artent.core.item.group.ArtentItemGroupBuilder;
+import faceless.artent.core.item.group.ModItemGroups;
 import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.api.MushroomBlockInfo;
 import faceless.artent.potions.api.MushroomType;
@@ -9,7 +10,6 @@ import faceless.artent.potions.block.*;
 import faceless.artent.potions.ingridients.Ingredients;
 import faceless.artent.potions.registry.FeatureRegistry;
 import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

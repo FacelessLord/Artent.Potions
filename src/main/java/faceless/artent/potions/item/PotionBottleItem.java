@@ -1,6 +1,7 @@
 package faceless.artent.potions.item;
 
-import faceless.artent.potions.api.IDebuggableItem;
+import faceless.artent.core.api.debug.DebugInfoConsumer;
+import faceless.artent.core.api.debug.IDebuggableItem;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.brewingApi.AlchemicalPotion;
 import faceless.artent.potions.brewingApi.AlchemicalPotionUtil;
@@ -189,7 +190,7 @@ public class PotionBottleItem extends Item implements IPotionContainerItem, IDeb
   }
 
   @Override
-  public void fillDebugInfo(ItemStack stack, List<String> debugInfo) {
+  public void fillDebugInfo(ItemStack stack, DebugInfoConsumer debugInfo) {
     if (hasPotion(stack)) {
       debugInfo.add("Potions: " + String.join(", ", getPotions(stack).stream().map((i) -> i.id).toList()));
     } else {

@@ -57,7 +57,7 @@ public class BrewingIngredients {
       Color.Cobalt);
   public static final BrewingIngredient ChorusPlant = new BrewingIngredient("chorus_plant", Items.CHORUS_FRUIT, Color.Purple);
   public static final BrewingIngredient BlazePowder = new BrewingIngredient("blaze_powder", Items.BLAZE_POWDER, Color.Orange);
-  public static final BrewingIngredient CocoaBeans = new BrewingIngredient("cocoa_beans", Items.COCOA_BEANS, Color.Brown);
+  public static final BrewingIngredient CocoaBeans = new BrewingIngredient("cocoa_beans", Items.COCOA_BEANS, Color.Brown.add(Color.Gold).add(Color.Brown));
   public static final BrewingIngredient EnderPearl = new BrewingIngredient("ender_pearl", Items.ENDER_PEARL, Color.Cyan);
   public static final BrewingIngredient GlisteningMelon = new BrewingIngredient(
       "glistening_melon",

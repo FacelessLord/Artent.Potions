@@ -1,10 +1,13 @@
 package faceless.artent.potions.block;
 
 import com.mojang.serialization.MapCodec;
+import faceless.artent.core.ArtentCore;
 import faceless.artent.core.api.ChatUtils;
+import faceless.artent.core.api.debug.DebugInfoConsumer;
+import faceless.artent.core.api.debug.IDebuggableBlock;
 import faceless.artent.core.item.INamed;
 import faceless.artent.core.math.Color;
-import faceless.artent.potions.api.IDebuggableBlock;
+import faceless.artent.core.text.TextUtils;
 import faceless.artent.potions.api.IPotionContainerItem;
 import faceless.artent.potions.api.PotionContainerUtil;
 import faceless.artent.potions.blockEntities.BrewingCauldronBlockEntity;
@@ -18,11 +21,13 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -34,7 +39,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BrewingCauldron extends BlockWithEntity implements INamed, IDebuggableBlock {
   public static final MapCodec<BrewingCauldron> CODEC = BrewingCauldron.createCodec(BrewingCauldron::new);
@@ -93,22 +101,33 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
     var stack = player.getEquippedStack(player.getActiveHand() == Hand.MAIN_HAND
                                             ? EquipmentSlot.MAINHAND
                                             : EquipmentSlot.OFFHAND);
+    var item = stack.getItem();
 
-    if (stack.getItem() == Items.WATER_BUCKET) {
+
+//    if (item == ArtentCore.DebugBook) {
+//      return item.useOnBlock(new ItemUsageContext(world, player, player.getActiveHand(), stack, hit));
+//    }
+
+    if (item == Items.WATER_BUCKET) {
       fillCauldron(world, pos, cauldron, player, player.getActiveHand(), stack);
-    } else if (world.getFuelRegistry().isFuel(stack)) {
+      return ActionResult.SUCCESS;
+    }
+    if (world.getFuelRegistry().isFuel(stack)) {
       addFuel(cauldron, player, player.getActiveHand(), stack);
-    } else if (stack.getItem() == Items.FLINT_AND_STEEL) {
+      return ActionResult.SUCCESS;
+    }
+    if (item == Items.FLINT_AND_STEEL) {
       setOnFire(world, pos, state, cauldron, player, stack);
-    } else if (stack.isEmpty()) {
+      return ActionResult.SUCCESS;
+    }
+    if (stack.isEmpty()) {
       if (player.isSneaking()) {
         cauldron.clear();
       }
       state = state.with(IS_BURNING, false);
       world.setBlockState(pos, state, Block.NOTIFY_LISTENERS);
+      return ActionResult.SUCCESS;
     }
-
-    var item = stack.getItem();
     if (item instanceof IPotionContainerItem) {
       var cauldronInterface = PotionContainerUtil.createInterface(cauldron);
       var updatedBottle = stack.copyWithCount(1);
@@ -132,9 +151,10 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
       }
       cauldron.markDirty();
       cauldron.updateBlock();
+      return ActionResult.SUCCESS;
     }
 
-    return ActionResult.SUCCESS;
+    return ActionResult.PASS;
   }
 
   private void setOnFire(
@@ -214,7 +234,12 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
   }
 
   @Override
-  public void fillDebugInfo(World world, BlockPos pos, BlockState state, List<String> debugInfo) {
+  public void fillDebugInfo(
+      World world,
+      BlockPos pos,
+      BlockState state,
+      DebugInfoConsumer debugInfo,
+      boolean extended) {
     debugInfo.add("IS_BURNING: " + state.get(IS_BURNING, false));
     debugInfo.add("HAS_COAL: " + state.get(HAS_COAL, false));
 
@@ -225,18 +250,31 @@ public class BrewingCauldron extends BlockWithEntity implements INamed, IDebugga
     }
     debugInfo.add("Fuel amount: " + cauldron.fuelAmount);
     debugInfo.add("Potion amount: " + cauldron.potionAmount);
-    debugInfo.add("Color: " + cauldron.color.toString());
-    debugInfo.add("Crystals required: " + cauldron.crystalsRequired);
-    debugInfo.add("Ingredients: " + String.join(
-        ", ",
-        cauldron.ingredients
+    var commaText = Text.of(", ");
+    if (extended) {
+      debugInfo.add("Color: " + cauldron.color.toString());
+      debugInfo.add("Crystals required: " + cauldron.crystalsRequired);
+      var ingredientsList = TextUtils.join(
+          commaText,
+          cauldron.ingredients.stream().map((i) -> i.item().getName()).toList());
+
+      debugInfo.add(Text
+                        .literal("Ingredients: ")
+                        .append(cauldron.ingredients.isEmpty() ? Text.literal("Empty") : ingredientsList));
+    }
+    var potionsList = TextUtils.join(
+        commaText,
+        cauldron.potions
             .stream()
-            .map((i) -> i.item().getName().toString())
-            .toList()));
-    var potions = new ArrayList<>(cauldron.potions);
-    debugInfo.add("Potions: " + String.join(", ", potions.stream().map((i) -> i.id).toList()));
+            .flatMap((i) -> Arrays.stream(i.statusEffects))
+            .map(sei -> Text.translatable(sei.getTranslationKey()))
+            .collect(Collectors.toUnmodifiableList()));
+
+    debugInfo.add(Text.literal("Potions: ").append(cauldron.potions.isEmpty() ? Text.literal("Empty") : potionsList));
     debugInfo.add("Potion amount: " + cauldron.getPotionAmount() + "/" + cauldron.getMaxPotionAmount());
-    debugInfo.add("Can extract potion: " + cauldron.canExtractPotion());
-    debugInfo.add("Is finishing state: " + cauldron.getBrewingState().isFinishing());
+    if (extended) {
+      debugInfo.add("Can extract potion: " + cauldron.canExtractPotion());
+      debugInfo.add("Is finishing state: " + cauldron.getBrewingState().isFinishing());
+    }
   }
 }
