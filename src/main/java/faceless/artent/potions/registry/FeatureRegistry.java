@@ -1,10 +1,8 @@
 package faceless.artent.potions.registry;
 
 import faceless.artent.potions.ArtentPotions;
-import faceless.artent.potions.features.BerryBushFeature;
-import faceless.artent.potions.features.BerryBushFeatureConfig;
-import faceless.artent.potions.features.VegetationBlockFeature;
-import faceless.artent.potions.features.VegetationBlockFeatureConfig;
+import faceless.artent.potions.features.*;
+import faceless.artent.potions.objects.ModBiomes;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registries;
@@ -35,7 +33,8 @@ public class FeatureRegistry {
   public static final RegistryKey<PlacedFeature> CRIMSON_TREES_PLACED_KEY = placedKeyOf(CRIMSON_TREES_FEATURE_ID);
 
   public static final Identifier BERRY_BUSH_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "berry_bush");
-  public static final RegistryKey<ConfiguredFeature<?, ?>> BERRY_BUSH_CONFIGURED_KEY = configuredKeyOf(BERRY_BUSH_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BERRY_BUSH_CONFIGURED_KEY = configuredKeyOf(
+      BERRY_BUSH_FEATURE_ID);
   public static final RegistryKey<PlacedFeature> BERRY_BUSH_PLACED_KEY = placedKeyOf(BERRY_BUSH_FEATURE_ID);
   public static final Feature<BerryBushFeatureConfig> BERRY_BUSH_FEATURE = new BerryBushFeature(BerryBushFeatureConfig.CODEC);
 
@@ -43,16 +42,24 @@ public class FeatureRegistry {
   public static final Feature<VegetationBlockFeatureConfig> VEGETATION_BLOCK_FEATURE = new VegetationBlockFeature(
       VegetationBlockFeatureConfig.CODEC);
 
-  public static final Identifier SHADOWVEIL_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "demonveil");
-  public static final RegistryKey<ConfiguredFeature<?, ?>> SHADOWVEIL_CONFIGURED_KEY = configuredKeyOf(SHADOWVEIL_FEATURE_ID);
-  public static final RegistryKey<PlacedFeature> SHADOWVEIL_PLACED_KEY = placedKeyOf(SHADOWVEIL_FEATURE_ID);
+  public static final Identifier ARTENT_POTIONS_FLOWERS_FOREST_ID = Identifier.of(ArtentPotions.MODID, "flowers_forest");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ARTENT_POTIONS_FLOWERS_FOREST_CONFIGURED_KEY = configuredKeyOf(
+          ARTENT_POTIONS_FLOWERS_FOREST_ID);
+  public static final RegistryKey<PlacedFeature> ARTENT_POTIONS_FLOWERS_FOREST_PLACED_KEY = placedKeyOf(ARTENT_POTIONS_FLOWERS_FOREST_ID);
 
-  public static final Identifier BLAZING_MARIGOLD_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "blazing_marigold");
-  public static final RegistryKey<ConfiguredFeature<?, ?>> BLAZING_MARIGOLD_CONFIGURED_KEY = configuredKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
-  public static final RegistryKey<PlacedFeature> BLAZING_MARIGOLD_PLACED_KEY = placedKeyOf(BLAZING_MARIGOLD_FEATURE_ID);
+  public static final Identifier ARTENT_POTIONS_FLOWERS_PLAINS_ID = Identifier.of(ArtentPotions.MODID, "flower_plains");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ARTENT_POTIONS_FLOWERS_PLAINS_CONFIGURED_KEY = configuredKeyOf(
+          ARTENT_POTIONS_FLOWERS_PLAINS_ID);
+  public static final RegistryKey<PlacedFeature> ARTENT_POTIONS_FLOWERS_PLAINS_PLACED_KEY = placedKeyOf(ARTENT_POTIONS_FLOWERS_PLAINS_ID);
+
+  public static final Identifier ARTENT_POTIONS_FLOWERS_MEADOW_ID = Identifier.of(ArtentPotions.MODID, "flower_meadow");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ARTENT_POTIONS_FLOWERS_MEADOW_CONFIGURED_KEY = configuredKeyOf(
+          ARTENT_POTIONS_FLOWERS_MEADOW_ID);
+  public static final RegistryKey<PlacedFeature> ARTENT_POTIONS_FLOWERS_MEADOW_PLACED_KEY = placedKeyOf(ARTENT_POTIONS_FLOWERS_MEADOW_ID);
 
   public static final Identifier SLIME_BERRY_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "slime_berry");
-  public static final RegistryKey<ConfiguredFeature<?, ?>> SLIME_BERRY_CONFIGURED_KEY = configuredKeyOf(SLIME_BERRY_FEATURE_ID);
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SLIME_BERRY_CONFIGURED_KEY = configuredKeyOf(
+      SLIME_BERRY_FEATURE_ID);
   public static final RegistryKey<PlacedFeature> SLIME_BERRY_PLACED_KEY = placedKeyOf(SLIME_BERRY_FEATURE_ID);
 
   public static final Identifier SHROOM_FEATURE_ID = Identifier.of(ArtentPotions.MODID, "shroom");
@@ -74,13 +81,18 @@ public class FeatureRegistry {
         BERRY_BUSH_PLACED_KEY);
 
     BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN),
+        BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN, ModBiomes.CRIMSON_FOREST_BIOME_KEY),
         GenerationStep.Feature.VEGETAL_DECORATION,
-        SHADOWVEIL_PLACED_KEY);
+        ARTENT_POTIONS_FLOWERS_FOREST_PLACED_KEY);
     BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.PALE_GARDEN),
+        BiomeSelectors.includeByKey(BiomeKeys.PLAINS),
         GenerationStep.Feature.VEGETAL_DECORATION,
-        BLAZING_MARIGOLD_PLACED_KEY);
+        ARTENT_POTIONS_FLOWERS_PLAINS_PLACED_KEY);
+    BiomeModifications.addFeature(
+        BiomeSelectors.includeByKey(BiomeKeys.MEADOW),
+        GenerationStep.Feature.VEGETAL_DECORATION,
+        ARTENT_POTIONS_FLOWERS_MEADOW_PLACED_KEY);
+
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP),
         GenerationStep.Feature.VEGETAL_DECORATION,
@@ -93,9 +105,8 @@ public class FeatureRegistry {
             BiomeKeys.DRIPSTONE_CAVES,
             BiomeKeys.LUSH_CAVES,
             BiomeKeys.JUNGLE,
-            BiomeKeys.SPARSE_JUNGLE),
-        GenerationStep.Feature.VEGETAL_DECORATION,
-        SHROOM_PLACED_KEY);
+            BiomeKeys.TAIGA,
+            BiomeKeys.SPARSE_JUNGLE), GenerationStep.Feature.VEGETAL_DECORATION, SHROOM_PLACED_KEY);
     BiomeModifications.addFeature(
         BiomeSelectors.includeByKey(BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA),
         GenerationStep.Feature.VEGETAL_DECORATION,

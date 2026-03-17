@@ -1,59 +1,48 @@
 {
   "feature": {
-    "type": "artent_potions:vegetation_bock",
+    "type": "minecraft:random_patch",
     "config": {
-      "plant_state": {
-        "Name": "artent_potions:shroom"
+      "feature": {
+        "feature": {
+          "type": "minecraft:simple_block",
+          "config": {
+            "to_place": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "artent_potions:shroom"
+              }
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:matching_blocks",
+              "blocks": "minecraft:air"
+            }
+          }
+        ]
       },
-      "soil_tag": "#minecraft:dirt"
+      "tries": 96,
+      "xz_spread": 7,
+      "y_spread": 3
     }
   },
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": {
-        "type": "minecraft:weighted_list",
-        "distribution": [
-          {
-            "data": 3,
-            "weight": 9
-          },
-          {
-            "data": 4,
-            "weight": 1
-          }
-        ]
-      }
+      "type": "minecraft:rarity_filter",
+      "chance": 32
     },
     {
       "type": "minecraft:in_square"
-    },
-    {
-      "type": "minecraft:surface_water_depth_filter",
-      "max_water_depth": 0
     },
     {
       "type": "minecraft:heightmap",
-      "heightmap": "OCEAN_FLOOR"
+      "heightmap": "MOTION_BLOCKING_NO_LEAVES"
     },
     {
       "type": "minecraft:biome"
-    },
-    {
-      "type": "minecraft:block_predicate_filter",
-      "predicate": {
-        "type": "minecraft:would_survive",
-        "state": {
-          "Name": "artent_potions:blackberry_bush",
-          "Properties": {
-            "age": "0",
-            "bush_type": "single"
-          }
-        }
-      }
-    },
-    {
-      "type": "minecraft:in_square"
     }
   ]
 }

@@ -8,6 +8,7 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
@@ -33,16 +34,15 @@ public class VegetationBlockFeature extends Feature<VegetationBlockFeatureConfig
           HorizontalFacingBlock.FACING,
           Util.getRandom(HorizontalDirections, context.getRandom()));
     }
+
     // find the surface of the world
     BlockPos testPos = new BlockPos(origin);
-    for (int y = 0; y < world.getHeight(); y++) {
-      testPos = testPos.up();
-      // the tag name is dirt, but includes grass, mud, podzol, etc.
-      if (world.getBlockState(testPos).isIn(BlockTags.DIRT)) {
-        if (world.getBlockState(testPos.up()).isOf(Blocks.AIR)) {
-          world.setBlockState(testPos.up(), blockState, 10);
-          return true;
-        }
+
+    var topPos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, testPos);
+    if (world.getBlockState(topPos).isIn(BlockTags.DIRT)) {
+      if (world.getBlockState(topPos.up()).isOf(Blocks.AIR)) {
+        world.setBlockState(topPos.up(), blockState, 10);
+        return true;
       }
     }
 

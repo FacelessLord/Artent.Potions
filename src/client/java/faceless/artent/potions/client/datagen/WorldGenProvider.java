@@ -42,8 +42,9 @@ public class WorldGenProvider extends FabricDynamicRegistryProvider {
         placedFeatureRegistry,
         FeatureRegistry.CRIMSON_TREES_FEATURE_ID);
     registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.BERRY_BUSH_FEATURE_ID);
-    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.SHADOWVEIL_FEATURE_ID);
-    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.BLAZING_MARIGOLD_FEATURE_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.ARTENT_POTIONS_FLOWERS_FOREST_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.ARTENT_POTIONS_FLOWERS_PLAINS_ID);
+    registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.ARTENT_POTIONS_FLOWERS_MEADOW_ID);
     registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.SLIME_BERRY_FEATURE_ID);
     registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.SHROOM_FEATURE_ID);
     registerSimpleFeature(entries, configuredFeatureRegistry, placedFeatureRegistry, FeatureRegistry.FROST_PUMPKIN_FEATURE_ID);

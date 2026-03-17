@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "artent:blazing_marigold_seeds",
+  "group": "artent:artent_seeds",
   "ingredients": [
     "artent_potions:blazing_marigold"
   ],

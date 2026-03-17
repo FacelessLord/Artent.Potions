@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "artent:slime_berry_seeds",
+  "group": "artent:artent_seeds",
   "ingredients": [
     "artent_potions:slime_berry"
   ],
