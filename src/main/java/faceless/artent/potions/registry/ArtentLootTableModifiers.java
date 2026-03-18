@@ -30,11 +30,19 @@ import java.util.List;
 public class ArtentLootTableModifiers {
 
   public void modifyLootTables() {
-    LootTableEvents.MODIFY.register((RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries) -> {
+    LootTableEvents.MODIFY.register((RegistryKey<LootTable> key,
+                                     LootTable.Builder tableBuilder,
+                                     LootTableSource source,
+                                     RegistryWrapper.WrapperLookup registries) -> {
+      var shortGrassKey = Blocks.SHORT_GRASS.getLootTableKey().orElseThrow();
+      var tallGrassKey = Blocks.TALL_GRASS.getLootTableKey().orElseThrow();
       var oakLeavesKey = Blocks.OAK_LEAVES.getLootTableKey().orElseThrow();
-      var tropicalFish = EntityType.TROPICAL_FISH.getLootTableKey().orElseThrow();
-      RegistryWrapper.Impl<Enchantment> impl = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
-      // Let's only modify built-in loot tables and leave data pack loot tables untouched by checking the source.
+      var tropicalFish = EntityType.TROPICAL_FISH.getLootTableKey()
+                                                 .orElseThrow();
+      RegistryWrapper.Impl<Enchantment> impl = registries.getOrThrow(
+          RegistryKeys.ENCHANTMENT);
+      // Let's only modify built-in loot tables and leave data pack loot
+      // tables untouched by checking the source.
       // We also check that the loot table ID is equal to the ID we want.
       if (!source.isBuiltin())
         return;
@@ -49,7 +57,8 @@ public class ArtentLootTableModifiers {
                                      .create()
                                      .items(
                                          registries.getOrThrow(RegistryKeys.ITEM),
-                                         Items.SHEARS))
+                                         Items.SHEARS
+                                     ))
                         .or(MatchToolLootCondition.builder(
                             ItemPredicate.Builder
                                 .create()
@@ -60,19 +69,73 @@ public class ArtentLootTableModifiers {
                                             impl.getOrThrow(
                                                 Enchantments.SILK_TOUCH),
                                             NumberRange.IntRange.atLeast(
-                                                1)))))))
+                                                1)
+                                        )))
+                                )))
                         .invert())
                 .conditionally(TableBonusLootCondition.builder(
                     impl.getOrThrow(Enchantments.FORTUNE),
                     0.025F,
                     0.03125F,
                     0.041666668F,
-                    0.05F))
+                    0.05F
+                ))
                 .with(ItemEntry
                           .builder(ModItems.ACORN)
-                          .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                          .apply(SetCountLootFunction.builder(
+                              ConstantLootNumberProvider.create(1)))
                           .apply(ExplosionDecayLootFunction.builder())));
-    }
+      }
+      if (shortGrassKey.equals(key) || tallGrassKey.equals(key)) {
+        tableBuilder.pool(
+            LootPool
+                .builder()
+                .rolls(ConstantLootNumberProvider.create(1.0F))
+                .conditionally(
+                    MatchToolLootCondition
+                        .builder(ItemPredicate.Builder
+                                     .create()
+                                     .items(
+                                         registries.getOrThrow(RegistryKeys.ITEM),
+                                         Items.SHEARS
+                                     ))
+                        .or(MatchToolLootCondition.builder(
+                            ItemPredicate.Builder
+                                .create()
+                                .subPredicate(
+                                    ItemSubPredicateTypes.ENCHANTMENTS,
+                                    EnchantmentsPredicate.enchantments(
+                                        List.of(new EnchantmentPredicate(
+                                            impl.getOrThrow(
+                                                Enchantments.SILK_TOUCH),
+                                            NumberRange.IntRange.atLeast(
+                                                1)
+                                        )))
+                                )))
+                        .invert())
+                .conditionally(TableBonusLootCondition.builder(
+                    impl.getOrThrow(Enchantments.FORTUNE),
+                    0.025F,
+                    0.03125F,
+                    0.041666668F,
+                    0.05F
+                ))
+                .with(ItemEntry
+                          .builder(ModItems.SHADOWVEIL_SEEDS)
+                          .apply(SetCountLootFunction.builder(
+                              ConstantLootNumberProvider.create(1)))
+                          .apply(ExplosionDecayLootFunction.builder()))
+                .with(ItemEntry
+                          .builder(ModItems.BLAZING_MARIGOLD_SEEDS)
+                          .apply(SetCountLootFunction.builder(
+                              ConstantLootNumberProvider.create(1)))
+                          .apply(ExplosionDecayLootFunction.builder()))
+                .with(ItemEntry
+                          .builder(ModItems.SLIME_BERRY_SEEDS)
+                          .apply(SetCountLootFunction.builder(
+                              ConstantLootNumberProvider.create(1)))
+                          .apply(ExplosionDecayLootFunction.builder())));
+      }
 
       if (tropicalFish.equals(key)) {
         tableBuilder.pool(
@@ -84,14 +147,16 @@ public class ArtentLootTableModifiers {
                     0.025F,
                     0.03125F,
                     0.041666668F,
-                    0.05F))
+                    0.05F
+                ))
                 .with(ItemEntry
                           .builder(ModItems.STONE_SCALE)
-                          .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                          .apply(SetCountLootFunction.builder(
+                              ConstantLootNumberProvider.create(1)))
                           .apply(ExplosionDecayLootFunction.builder())));
       }
-  });
-}
+    });
+  }
 
 
 }

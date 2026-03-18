@@ -1,11 +1,13 @@
 // 1.21.4	-999999999-01-01T00:00:00	Artent.Potions/artent_potions_block_tags
 0366b0a330252aece42f4d8f8d8546ea5874fe53 data/minecraft/tags/block/leaves.json
-67f3716e00088e0d2b3602e5914dccf6e4d15cc0 data/minecraft/tags/block/logs.json
-67f3716e00088e0d2b3602e5914dccf6e4d15cc0 data/minecraft/tags/block/logs_that_burn.json
-d383faadca6d5c773e29cd3c3338f98c92a3dd5a data/minecraft/tags/block/mineable/axe.json
+cb13420e8a13f5aadb84b138813943d0072c8f84 data/minecraft/tags/block/logs.json
+cb13420e8a13f5aadb84b138813943d0072c8f84 data/minecraft/tags/block/logs_that_burn.json
+b05b9a61dcb574bb32a7211dd0128e249a78b93a data/minecraft/tags/block/mineable/axe.json
 0366b0a330252aece42f4d8f8d8546ea5874fe53 data/minecraft/tags/block/mineable/hoe.json
-2cae2657867d3cd7c555fadff1ce277f8bdcaea0 data/minecraft/tags/block/mineable/pickaxe.json
+3a27554530e444ca8eb25b702ebf4935124f3861 data/minecraft/tags/block/mineable/pickaxe.json
 2cae2657867d3cd7c555fadff1ce277f8bdcaea0 data/minecraft/tags/block/needs_stone_tool.json
 645fafed682564ee5a08a27c32cd507299a9365d data/minecraft/tags/block/planks.json
 41c64e771e6b246621bd038b566f72e7fa4231f4 data/minecraft/tags/block/saplings.json
-53db4c1528e657cd8f1249b0f86911efe7595c87 data/minecraft/tags/block/sculk_replaceable.json
+8a41c737bce18a6c32e6515ae2953b6873e71b02 data/minecraft/tags/block/sculk_replaceable.json
+c601d9b4dc9645e054eb4555ce82024625657b20 data/minecraft/tags/block/wooden_slabs.json
+859ddc7ad690179c593f5c6553e7b7ada2249c73 data/minecraft/tags/block/wooden_stairs.json

@@ -12,7 +12,10 @@ import net.minecraft.registry.tag.BlockTags;
 import java.util.concurrent.CompletableFuture;
 
 public class BlockTagsProvider extends FabricTagProvider<Block> {
-  public BlockTagsProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+  public BlockTagsProvider(
+      FabricDataOutput output,
+      CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture
+  ) {
     super(output, RegistryKeys.BLOCK, registriesFuture);
   }
 
@@ -22,6 +25,16 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.CRIMSONWOOD_LOG.block());
     getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
         .add(ModBlocks.CRIMSONWOOD_LOG.block());
+
+    getOrCreateTagBuilder(BlockTags.LOGS)
+        .add(ModBlocks.CRIMSONWOOD_LOG_STRIPPED.block());
+    getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
+        .add(ModBlocks.CRIMSONWOOD_LOG_STRIPPED.block());
+    getOrCreateTagBuilder(BlockTags.WOODEN_SLABS)
+
+        .add(ModBlocks.CRIMSONWOOD_PLANKS_SLAB.block());
+    getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS)
+        .add(ModBlocks.CRIMSONWOOD_PLANKS_STAIRS.block());
 
     getOrCreateTagBuilder(BlockTags.LEAVES)
         .add(ModBlocks.CRIMSONWOOD_LEAVES.block());
@@ -34,7 +47,10 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
 
     getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
         .add(ModBlocks.CRIMSONWOOD_LOG.block())
+        .add(ModBlocks.CRIMSONWOOD_LOG_STRIPPED.block())
         .add(ModBlocks.CRIMSONWOOD_PLANKS.block())
+        .add(ModBlocks.CRIMSONWOOD_PLANKS_SLAB.block())
+        .add(ModBlocks.CRIMSONWOOD_PLANKS_STAIRS.block())
         .add(ModBlocks.CRIMSONWOOD_SAPLING.block())
         .add(ModBlocks.CRIMSONWOOD_LEAVES.block());
 
@@ -48,6 +64,8 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
     getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
         .add(ModBlocks.CRIMSONWOOD_LOG.block())
         .add(ModBlocks.CRIMSONWOOD_PLANKS.block())
+        .add(ModBlocks.CRIMSONWOOD_PLANKS_SLAB.block())
+        .add(ModBlocks.CRIMSONWOOD_PLANKS_STAIRS.block())
         .add(ModBlocks.CRIMSONWOOD_SAPLING.block())
         .add(ModBlocks.FROST_PUMPKIN_CARVED.block())
         .add(ModBlocks.FROST_PUMPKIN.block())
@@ -57,6 +75,14 @@ public class BlockTagsProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.BERRY_BUSH[1].block())
         .add(ModBlocks.BERRY_BUSH[2].block())
         .add(ModBlocks.BERRY_BUSH[3].block());
+    getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+        .add(ModBlocks.ICE_CRYSTAL_BLOCK.block())
+        .add(ModBlocks.ICE_CRYSTAL_BUD_SMALL.block())
+        .add(ModBlocks.ICE_CRYSTAL_BUD_MEDIUM.block())
+        .add(ModBlocks.ICE_CRYSTAL_BUD_LARGE.block())
+        .add(ModBlocks.ICE_CRYSTAL_CLUSTER.block())
+        .add(ModBlocks.BREWING_CAULDRON.block())
+        .add(ModBlocks.BREWING_CAULDRON_COPPER.block());
     getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
         .add(ModBlocks.CRIMSONWOOD_LEAVES.block());
   }
