@@ -52,27 +52,27 @@ Concentrates are the potions that were fermented in a barrel for a long time, wh
 ## WorldGen
 #### Berries
 Four types of berry bushes: blackberry, blueberry, cloudberry, raspberry
-![Berries](docs/images/berries.png)
+![Berries](docs/images/berries.webp)
 #### Crimson forest
 Generates on the edge of some forests
-![Crimson Forest](docs/images/crimson_forest.png)
+![Crimson Forest](docs/images/crimson_forest.webp)
 #### Shroom
 Rarely generates in forests, jungles and mushroom islands
 Can be breed using bone meal
-![Shroom](docs/images/shroom.png)
+![Shroom](docs/images/shroom.webp)
 #### Shadowveil
 Grassy plant spawning in forests and plains
-![Shadowveil](docs/images/shadowveil.png)
+![Shadowveil](docs/images/shadowveil.webp)
 #### Frost pumpkin
 Generates in Taiga forest and cold plains
-![Frost pumpkin](docs/images/frost_pumpkin.png)
+![Frost pumpkin](docs/images/frost_pumpkin.webp)
 ## Blocks
 #### Cauldron
 Used to brew potions. Fuel and water added by right-clicking the cauldron
 Ingredients dropped into cauldron, which in turn changes color of water
 When potion is ready it can be collected using phials
 Each cauldron gives 3 potion phials
-![Cauldrons](docs/images/cauldrons.png)
+![Cauldrons](docs/images/cauldrons.webp)
 
 #### Barrel
 Used to ferment potions
@@ -86,7 +86,7 @@ Only 7 potions can be fermented:
 - Levitation - Surface Teleportation
 - Holy water - Angelic Water
 - Vampirism - Grand Vamprire
-  ![Barrel](docs/images/barrel.png)
+  ![Barrel](docs/images/barrel.webp)
 
 ## Items
 - Crimson Leaf and Crimson Berry - drops from Crimsonwood leaves
@@ -95,8 +95,8 @@ Only 7 potions can be fermented:
 - Mana Feather - drop from Mana Chicken
 - Acorn - drops from oak tree leaves
 - Stone Scale - drops from tropical fish
-- ![Items|459](docs/images/items.png)
+- ![Items|459](docs/images/items.webp)
 ## Entities
 #### Mana chicken
 Created when shroom is given to normal chicken. Can be breed using shroom. Drops Mana Feathers but lays normal eggs
-![Mana Chicken](docs/images/mana_chicken.png)
+![Mana Chicken](docs/images/mana_chicken.webp)
