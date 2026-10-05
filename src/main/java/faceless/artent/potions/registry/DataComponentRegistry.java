@@ -15,7 +15,7 @@ public class DataComponentRegistry {
       Identifier.of(ArtentPotions.MODID, "potion_key"),
       ComponentType.<List<String>>builder().codec(Codec.list(Codec.STRING)).build()
                                                                                 );
-  public static final ComponentType<Integer> CONCENTRATE_AMOUNT = Registry.register(
+  public static final ComponentType<Integer> POTION_AMOUNT = Registry.register(
       Registries.DATA_COMPONENT_TYPE,
       Identifier.of(ArtentPotions.MODID, "amount"),
       ComponentType.<Integer>builder().codec(Codec.INT).build()

@@ -53,6 +53,6 @@
             "type": "minecraft:model",
             "model": "artent_potions:item/medium_bottle"
         },
-        "property": "artent_potions:concentrate_amount"
+        "property": "artent_potions:potion_amount"
     }
 }

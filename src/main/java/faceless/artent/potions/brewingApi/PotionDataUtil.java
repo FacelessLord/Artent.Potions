@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-import static faceless.artent.potions.registry.DataComponentRegistry.CONCENTRATE_AMOUNT;
+import static faceless.artent.potions.registry.DataComponentRegistry.POTION_AMOUNT;
 import static faceless.artent.potions.registry.DataComponentRegistry.POTION_KEY;
 
 public class PotionDataUtil {
@@ -18,11 +18,11 @@ public class PotionDataUtil {
   }
 
   public static int getConcentrateAmount(ItemStack stack) {
-    var integer = stack.get(CONCENTRATE_AMOUNT);
+    var integer = stack.get(POTION_AMOUNT);
     return integer == null ? 0 : integer;
   }
 
   public static void setConcentrateAmount(ItemStack stack, int amount) {
-    stack.set(CONCENTRATE_AMOUNT, amount);
+    stack.set(POTION_AMOUNT, amount);
   }
 }

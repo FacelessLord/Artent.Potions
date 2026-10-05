@@ -9,23 +9,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.dynamic.Codecs;
 import org.jetbrains.annotations.Nullable;
 
-import static faceless.artent.potions.registry.DataComponentRegistry.CONCENTRATE_AMOUNT;
+import static faceless.artent.potions.registry.DataComponentRegistry.POTION_AMOUNT;
 
-public record ConcentrateAmountProperty(int amount) implements NumericProperty {
-  public static final MapCodec<ConcentrateAmountProperty> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance
-      .group(Codecs.POSITIVE_INT.optionalFieldOf("concentrate_amount", 0).forGetter(ConcentrateAmountProperty::amount))
-      .apply(instance, ConcentrateAmountProperty::new));
+public record PotionAmountProperty(int amount) implements NumericProperty {
+  public static final MapCodec<PotionAmountProperty> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance
+      .group(Codecs.POSITIVE_INT.optionalFieldOf("potion_amount", 0).forGetter(PotionAmountProperty::amount))
+      .apply(instance, PotionAmountProperty::new));
 
-  public ConcentrateAmountProperty(int amount) {
+  public PotionAmountProperty(int amount) {
     this.amount = amount;
   }
 
   public float getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity holder, int seed) {
-    var integer = stack.get(CONCENTRATE_AMOUNT);
+    var integer = stack.get(POTION_AMOUNT);
     return integer == null ? 0 : integer;
   }
 
-  public MapCodec<ConcentrateAmountProperty> getCodec() {
+  public MapCodec<PotionAmountProperty> getCodec() {
     return CODEC;
   }
 

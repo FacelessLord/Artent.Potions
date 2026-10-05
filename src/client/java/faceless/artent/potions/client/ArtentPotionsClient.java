@@ -2,7 +2,7 @@ package faceless.artent.potions.client;
 
 import faceless.artent.potions.ArtentPotions;
 import faceless.artent.potions.client.network.ArtentClientHook;
-import faceless.artent.potions.client.properties.ConcentrateAmountProperty;
+import faceless.artent.potions.client.properties.PotionAmountProperty;
 import faceless.artent.potions.client.registry.*;
 import faceless.artent.potions.client.tint.ArtentPotionTintSource;
 import net.fabricmc.api.ClientModInitializer;
@@ -28,8 +28,8 @@ public class ArtentPotionsClient implements ClientModInitializer {
     Particles.register();
 
     NumericProperties.ID_MAPPER.put(
-        Identifier.of(ArtentPotions.MODID, "concentrate_amount"),
-        ConcentrateAmountProperty.CODEC);
+        Identifier.of(ArtentPotions.MODID, "potion_amount"),
+        PotionAmountProperty.CODEC);
     TintSourceTypes.ID_MAPPER.put(Identifier.of(ArtentPotions.MODID, "potion_color"), ArtentPotionTintSource.CODEC);
   }
 }

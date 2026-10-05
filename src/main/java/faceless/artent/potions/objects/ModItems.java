@@ -21,7 +21,7 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.function.Function;
 
-import static faceless.artent.potions.registry.DataComponentRegistry.CONCENTRATE_AMOUNT;
+import static faceless.artent.potions.registry.DataComponentRegistry.POTION_AMOUNT;
 import static faceless.artent.potions.registry.DataComponentRegistry.POTION_KEY;
 
 public final class ModItems {
@@ -68,7 +68,7 @@ public final class ModItems {
         (settings) -> new PotionBottleItem(settings, "small", 1),
         new Item.Settings()
             .component(POTION_KEY, List.of())
-            .component(CONCENTRATE_AMOUNT, 1)
+            .component(POTION_AMOUNT, 1)
             .maxCount(64),
         null);
     MEDIUM_BOTTLE = register(
@@ -76,7 +76,7 @@ public final class ModItems {
         (settings) -> new PotionBottleItem(settings, "medium", 3),
         new Item.Settings()
             .component(POTION_KEY, List.of())
-            .component(CONCENTRATE_AMOUNT, 3)
+            .component(POTION_AMOUNT, 3)
             .maxCount(1),
         null);
     BIG_BOTTLE = register(
@@ -84,7 +84,7 @@ public final class ModItems {
         (settings) -> new PotionBottleItem(settings, "big", 9),
         new Item.Settings()
             .component(POTION_KEY, List.of())
-            .component(CONCENTRATE_AMOUNT, 9)
+            .component(POTION_AMOUNT, 9)
             .maxCount(1),
         null);
 
@@ -93,7 +93,7 @@ public final class ModItems {
         (settings) -> new ExplosivePotionBottleItem(settings, "small", 1),
         new Item.Settings()
             .component(POTION_KEY, List.of())
-            .component(CONCENTRATE_AMOUNT, 1)
+            .component(POTION_AMOUNT, 1)
             .maxCount(64),
         null);
 

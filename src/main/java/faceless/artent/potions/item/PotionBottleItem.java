@@ -105,9 +105,7 @@ public class PotionBottleItem extends Item implements IPotionContainerItem, IDeb
     if (stack.getItem() instanceof IPotionContainerItem potionContainer) {
       var maxAmount = potionContainer.getMaxPotionAmount(stack);
       if (maxAmount != 1) {
-        tooltip.add(Text.literal(potionContainer.getPotionAmount(stack)
-                                 + "/"
-                                 + maxAmount));
+        tooltip.add(Text.literal(potionContainer.getPotionAmount(stack)+"").append(Text.translatable("text.artent_potions.swigs_left")));
       }
     }
 
