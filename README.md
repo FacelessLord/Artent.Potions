@@ -90,7 +90,6 @@ Only 7 potions can be fermented:
 
 ## Items
 - Crimson Leaf and Crimson Berry - drops from Crimsonwood leaves
-- Golden Bucket
 - Phials
 - Mana Feather - drop from Mana Chicken
 - Acorn - drops from oak tree leaves
