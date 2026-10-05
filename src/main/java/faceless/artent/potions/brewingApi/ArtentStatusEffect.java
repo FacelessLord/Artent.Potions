@@ -1,7 +1,6 @@
 package faceless.artent.potions.brewingApi;
 
 import faceless.artent.core.math.Color;
-import faceless.artent.potions.entity.FrostedGolem;
 import faceless.artent.potions.objects.ModPotionEffects;
 import faceless.artent.potions.registry.DamageSourceRegistry;
 import faceless.artent.potions.registry.StatusEffectsRegistry;
@@ -61,8 +60,6 @@ public class ArtentStatusEffect extends StatusEffect {
     }
     if (this == ModPotionEffects.FREEZING) {
       entity.extinguish();
-      if (!(entity instanceof FrostedGolem))
-        entity.setFrozenTicks(Math.min(entity.getFrozenTicks() + amplifier * 2, 20 * 10 * (1 + amplifier)));
       return true;
     }
     if (this == ModPotionEffects.SANCTITY) {

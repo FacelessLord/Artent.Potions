@@ -101,10 +101,6 @@ public final class ModItems {
         "mana_chicken_spawn_egg",
         (Item.Settings settings) -> new SpawnEggItem(ModEntities.MANA_CHICKEN, settings),
         new Item.Settings(), ModItemGroups.BASE);
-    FROSTED_GOLEM_SPAWN_EGG = register(
-        "frosted_golem_spawn_egg",
-        (Item.Settings settings) -> new SpawnEggItem(ModEntities.FROSTED_GOLEM, settings),
-        new Item.Settings(), ModItemGroups.BASE);
 
     MANA_FEATHER = register(
         "mana_feather",
